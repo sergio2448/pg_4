@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/inmueblesDB`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -30,10 +30,19 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const {  } = sequelize.models;
+const {  Roles,Users,BanckCards  } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+
+// Uno a uno 1:N:
+// Un Rol puede estar asociado a varios usuario, un usuario tiene un solo rol
+Roles.hasMany(Users, { as: "Users", foreignKey: "rolId" });
+
+// Uno a Muchos, 1:N
+//un usuario  tiene Una o varias tarjetas bancarias, una tarjeta está asociadoa un solo usuario
+Users.hasMany(BanckCards, { as: "BanckCards", foreignKey: "userId" });
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
