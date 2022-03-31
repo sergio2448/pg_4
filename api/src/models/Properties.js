@@ -24,6 +24,12 @@ module.exports =  (sequelize) => {
             type: DataTypes.DECIMAL,
             allowNull:false,
             },
-
+        lease:{
+            type:DataTypes.STRING,
+            allowNull:false,
+            validator:{
+                isIn:["Rent","Sale"]            
+            }
+        }
    })
 }
