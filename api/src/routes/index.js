@@ -68,4 +68,9 @@ router.post('/roles', async (req, res) => {
 router.get('/roles', async (req, res) => {
     res.json(await Roles.findAll())
 })
+
+router.post('/cards', async(req,res)=>{
+    const {} = req.body
+})
+
 module.exports = router;
