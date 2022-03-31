@@ -18,7 +18,7 @@ module.exports = (Sequelize) => {
             },
         },
         cardNumbre:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.BIGINT,
             allowNull:false,
             validate: {
                 notNull: {
