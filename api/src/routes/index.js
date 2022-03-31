@@ -7,30 +7,30 @@ const { Roles, Users, BanckCards } = require('../db')
 const router = Router();
 
 async function insert(name, email, password, roleid) {
-    const [newUser, create] = await Users.create(
+    const newUser = await Users.create(
         {
             name,
             email,
             password,
-         
-        },
+        }
     )
-    
-    //     console.log(roleid)
-    //     console.log(newUser)
-    //     await newUser.addRoles(roleid)
-    //     return newUser
-    
+    const Role = await getRolebyId(roleid)
+    await Role.addUser(newUser)
 }
 
 
 async function getbyEmail(pEmail) {
-    const matched = await Users.findAll({
+    const matched = await Users.findOne({
         where: {
             email: pEmail
         }
     })
     return matched
+}
+
+async function getRolebyId(id) {
+    const role = await Roles.findByPk(id)
+    return role
 }
 
 
@@ -40,7 +40,9 @@ router.post('/user', async (req, res) => {
         if (await getbyEmail(email).length > 0) {
             return res.json(await getbyEmail(email))
         } else {
-            return res.json(await insert(name, email, password, roleid))
+            await insert(name, email, password, roleid)
+
+            return res.json(await getbyEmail(email))
         }
     } catch (error) {
         console.log(error)
@@ -48,22 +50,15 @@ router.post('/user', async (req, res) => {
 })
 
 router.get('/users', async (req, res) => {
-    const users = await Users.findAll({
-        include: [{
-            model: Roles,
-            attributes: ['rolName'],
-            through: {
-                attributes: []
-            }
-        }]
-    });
+    const users = await Users.findAll();
     res.json(users)
 })
 
 router.post('/roles', async (req, res) => {
     const { id, name } = req.body
     const newUser = await Roles.create(
-        {   id,
+        {
+            id,
             rolName: name
         }
     )
