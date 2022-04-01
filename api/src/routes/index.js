@@ -1,76 +1,25 @@
 const { Router } = require('express');
-const axios = require('axios');
-const { Op } = require('Sequelize')
-const { Roles, Users, BanckCards } = require('../db')
-
+const userCreate = require('../controller/usercreate.js')
+const allusers = require('../controller/getusers')
+const postroles = require('../controller/postroles.js.js.js')
+const postcards = require('../controller/postcard.js.js.js')
+const getroles = require('../controller/getroles.js.js')
 
 const router = Router();
 
-async function insert(name, email, password, roleid) {
-    const newUser = await Users.create(
-        {
-            name,
-            email,
-            password,
-        }
-    )
-    const Role = await getRolebyId(roleid)
-    await Role.addUser(newUser)
-}
+//todo: crea un usuario
+router.use('/user', userCreate )
 
+//todo: obtiene todos los usuarios
+router.use('/users', allusers)
 
-async function getbyEmail(pEmail) {
-    const matched = await Users.findOne({
-        where: {
-            email: pEmail
-        }
-    })
-    return matched
-}
+//todo: crea un rol de usuario
+router.use('/role', postroles)
 
-async function getRolebyId(id) {
-    const role = await Roles.findByPk(id)
-    return role
-}
+//todo: obtiene todos los roles
+router.use('/roles', getroles)
 
-
-router.post('/user', async (req, res) => {
-    const { name, email, password, roleid } = req.body
-    try {
-        if (await getbyEmail(email).length > 0) {
-            return res.json(await getbyEmail(email))
-        } else {
-            await insert(name, email, password, roleid)
-
-            return res.json(await getbyEmail(email))
-        }
-    } catch (error) {
-        console.log(error)
-    }
-})
-
-router.get('/users', async (req, res) => {
-    const users = await Users.findAll();
-    res.json(users)
-})
-
-router.post('/roles', async (req, res) => {
-    const { id, name } = req.body
-    const newUser = await Roles.create(
-        {
-            id,
-            rolName: name
-        }
-    )
-    return res.json(newUser)
-})
-
-router.get('/roles', async (req, res) => {
-    res.json(await Roles.findAll())
-})
-
-router.post('/cards', async(req,res)=>{
-    const {} = req.body
-})
+//todo: crea una tarjeta y asocia segun el nombre
+router.use('/cards', postcards)
 
 module.exports = router;
