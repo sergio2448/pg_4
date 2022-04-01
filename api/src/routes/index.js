@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { Op } = require('Sequelize')
 const { Roles, Users, BanckCards } = require('../db')
 const PropertiesRoute = require('./PropertiesRoute');
 
