@@ -16,6 +16,14 @@ module.exports =  (sequelize) => {
             type: DataTypes.DECIMAL,
             allowNull:false,
         },
+        address:{
+            type: DataTypes.STRING,
+            allowNull:true,
+        },
+        city:{
+            type: DataTypes.STRING,
+            allowNull:true,
+        },
         country:{
             type: DataTypes.STRING,
             allowNull:false,
@@ -24,6 +32,16 @@ module.exports =  (sequelize) => {
             type: DataTypes.DECIMAL,
             allowNull:false,
             },
-
+        cp:{
+            type: DataTypes.STRING,
+            allowNull:false,
+        },
+        lease:{
+            type:DataTypes.STRING,
+            allowNull:false,
+            validator:{
+                isIn:["Rent","Sale"]            
+            }
+        }
    })
 }
