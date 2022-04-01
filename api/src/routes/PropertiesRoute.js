@@ -1,12 +1,12 @@
 const express = require("express");
-const { getProperties }  =require('../controller/PropertiesController')
+const { getProperties, fillProperties } = require("../controller/PropertiesController");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
     try {
-        const {precio}= req.params;
-        const result = await getProperties();
+        const {id,cost,address,city,country,cp,lease}= req.query;
+        const result = await getProperties(id,cost,address,city,country,cp,lease);
         if(result?.length> 0){
             return res.json(result) ;
         }else{
@@ -15,6 +15,8 @@ router.get("/", async (req, res) => {
     } catch (error) {
         console.log("Ocurrio un error en PropertiesRoute / get :"+error);
     }
-})
+});
+
+router.post("/pro", fillProperties);
 
 module.exports = router;
