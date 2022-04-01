@@ -26,7 +26,7 @@ const getProperties = async (name) => {
 
 const fillProperties = async (req, res) => {
   try {
-    let { description, m2, address, city, country, cost, cp, lease } = req.body;
+    let { description, features, m2, address, city, country, cost, cp, lease } = req.body;
     let newProperty = await Properties.create({
       description,
       m2,
@@ -37,6 +37,11 @@ const fillProperties = async (req, res) => {
       cp,
       lease,
     });
+    let propertyFeature = await Features.findAll({
+      where: { name: features },
+    });
+    newProperty.addFeatures(propertyFeature);
+    res.send("Propiedad creada con éxito");
   } catch (error) {
     console.log(error.message);
   }
@@ -44,5 +49,5 @@ const fillProperties = async (req, res) => {
 
 module.exports = {
   getProperties,
-  fillProperties
+  fillProperties,
 };

@@ -17,6 +17,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/properties", fillProperties);
+router.post("/pro", fillProperties);
 
 module.exports = router;
