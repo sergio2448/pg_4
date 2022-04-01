@@ -2,9 +2,11 @@ const { Router } = require('express');
 const axios = require('axios');
 const { Op } = require('Sequelize')
 const { Roles, Users, BanckCards } = require('../db')
+const PropertiesRoute = require('./PropertiesRoute');
 
 
 const router = Router();
+router.use('/Properties', PropertiesRoute);
 
 async function insert(name, email, password, roleid) {
     const newUser = await Users.create(
