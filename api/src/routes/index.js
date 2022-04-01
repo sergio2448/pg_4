@@ -4,8 +4,10 @@ const allusers = require('../controller/getusers')
 const postroles = require('../controller/postroles.js.js.js')
 const postcards = require('../controller/postcard.js.js.js')
 const getroles = require('../controller/getroles.js.js')
+const PropertiesRoute = require('./PropertiesRoute');
 
 const router = Router();
+router.use('/Properties', PropertiesRoute);
 
 //todo: crea un usuario
 router.use('/user', userCreate )
