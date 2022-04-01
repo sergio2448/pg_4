@@ -1,24 +1,37 @@
 const { Properties, Features, Photos } = require("../db");
 const { Op } = require("sequelize");
 
-const getProperties = async (id,cost,address,city,country,cp,lease) => {
+const getProperties = async (id,cost,address,city,country,cp,lease,search) => {
     try {
         let respProperties;
-        console.log(id);
-        if(id || cost ||address ||city ||country ||cp ||lease){
-            let objWhere={};
-            id? objWhere.id=id:null;
-            cost? objWhere.cost={[Op.lte]:parseInt(cost)}:null;
-            cp? objWhere.cp=cp:null;
-            lease? objWhere.lease=lease:null;
-            address? objWhere.address={[Op.iLike]:`%${address}%`}:null;
-            city? objWhere.city={[Op.iLike]:`%${city}%`}:null;
-            country? objWhere.country={[Op.iLike]:`%${country}%`}:null;
+        let filterSearch;
+        if(id || cost ||address ||city ||country ||cp ||lease || search){
+           
+            if(search){
+                filterSearch={[Op.or]: [{address:
+                            {[Op.iLike]:`%${search}%`}
+                        },
+                        {city:
+                            {[Op.iLike]:`%${search}%`}
+                        },
+                        {country:
+                            {[Op.iLike]:`%${search}%`}
+                        },]
+                    };
+            }
+    
+            id? filterSearch.id=id:null;
+            cost? filterSearch.cost={[Op.lte]:parseInt(cost)}:null;
+            cp? filterSearch.cp=cp:null;
+            lease? filterSearch.lease=lease:null;
+            address? filterSearch.address={[Op.iLike]:`%${address}%`}:null;
+            city? filterSearch.city={[Op.iLike]:`%${city}%`}:null;
+            country? filterSearch.country={[Op.iLike]:`%${country}%`}:null;
 
             respProperties= await Properties.findAll({
-                logging: console.log,
+                // logging: console.log,
                 include:[{model:Features},{model:Photos}],
-                where:objWhere
+                where:filterSearch
             });
         }else{
             respProperties=await Properties.findAll({  include:[{model:Features},{model:Photos}]})
