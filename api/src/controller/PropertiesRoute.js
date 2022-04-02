@@ -37,6 +37,7 @@ router.put('/put/:id', async (req, res) => {
                 (req.body[key].length > 0) && (values[key] = req.body[key])
             }
         }
+        
         // await addphoto(photos) //*pendiiente asociacion de fotos
         await updateProperties(values, id)
         if (override === 'true') {

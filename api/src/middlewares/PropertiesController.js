@@ -1,93 +1,96 @@
 const { Properties, Features, Photos } = require('../db')
 const { Op } = require("sequelize")
 const { getById } = require('../middlewares/usercreate.js')
-const getProperties = async (id,cost,address,city,country,cp,lease,search) => {
+const getProperties = async (id, cost, address, city, country, cp, lease, search) => {
     try {
         let respProperties;
         let filterSearch;
-        if(id || cost ||address ||city ||country ||cp ||lease || search){
-           
-            if(search){
-                filterSearch={[Op.or]: [{address:
-                            {[Op.iLike]:`%${search}%`}
-                        },
-                        {city:
-                            {[Op.iLike]:`%${search}%`}
-                        },
-                        {country:
-                            {[Op.iLike]:`%${search}%`}
-                        },]
-                    };
-            }
-    
-            id? filterSearch.id=id:null;
-            cost? filterSearch.cost={[Op.lte]:parseInt(cost)}:null;
-            cp? filterSearch.cp=cp:null;
-            lease? filterSearch.lease=lease:null;
-            address? filterSearch.address={[Op.iLike]:`%${address}%`}:null;
-            city? filterSearch.city={[Op.iLike]:`%${city}%`}:null;
-            country? filterSearch.country={[Op.iLike]:`%${country}%`}:null;
+        if (id || cost || address || city || country || cp || lease || search) {
 
-            respProperties= await Properties.findAll({
+            if (search) {
+                filterSearch = {
+                    [Op.or]: [{
+                        address:
+                            { [Op.iLike]: `%${search}%` }
+                    },
+                    {
+                        city:
+                            { [Op.iLike]: `%${search}%` }
+                    },
+                    {
+                        country:
+                            { [Op.iLike]: `%${search}%` }
+                    },]
+                };
+            }
+
+            id ? filterSearch.id = id : null;
+            cost ? filterSearch.cost = { [Op.lte]: parseInt(cost) } : null;
+            cp ? filterSearch.cp = cp : null;
+            lease ? filterSearch.lease = lease : null;
+            address ? filterSearch.address = { [Op.iLike]: `%${address}%` } : null;
+            city ? filterSearch.city = { [Op.iLike]: `%${city}%` } : null;
+            country ? filterSearch.country = { [Op.iLike]: `%${country}%` } : null;
+
+            respProperties = await Properties.findAll({
                 // logging: console.log,
-                include:[{model:Features},{model:Photos}],
-                where:filterSearch
+                include: [{ model: Features }, { model: Photos }],
+                where: filterSearch
             });
-        }else{
-            respProperties=await Properties.findAll({  include:[{model:Features},{model:Photos}]})
+        } else {
+            respProperties = await Properties.findAll({ include: [{ model: Features }, { model: Photos }] })
         }
         return respProperties;
 
     } catch (error) {
-        console.log("Ocurrio un error en PropertiesController/ getProperties:"+error);
+        console.log("Ocurrio un error en PropertiesController/ getProperties:" + error);
     }
 };
 
 const fillProperties = async (req, res) => {
-  try {
-    let { description, features, m2, address, city, country, cost, cp, lease } = req.body;
-    let newProperty = await Properties.create({
-      description,
-      m2,
-      address,
-      city,
-      country,
-      cost,
-      cp,
-      lease,
-    });
-    
-    features.forEach(async element => {
-      const  propFeature = await Features.findAll({
-        where: { name:element.name },
-      });
-      
-      newProperty.addFeatures(propFeature,{ through: {value:element.value}});
-    });
-    res.send("Propiedad creada con éxito");
-  } catch (error) {
-    console.log(error.message);
-  }
+    try {
+        let { description, features, m2, address, city, country, cost, cp, lease } = req.body;
+        let newProperty = await Properties.create({
+            description,
+            m2,
+            address,
+            city,
+            country,
+            cost,
+            cp,
+            lease,
+        });
+
+        features.forEach(async element => {
+            const propFeature = await Features.findAll({
+                where: { name: element.name },
+            });
+
+            newProperty.addFeatures(propFeature, { through: { value: element.value } });
+        });
+        res.send("Propiedad creada con éxito");
+    } catch (error) {
+        console.log(error.message);
+    }
 };
 
 const updateProperties = async (values, id) => {
 
-    const response = await Properties.update(values, {
-        where: { id }
+    await Properties.update(values, {
+        where: {
+            id
+        }
     })
-    // const propUpdate = await getById(id)
-    // console.log(propUpdate.__proto__)
-    // console.log(await propUpdate.getSeller())
-    return response
+    
 }
 
-const addassociations = async (features, photos, id) => {
+const addassociations = async (features/*, photos*/, id) => {
     const propUpdate = await getById(id)
     features.length > 0 && await propUpdate.addFeatures(features)
     // photos.length > 0 && await propUpdate.addPhotos(photos) //*pendiiente asociacion de fotos
 }
 
-const setassociations = async (features, photos, id) => {
+const setassociations = async (features/*, photos*/, id) => {
     const propUpdate = await getById(id)
     features.length > 0 && await propUpdate.setFeatures(features)
     // photos.length > 0 && await propUpdate.set(features) //*pendiiente asociacion de fotos
