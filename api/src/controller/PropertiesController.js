@@ -56,10 +56,14 @@ const fillProperties = async (req, res) => {
       cp,
       lease,
     });
-    let propertyFeature = await Features.findAll({
-      where: { name: features },
+    
+    features.forEach(async element => {
+      const  propFeature = await Features.findAll({
+        where: { name:element.name },
+      });
+      
+      newProperty.addFeatures(propFeature,{ through: {value:element.value}});
     });
-    newProperty.addFeatures(propertyFeature);
     res.send("Propiedad creada con éxito");
   } catch (error) {
     console.log(error.message);
