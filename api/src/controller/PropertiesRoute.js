@@ -1,6 +1,11 @@
 const express = require("express");
-const { getProperties, updateProperties, setassociations, addassociations } = require('../middlewares/PropertiesController')
-
+const {
+    getProperties,
+    updateProperties,
+    setassociations,
+    addassociations
+} = require('../middlewares/PropertiesController')
+// const {addphoto} = require('../middlewares/usercreate.js')
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -17,10 +22,12 @@ router.get("/", async (req, res) => {
     }
 })
 
+
+//! ----------------  En contrucción----------------//
 router.put('/put/:id', async (req, res) => {
     const { override } = req.query
     const { id } = req.params
-    const { features } = req.body
+    const { features /*, photos*/ } = req.body
     try {
         let values = {};
         for (let key in req.body) {
@@ -28,11 +35,12 @@ router.put('/put/:id', async (req, res) => {
                 (req.body[key].length > 0) && (values[key] = req.body[key])
             }
         }
+        // await addphoto(photos) //*pendiiente asociacion de fotos
         await updateProperties(values, id)
         if (override === 'true') {
-            setassociations(features, photos, id)
+            setassociations(features /*, photos*/, id)
         } else if (override === 'false') {
-            await addassociations(features, photos, id)
+            await addassociations(features /*, photos*/, id)
         }
         return res.json({ status: 'update' })
     } catch (error) {
@@ -40,5 +48,5 @@ router.put('/put/:id', async (req, res) => {
     }
 
 })
-
+//! ----------------^^^^^----------------//
 module.exports = router;

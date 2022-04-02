@@ -34,15 +34,14 @@ const updateProperties = async (values, id) => {
 
 const addassociations = async (features, photos, id) => {
     const propUpdate = await getById(id)
-    // const photo = await
     features.length > 0 && await propUpdate.addFeatures(features)
-    photos.length > 0 && await propUpdate.addPhotos(photos)
+    // photos.length > 0 && await propUpdate.addPhotos(photos) //*pendiiente asociacion de fotos
 }
 
 const setassociations = async (features, photos, id) => {
     const propUpdate = await getById(id)
     features.length > 0 && await propUpdate.setFeatures(features)
-    photos.length > 0 && await propUpdate.set(features)
+    // photos.length > 0 && await propUpdate.set(features) //*pendiiente asociacion de fotos
 }
 
 module.exports = {

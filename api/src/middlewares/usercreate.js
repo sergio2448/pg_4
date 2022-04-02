@@ -13,7 +13,6 @@ async function insert(name, email, password, roleid) {
     } catch (err) {
         return err
     }
-
 }
 
 async function getbyEmail(pEmail) {
@@ -46,9 +45,18 @@ async function getById(id) {
     })
     return Property
 }
+
+async function addphoto(photo) {
+    photo.map((value) => {
+        Photos.findOrCrate({
+            where: { photos: value }
+        })
+    })
+}
 module.exports = {
     insert,
     getbyEmail,
     findByName,
-    getById
+    getById,
+    addphoto
 }
