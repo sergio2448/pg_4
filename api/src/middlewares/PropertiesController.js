@@ -1,11 +1,11 @@
 const { Properties, Features, Photos } = require('../db')
 const { Op } = require("sequelize")
 const { getById } = require('../middlewares/usercreate.js')
-const getProperties = async (id, cost, address, city, country, cp, lease, search) => {
+const getProperties = async (id, cost, address, city,state, country, cp, lease, propertyType,search) => {
     try {
         let respProperties;
-        let filterSearch;
-        if (id || cost || address || city || country || cp || lease || search) {
+        let filterSearch={}; 
+        if (id || cost || address || city || state || country || cp || lease || propertyType || search) {
 
             if (search) {
                 filterSearch = {
@@ -18,9 +18,14 @@ const getProperties = async (id, cost, address, city, country, cp, lease, search
                             { [Op.iLike]: `%${search}%` }
                     },
                     {
+                        state:
+                            { [Op.iLike]: `%${search}%` }
+                    },
+                    {
                         country:
                             { [Op.iLike]: `%${search}%` }
-                    },]
+                    },
+                    ]
                 };
             }
 
@@ -28,12 +33,15 @@ const getProperties = async (id, cost, address, city, country, cp, lease, search
             cost ? filterSearch.cost = { [Op.lte]: parseInt(cost) } : null;
             cp ? filterSearch.cp = cp : null;
             lease ? filterSearch.lease = lease : null;
+            propertyType? filterSearch.propertyType=propertyType:null;
             address ? filterSearch.address = { [Op.iLike]: `%${address}%` } : null;
+            state ? filterSearch.state = { [Op.iLike]: `%${state}%` } : null;
             city ? filterSearch.city = { [Op.iLike]: `%${city}%` } : null;
             country ? filterSearch.country = { [Op.iLike]: `%${country}%` } : null;
+           
 
             respProperties = await Properties.findAll({
-                // logging: console.log,
+                //logging: console.log,
                 include: [{ model: Features }, { model: Photos }],
                 where: filterSearch
             });
@@ -49,16 +57,18 @@ const getProperties = async (id, cost, address, city, country, cp, lease, search
 
 const fillProperties = async (req, res) => {
     try {
-        let { description, features, m2, address, city, country, cost, cp, lease } = req.body;
+        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType } = req.body;
         let newProperty = await Properties.create({
             description,
             m2,
             address,
             city,
+            state,
             country,
             cost,
             cp,
             lease,
+            propertyType,
         });
 
         features.forEach(async element => {

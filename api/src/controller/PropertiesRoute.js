@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     try {
-        const {id,cost,address,city,country,cp,lease,search}= req.query;
-        const result = await getProperties(id,cost,address,city,country,cp,lease,search);
+        const {id, cost, address, city,state, country, cp, lease, propertyType,search}= req.query;
+        const result = await getProperties(id, cost, address, city,state, country, cp, lease, propertyType,search);
         if(result?.length> 0){
             return res.json(result) ;
         }else{
