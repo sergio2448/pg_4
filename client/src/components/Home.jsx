@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import houseBackground from '../styles/images/house-back.jpg';
 import Nav from './Nav.jsx'
 
-
 function Home() {
 
 
