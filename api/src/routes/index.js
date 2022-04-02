@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const userCreate = require('../controller/usercreate.js')
 const allusers = require('../controller/getusers')
-const postroles = require('../controller/postroles.js.js.js')
-const postcards = require('../controller/postcard.js.js.js')
-const getroles = require('../controller/getroles.js.js')
-const PropertiesRoute = require('./PropertiesRoute');
+const postroles = require('../controller/postroles.js')
+const postcards = require('../controller/postcard.js')
+const getroles = require('../controller/getroles.js')
+const PropertiesRoute = require('../controller/PropertiesRoute');
 
 const router = Router();
 router.use('/Properties', PropertiesRoute);

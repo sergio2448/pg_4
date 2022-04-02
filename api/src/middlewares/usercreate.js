@@ -1,5 +1,4 @@
-const { Roles, Users, BanckCards } = require('../../db')
-
+const { Roles, Users, BanckCards, Properties, Features, Photos } = require('../db')
 async function insert(name, email, password, roleid) {
     try {
         const newUser = await Users.create(
@@ -41,9 +40,15 @@ async function findByName(name, card) {
 
 }
 
-
+async function getById(id) {
+    const Property = await Properties.findByPk(id, {
+        include: [{ model: Features }, { model: Photos }]
+    })
+    return Property
+}
 module.exports = {
     insert,
     getbyEmail,
-    findByName
+    findByName,
+    getById
 }
