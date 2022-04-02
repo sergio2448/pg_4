@@ -84,6 +84,16 @@ const fillProperties = async (req, res) => {
     }
 };
 
+const fillPhotos = async (data) => {
+  try {
+    let newPhoto = await Photos.create({
+      photos: data,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 const updateProperties = async (values, id) => {
 
     await Properties.update(values, {
@@ -107,9 +117,10 @@ const setassociations = async (features/*, photos*/, id) => {
 }
 
 module.exports = {
-    getProperties,
-    updateProperties,
-    addassociations,
-    setassociations,
-    fillProperties
-}
+  getProperties,
+  updateProperties,
+  addassociations,
+  setassociations,
+  fillProperties,
+  fillPhotos,
+};
