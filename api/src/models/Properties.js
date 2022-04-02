@@ -24,6 +24,10 @@ module.exports =  (sequelize) => {
             type: DataTypes.STRING,
             allowNull:true,
         },
+        state:{
+            type:DataTypes.STRING,
+            allowNull:false,
+        },
         country:{
             type: DataTypes.STRING,
             allowNull:false,
@@ -42,6 +46,10 @@ module.exports =  (sequelize) => {
             validator:{
                 isIn:["Rent","Sale"]            
             }
+        },
+        propertyType:{
+            type:DataTypes.STRING,
+            allowNull:false,
         }
    })
 }
