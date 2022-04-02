@@ -7,7 +7,7 @@ const getroles = require('../controller/getroles.js')
 const PropertiesRoute = require('../controller/PropertiesRoute');
 
 const router = Router();
-router.use('/Properties', PropertiesRoute);
+router.use("/Properties", PropertiesRoute);
 
 //todo: crea un usuario
 router.use('/user', userCreate )

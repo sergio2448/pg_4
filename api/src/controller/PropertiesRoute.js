@@ -3,25 +3,27 @@ const {
     getProperties,
     updateProperties,
     setassociations,
-    addassociations
+    addassociations,
+    fillProperties
 } = require('../middlewares/PropertiesController')
 // const {addphoto} = require('../middlewares/usercreate.js')
 const router = express.Router();
 
 router.get("/", async (req, res) => {
     try {
-        const { precio } = req.params;
-        const result = await getProperties();
-        if (result?.length > 0) {
-            return res.json(result);
-        } else {
-            return res.status(404).json({ message: "No se encontraron registros" });
+        const {id,cost,address,city,country,cp,lease,search}= req.query;
+        const result = await getProperties(id,cost,address,city,country,cp,lease,search);
+        if(result?.length> 0){
+            return res.json(result) ;
+        }else{
+            return res.status(404).json({message:"No se encontraron registros"});
         }
     } catch (error) {
-        console.log("Ocurrio un error en PropertiesRoute / get :" + error);
+        console.log("Ocurrio un error en PropertiesRoute / get :"+error);
     }
-})
+});
 
+router.post("/pro", fillProperties);
 
 //! ----------------  En contrucción----------------//
 router.put('/put/:id', async (req, res) => {
