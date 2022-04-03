@@ -25,7 +25,7 @@ const diskstorage = multer.diskStorage({
 const fileUpload = multer({
   storage: diskstorage,
   //El argumento de single debe coincidir con el nombre del key en la consulta de postman
-}).single("file");
+}).any("file");
 
 router.get("/", async (req, res) => {
   try {
@@ -68,13 +68,20 @@ router.post("/pro", fillProperties);
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
   try {
     const {idProperty}= req.params;
-    const file= req.file;
+    console.log(">>>>>");
+    //const arrayImagenes = req.files.map(img => img.)
+    // console.log(req.files);
+    const file= req.files;
     const result = await uploadFile(file);
     
   // const data = fs.readFileSync(
   //   path.join(__dirname, "../images/" + req.file.filename)
   // );
-  const image = await fillPhotos(result.key,idProperty);
+  result.forEach(async element => {
+    const res =await element;
+    await fillPhotos(res.key,idProperty);
+  })
+  
   res.send({ data: "Imagen cargada" });
   } catch (error) {
     res.status(500).send({ data: "No se pudo guardar la imagen" });
@@ -88,6 +95,10 @@ router.get('/images/:key', (req, res) => {
 
   readStream.pipe(res)
 })
+
+
+//router.put('/imagen/:key',)
+
 
 //! ----------------  En contrucción----------------//
 router.put('/put/:id', async (req, res) => {
