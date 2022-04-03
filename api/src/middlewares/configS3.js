@@ -18,7 +18,7 @@ function uploadFile(file) {
   let listResponse=[];
   file.forEach(async element => {
     const fileStream = fs.createReadStream(element.path)
-
+    
     const uploadParams = {
       Bucket: bucketName,
       Body: fileStream,

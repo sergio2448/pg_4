@@ -68,7 +68,6 @@ router.post("/pro", fillProperties);
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
   try {
     const {idProperty}= req.params;
-    console.log(">>>>>");
     //const arrayImagenes = req.files.map(img => img.)
     // console.log(req.files);
     const file= req.files;
