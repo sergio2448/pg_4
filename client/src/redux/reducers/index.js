@@ -10,7 +10,8 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_ESTATE:
-            return ({});
+            console.log("Hello")
+            return;
         default:
             return ({
                 ...state
