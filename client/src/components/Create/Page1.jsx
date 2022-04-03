@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function Page1({handleSubmit, countries, citys}) {
+export default function Page1({ handleSubmit, countries, citys }) {
     return (
         <div className="px-4 py-5 sm:p-6 bg-[#29252480]">
             <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-2">
                     <label htmlFor="lease" className="block text-sm text-white font-medium">
-                        Tipo de publicacion
+                        Tipo De Publicacion
                     </label>
                     <select
                         id="lease"
@@ -33,10 +33,9 @@ export default function Page1({handleSubmit, countries, citys}) {
                         onChange={handleSubmit}
                     />
                 </div>
-
                 <div className="col-span-6 sm:col-span-2">
                     <label htmlFor="m2" className="block text-white text-sm font-medium">
-                        Metros Cuadrados
+                        Metros Cuadrados De La Propiedad
                     </label>
                     <input
                         type="number"
@@ -87,7 +86,6 @@ export default function Page1({handleSubmit, countries, citys}) {
                         }
                     </select>
                 </div>
-
                 <div className="col-span-6">
                     <label htmlFor="address" className="block text-white text-sm font-medium ">
                         Direccion
@@ -101,10 +99,9 @@ export default function Page1({handleSubmit, countries, citys}) {
                         onChange={handleSubmit}
                     />
                 </div>
-
                 <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                     <label htmlFor="city" className="block text-white text-sm font-medium">
-                        City
+                        Ciudad
                     </label>
                     <input
                         type="text"
@@ -115,7 +112,6 @@ export default function Page1({handleSubmit, countries, citys}) {
                         onChange={handleSubmit}
                     />
                 </div>
-
                 <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label htmlFor="cp" className="block text-white text-sm font-medium">
                         Codigo Postal
@@ -129,7 +125,6 @@ export default function Page1({handleSubmit, countries, citys}) {
                         onChange={handleSubmit}
                     />
                 </div>
-
                 <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label htmlFor="propertyType" className="block text-white text-sm font-medium">
                         Property Type
@@ -143,7 +138,6 @@ export default function Page1({handleSubmit, countries, citys}) {
                         onChange={handleSubmit}
                     />
                 </div>
-
                 <div className="col-span-6 sm:col-span-6 lg:col-span-6">
                     <label htmlFor="description" className="block text-white text-sm font-medium">
                         Descripcion
@@ -158,20 +152,19 @@ export default function Page1({handleSubmit, countries, citys}) {
                     />
                 </div>
                 {/* <div className="col-span-6 sm:col-span-3 lg:col-span-4">
-                                                <label htmlFor="img" className="block text-sm font-medium">
-                                                    Subi tus fotos
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    name="img"
-                                                    id="img"
-                                                    autoComplete="postal-code"
-                                                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                                    onChange={handleSubmit} 
-                                                />
-                                                </div> */}
+                        <label htmlFor="img" className="block text-sm font-medium">
+                            Subi tus fotos
+                        </label>
+                        <input
+                            type="file"
+                            name="img"
+                            id="img"
+                            autoComplete="postal-code"
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            onChange={handleSubmit} 
+                        />
+                    </div> */}
             </div>
-
         </div>
     )
 }

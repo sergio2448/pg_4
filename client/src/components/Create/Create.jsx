@@ -1,7 +1,6 @@
 import React from 'react'
 import Nav from '../Nav'
 import axios from 'axios'
-import { createEstate } from "../../redux/actions/index"
 import house from "../../styles/images/house2.jpg"
 import Page1 from './Page1'
 import Page2 from './Page2'
@@ -17,13 +16,6 @@ const changeCitys = async (country, set) => {
         }
     })
     set(allCityes.data)
-}
-
-async function postImage(image, idEstate) {
-    const formData = new FormData();
-    formData.append("image", image)
-
-    const result = await axios.post(`http://localhost:3001/Properties/img/${idEstate}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 }
 
 export default function Create() {
@@ -83,11 +75,13 @@ export default function Create() {
         /* dispatch(createEstate(newEstate)); */
         try {
             let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
-            console.log(estateCreated)
             idEstateCreated = estateCreated.data.id
-            console.log(idEstateCreated)
-            let postImages = await postImage(images, idEstateCreated)
-            console.log(postImage)
+            const f = new FormData()
+            for (let i = 0; i < images.length; i++) {
+                f.append("files", images[i])
+            }
+            const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+            console.log(result)
         } catch (error) {
             console.log(error)
         }
@@ -121,6 +115,7 @@ export default function Create() {
             ...newEstate,
             features: features
         })
+        document.querySelector("#quantity").value = ""
     }
 
     return (
@@ -129,7 +124,6 @@ export default function Create() {
             <div className='bg-[#00000060] h-16 relative z-20'>
                 <Nav />
             </div>
-
             <div className='mt-24 relative z-10 mb-20'>
                 <div className="mt-10 sm:mt-0 mb-24">
                     <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -158,8 +152,6 @@ export default function Create() {
                     </div>
                 </div>
             </div>
-
-
         </div>
     )
 }

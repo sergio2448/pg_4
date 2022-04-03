@@ -13,9 +13,14 @@ export default function Page2({handleFeatures}) {
                     autoComplete="features"
                     className="bg-[#f8fafc95] mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
-                    <option>rooms</option>
-                    <option>bathrooms</option>
-                    <option>Piscina</option>
+                    <option hidden>~</option>
+                    <option>Baños</option>
+                    <option>Cocinas</option>
+                    <option>Comedores</option>
+                    <option>Habitaciones</option>
+                    <option>Piscinas</option>
+                    <option>Terrazas</option>
+                    <option>Estacionamientos</option>
                 </select>
             </div>
             <div className="col-span-6 sm:col-span-6 lg:col-span-2">

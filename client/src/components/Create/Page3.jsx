@@ -13,7 +13,7 @@ export default function Page3({setImages}) {
                     id="img1"
                     autoComplete="img1"
                     className="bg-[#f8fafc95] mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    onChange={(e) => setImages(e)}
+                    onChange={(e) => setImages(e.target.files)}
                     multiple
                 />
             </div>
@@ -48,7 +48,7 @@ export default function Page3({setImages}) {
                     type="submit"
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Publicar
+                    Publicar Inmueble
                 </button>
             </div>
         </div>
