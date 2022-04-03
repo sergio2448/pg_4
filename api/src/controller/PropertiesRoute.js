@@ -13,8 +13,10 @@ const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 
+const { uploadFile, getFileStream } = require('../middlewares/configS3')
+
 const diskstorage = multer.diskStorage({
-  destination: path.join(__dirname, "../images"),
+//  destination: path.join(__dirname, "../images"),
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
   },
@@ -23,7 +25,7 @@ const diskstorage = multer.diskStorage({
 const fileUpload = multer({
   storage: diskstorage,
   //El argumento de single debe coincidir con el nombre del key en la consulta de postman
-}).single("file");
+}).any("file");
 
 router.get("/", async (req, res) => {
   try {
@@ -63,13 +65,39 @@ router.get("/", async (req, res) => {
 
 router.post("/pro", fillProperties);
 
-router.post("/img", fileUpload, async (req, res) => {
-  const data = fs.readFileSync(
-    path.join(__dirname, "../images/" + req.file.filename)
-  );
-  const image = await fillPhotos(data);
+router.post("/img/:idProperty", fileUpload, async (req, res) => {
+  try {
+    const {idProperty}= req.params;
+    //const arrayImagenes = req.files.map(img => img.)
+    // console.log(req.files);
+    const file= req.files;
+    const result = await uploadFile(file);
+    
+  // const data = fs.readFileSync(
+  //   path.join(__dirname, "../images/" + req.file.filename)
+  // );
+  result.forEach(async element => {
+    const res =await element;
+    await fillPhotos(res.key,idProperty);
+  })
+  
   res.send({ data: "Imagen cargada" });
+  } catch (error) {
+    res.status(500).send({ data: "No se pudo guardar la imagen" });
+  }
 });
+
+router.get('/images/:key', (req, res) => {
+  console.log(req.params)
+  const key = req.params.key
+  const readStream = getFileStream(key)
+
+  readStream.pipe(res)
+})
+
+
+//router.put('/imagen/:key',)
+
 
 //! ----------------  En contrucción----------------//
 router.put('/put/:id', async (req, res) => {
