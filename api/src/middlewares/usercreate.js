@@ -53,10 +53,31 @@ async function addphoto(photo) {
         })
     })
 }
+
+async function addfeatures(features, newProperty) {
+
+    features.forEach(async ({name, value}) => {
+        const propFeature = await Features.findAll({
+            where: { name },
+        });
+        newProperty.addFeatures(propFeature, { through: { value } });
+    })
+}
+async function setfeatures(features, newProperty) {
+    features.forEach(async ({ name, value }) => {
+        const propFeature = await Features.findAll({
+            where: { name },
+        });
+        newProperty.setFeatures(propFeature, { through: { value } });
+    })
+}
+
 module.exports = {
     insert,
     getbyEmail,
     findByName,
     getById,
-    addphoto
+    addphoto,
+    addfeatures,
+    setfeatures
 }

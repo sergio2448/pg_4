@@ -1,10 +1,14 @@
 const { Properties, Features, Photos } = require('../db')
 const { Op } = require("sequelize")
-const { getById } = require('../middlewares/usercreate.js')
-const getProperties = async (id, cost, address, city,state, country, cp, lease, propertyType,search) => {
+const {
+    getById,
+    addfeatures,
+    setfeatures
+} = require('../middlewares/usercreate.js')
+const getProperties = async (id, cost, address, city, state, country, cp, lease, propertyType, search) => {
     try {
         let respProperties;
-        let filterSearch={}; 
+        let filterSearch = {};
         if (id || cost || address || city || state || country || cp || lease || propertyType || search) {
 
             if (search) {
@@ -33,12 +37,12 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
             cost ? filterSearch.cost = { [Op.lte]: parseInt(cost) } : null;
             cp ? filterSearch.cp = cp : null;
             lease ? filterSearch.lease = lease : null;
-            propertyType? filterSearch.propertyType=propertyType:null;
+            propertyType ? filterSearch.propertyType = propertyType : null;
             address ? filterSearch.address = { [Op.iLike]: `%${address}%` } : null;
             state ? filterSearch.state = { [Op.iLike]: `%${state}%` } : null;
             city ? filterSearch.city = { [Op.iLike]: `%${city}%` } : null;
             country ? filterSearch.country = { [Op.iLike]: `%${country}%` } : null;
-           
+
 
             respProperties = await Properties.findAll({
                 //logging: console.log,
@@ -57,7 +61,7 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
 
 const fillProperties = async (req, res) => {
     try {
-        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType } = req.body;
+        let { description, features, m2, address, city, state, country, cost, cp, lease, propertyType } = req.body;
         let newProperty = await Properties.create({
             description,
             m2,
@@ -85,42 +89,42 @@ const fillProperties = async (req, res) => {
 };
 
 const fillPhotos = async (data) => {
-  try {
-    let newPhoto = await Photos.create({
-      photos: data,
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
+    try {
+        let newPhoto = await Photos.create({
+            photos: data,
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
 };
 
 const updateProperties = async (values, id) => {
-
     await Properties.update(values, {
         where: {
             id
         }
     })
-    
 }
 
-const addassociations = async (features/*, photos*/, id) => {
+const addassociations = async (features, id) => {
     const propUpdate = await getById(id)
-    features.length > 0 && await propUpdate.addFeatures(features)
-    // photos.length > 0 && await propUpdate.addPhotos(photos) //*pendiiente asociacion de fotos
+    if (features.length > 0) {
+        await addfeatures(features, propUpdate)
+    }
 }
 
-const setassociations = async (features/*, photos*/, id) => {
+const setassociations = async (features, id) => {
     const propUpdate = await getById(id)
-    features.length > 0 && await propUpdate.setFeatures(features)
-    // photos.length > 0 && await propUpdate.set(features) //*pendiiente asociacion de fotos
+    if (features.length > 0) {
+        await setfeatures(features, propUpdate)
+    }
 }
 
 module.exports = {
-  getProperties,
-  updateProperties,
-  addassociations,
-  setassociations,
-  fillProperties,
-  fillPhotos,
+    getProperties,
+    updateProperties,
+    addassociations,
+    setassociations,
+    fillProperties,
+    fillPhotos,
 };
