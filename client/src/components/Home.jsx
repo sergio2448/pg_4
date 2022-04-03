@@ -40,28 +40,6 @@ function Home() {
           </div>
         </div>  
         <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
-                     
-      </div>
-      <div className=' py-16 text-center bg-stone-200/75 '>
-        <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Featured Properties</h2>        
-        <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true}/>
-            </Link>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true}/>
-            </Link>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true}/>
-            </Link>
-          </div>
-        </div>  
-        <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
       </div>
       <div className=' py-16 text-center '>
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale</h2>

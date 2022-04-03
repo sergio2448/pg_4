@@ -8,7 +8,7 @@ export default function SearchBar (){
     return (
         <div>
             {
-                filterSelect == 0 ? (<div className='flex justify-center mt-32'>
+                filterSelect == 0 ? (<div className='flex justify-center mt-34'>
                 <div className=' bg-stone-800 text-base text-sky-500 font-Monserrat font-bold px-4 py-1 ' >Buy</div>
                 <div onClick={() => setFilterSelect(1)} className='bg-stone-900 text-base text-white font-Monserrat font-bold px-4 py-1 '>Rent</div>
             </div>) : (<div className='flex justify-center mt-32'>
