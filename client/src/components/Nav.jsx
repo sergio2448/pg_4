@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { LoginButton } from './Auth0/Login'
 import { LogoutButton } from './Auth0/Logout'
 import { Profile } from './Auth0/Profile'
