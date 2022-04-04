@@ -63,7 +63,7 @@ function Home() {
             <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={true} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
           </Link>
         </div>) 
-            }) : (<div>loading..</div>)
+            }) : (<div>Loading...</div>)
           }
         </div>  
         <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
