@@ -58,8 +58,8 @@ function Home() {
           {
             homeCards.length ? homeCards.slice(0,3).map(c => {
               return(             
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          <Link to='/'>
+        <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to={'/estate/' + c.id}>
             <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={true} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
           </Link>
         </div>) 
@@ -69,13 +69,13 @@ function Home() {
         <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
       </div>
       <div className=' py-16 text-center '>
-        <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale</h2>
+        <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale/Rent</h2>
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
             homeCards.length ? homeCards.reverse().slice(0,3).map(c => {
               return(             
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          <Link to='/'>
+        <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to={'/estate/' + c.id}>
             <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
           </Link>
         </div>) 

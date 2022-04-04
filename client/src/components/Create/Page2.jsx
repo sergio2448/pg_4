@@ -1,9 +1,12 @@
 import React from 'react'
 
-export default function Page2({handleFeatures}) {
+export default function Page2({handleFeatures, setCurrentStep, setPages, pages}) {
     return (
         <div className="px-4 py-5 sm:p-6 bg-[#29252480]">
             <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                <div id='inner'>
+
+                </div>
                 <label htmlFor="features" className="block text-white text-sm font-medium">
                     Detalles
                 </label>
@@ -23,7 +26,7 @@ export default function Page2({handleFeatures}) {
                     <option>Estacionamientos</option>
                 </select>
             </div>
-            <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+            <div className="col-span-6 sm:col-span-6 lg:col-span-2 mb-4">
                 <label htmlFor="quantity" className="block text-white text-sm font-medium">
                     Cantidad
                 </label>
@@ -41,6 +44,36 @@ export default function Page2({handleFeatures}) {
             >
                 Agregar
             </button>
+            <div className="px-4 py-3 text-center sm:px-6">
+                <button
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={() => {
+                        setCurrentStep(1)
+                        setPages({
+                            ...pages,
+                            page1: true,
+                            page2: false
+                        })
+                    }}
+                >
+                    Anterior
+                </button>
+            </div>
+            <div className="px-4 py-3 text-center sm:px-6">
+                <button
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    onClick={() => {
+                        setCurrentStep(3)
+                        setPages({
+                            ...pages,
+                            page2: false,
+                            page3: true
+                        })
+                    }}
+                >
+                    Siguiente
+                </button>
+            </div>
         </div>
     )
 }
