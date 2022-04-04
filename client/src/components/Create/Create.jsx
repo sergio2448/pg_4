@@ -1,11 +1,14 @@
 import React from 'react'
-import Nav from '../Nav'
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import house from "../../styles/images/house8.jpg"
 import { useAuth0 } from "@auth0/auth0-react"
+import Nav from '../Nav'
+import Steps from "./Steps"
 import Page1 from './Page1'
 import Page2 from './Page2'
 import Page3 from './Page3'
+import Page4 from './Page4'
+import house from "../../styles/images/house8.jpg"
 let apiKey = ""
 
 
@@ -22,14 +25,17 @@ const changeCitys = async (country, set) => {
 export default function Create() {
 
     /* const [errors, setErrors] = React.useState({}); */
+    let navigate = useNavigate();
     const [citys, setCitys] = React.useState([])
     const [images, setImages] = React.useState(null)
     const [pages, setPages] = React.useState({
         page1: true,
-        page2: true,
-        page3: true
+        page2: false,
+        page3: false,
+        page4: false
     })
     const [countries, setCountries] = React.useState([]);
+    const [currentStep, setCurrentStep] = React.useState(1)
     const [newEstate, setNewEstate] = React.useState({
         lease: '',
         cost: '',
@@ -42,7 +48,7 @@ export default function Create() {
         features: [],
         propertyType: ''
     });
-    const { isAuthenticated } = useAuth0()
+    const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     React.useEffect(async () => {
         try {
@@ -83,7 +89,7 @@ export default function Create() {
                 f.append("files", images[i])
             }
             const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
-            console.log(result)
+            navigate("/")
         } catch (error) {
             console.log(error)
         }
@@ -107,6 +113,7 @@ export default function Create() {
         event.preventDefault()
         let option = document.querySelector("#features").value
         let quantity = document.querySelector("#quantity").value
+        let inner = document.querySelector("#inner")
         let newFeature = {
             name: option,
             value: quantity
@@ -118,43 +125,52 @@ export default function Create() {
             features: features
         })
         document.querySelector("#quantity").value = ""
+        inner.innerHTML += `<p>${option}</p>`
+        inner.innerHTML += `<p>${quantity}</p>`
     }
 
     return (
-        <div className='h-120'>
-            <img className='absolute z-0 h-120 w-screen' src={house} alt="" />
-            <div className='bg-[#00000060] h-16 relative z-20'>
-                <Nav />
-            </div>
-            <div className='mt-24 relative z-10 mb-20'>
-                <div className="mt-10 sm:mt-0 mb-24">
-                    <div className="md:grid md:grid-cols-3 md:gap-6">
-                        <div className="md:col-span-1 mx-4 bg-[#00000060] h-16 rounded-sm">
-                            <div className="px-4 sm:px-0">
-                                <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Datos Del Inmueble</h3>
-                                <p className="mt-1 text-sm text-lightProject">Use a permanent address where you can receive mail.</p>
-                            </div>
-                        </div>
-                        <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
-                            <form action="" method="POST" onSubmit={onSubmit}>
-                                <div className="shadow overflow-hidden sm:rounded-xl">
-                                    {
-                                        pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} /> : ""
+        /* isAuthenticated ? */
+            <div className='h-120'>
+                <img className='absolute z-0 h-120 w-screen' src={house} alt="" />
+                <div className='bg-[#00000060] h-16 relative z-20'>
+                    <Nav />
+                </div>
+                
 
-                                    }
-                                    {
-                                        pages.page2 ? <Page2 handleFeatures={handleFeatures} /> : ""
-                                    }
-                                    {
-                                        pages.page3 ? <Page3 setImages={setImages} /> : ""
-                                    }
+
+                <div className='mt-16 relative z-10 mb-20'>
+                    <div className="mt-10 sm:mt-0 mb-24">
+                        <div className="md:grid md:grid-cols-3 md:gap-6">
+                            <div className="md:col-span-1 mx-4 bg-[#00000060] mt-16 h-16 rounded-sm">
+                                <div className="px-4 sm:px-0">
+                                    <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Datos Del Inmueble</h3>
+                                    <p className="mt-1 text-sm text-lightProject">Use a permanent address where you can receive mail.</p>
                                 </div>
-                            </form>
+                            </div>
+                            <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
+                                <Steps currentStep={currentStep} setCurrentStep={setCurrentStep}/>
+                                <form action="" method="POST" onSubmit={onSubmit}>
+                                    <div className="shadow overflow-hidden sm:rounded-xl">
+                                        {
+                                            pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                        }
+                                        {
+                                            pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                        }
+                                        {
+                                            pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                        }
+                                        {
+                                            pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                        }
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
+            /* : loginWithRedirect() */
     )
 }
