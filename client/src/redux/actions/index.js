@@ -20,3 +20,12 @@ export function getSearchbar(input){
     }
 }
 
+export function getHomeCards(){
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/Properties');
+        return dispatch({
+            type: 'GET_HOMECARDS',
+            payload: json.data
+        })
+    }
+}

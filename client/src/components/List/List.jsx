@@ -7,8 +7,8 @@ import gardenHouse from "../../styles/images/house-back5.jpg"
 import Card from "../Card"
 import Nav from '../Nav'
 import SearchBar from '../SearchBar'
-import Filter from '../Home/Inputs'
-import ConteinInputs from "../Home/ConteinInputs"
+import Filter from './Inputs'
+import ConteinInputs from "./ConteinInputs"
 
 export default function List() {
   return (
