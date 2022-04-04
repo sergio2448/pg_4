@@ -2,8 +2,10 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchbar } from '../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar (){
+    const navigate = useNavigate();
     const [filterSelect, setFilterSelect] = useState('Venta');
     const [input, setInput] = useState({
         searchType: 'address',
@@ -42,6 +44,9 @@ export default function SearchBar (){
         e.preventDefault();
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
         dispatch(getSearchbar(aInput));
+        if(window.location.pathname == '/'){
+            navigate('/estate');
+        }
     }
 
     return (
