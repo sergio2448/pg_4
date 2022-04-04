@@ -29,3 +29,13 @@ export function getHomeCards(){
         })
     }
 }
+
+export function getListCards(){
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/Properties');
+        return dispatch({
+            type: 'GET_LISTCARDS',
+            payload: json.data
+        })
+    }
+}

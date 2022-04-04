@@ -5,7 +5,7 @@ import { LogoutButton } from './Auth0/Logout'
 import { Profile } from './Auth0/Profile'
 import { useAuth0 } from '@auth0/auth0-react'
 
-function Nav(){
+function Nav() {
   const { isAuthenticated } = useAuth0();
 
 
