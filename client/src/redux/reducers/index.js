@@ -32,6 +32,16 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 homeCards: newHomeCards
             }
+        case 'GET_LISTCARDS':
+            let newListCards = action.payload.sort((a, b) => {
+                if(a.order < b.order){
+                    return -1
+                }else if(a.order > b.order){
+                    return 1
+                }else{
+                    return 0
+                }
+            })
         default:
             return ({
                 ...state

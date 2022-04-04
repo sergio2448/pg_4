@@ -26,7 +26,7 @@ export default function List() {
       <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-              <Card image={hardcodeHouse} />
+              <Card image={hardcodeHouse}  />
           </div>
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
           
