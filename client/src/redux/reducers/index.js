@@ -7,7 +7,8 @@ const initialState = {
     allEstate: [],
     properties: [],
     homeCards: [],
-    listCards: []
+    listCards: [],
+    homeDetail:[]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -44,6 +45,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 homeCards: newListCards
+            }
+        case 'GET_DATAIL':
+            return {
+                ...state,
+                homeDetail: action.payload
             }
         default:
             return ({
