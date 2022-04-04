@@ -21,9 +21,9 @@ function List() {
   }, []);
 
   return (
-    <div bg-white>
-      <div className='relative z-26  text-center'>
-      <div className='bg-black shadow-2xl h-20 relative z-20'>
+    <div>
+      <div className='relative z-6  text-center'>
+      <div className='bg-black h-20 relative z-20 shadow-nav'>
                 <Nav />
             </div>
       <div className='relative z-6 text-center'> 

@@ -2,6 +2,10 @@ import React from "react";
 import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
 import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
+import { useDispatch,useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import {getHomeDetail} from '../../redux/actions/index'
 
 const Detail = ({ name, city, country, cost, measure, rooms }) => {
   name = "Hardcode Street";
@@ -10,19 +14,33 @@ const Detail = ({ name, city, country, cost, measure, rooms }) => {
   cost = "$4000 usd";
   measure = "300 sq m";
   rooms = 5;
+
+  let {id}       = useParams();
+  const dispatch  = useDispatch();
+  const detail   = useSelector(state => state.homeDetail);
+  
+
+  useEffect(() => {
+     dispatch(getHomeDetail(id));
+    return () => {dispatch(getHomeDetail([]))}
+    },[id])
+
+    console.log(detail);
   return (
-    <div className=" py-8 text-center ">
+    <div className=" text-center ">
       <div className="bg-[#075985]">
-        <Nav />
+      <div className='bg-black shadow-nav h-20 relative z-20'>
+                <Nav />
+            </div>
       </div>
       <h2 className="mt-6 text-stone-600 text-5xl font-base font-Poppins">
         <strong>{name}</strong>
       </h2>
-      <div className="mx-32 px-6 mt-12 grid grid-cols-4 gap-6">
+      <div className="mx-32 px-5 mt-12 grid grid-cols-4 gap-6">
         <div>
           <img
             className="border-2 h-full object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
+            src={detail.length>0?'http://localhost:3001/Properties/images/'+detail[0].photos[0].photos:hardcodeHouse}
           />
         </div>
         <div>
