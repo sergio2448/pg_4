@@ -58,8 +58,8 @@ function Home() {
           {
             homeCards.length ? homeCards.slice(0,3).map(c => {
               return(             
-          <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          <Link to='/details'>
+        <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to={'/estate/' + c.id}>
             <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={true} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
           </Link>
         </div>) 
@@ -74,8 +74,8 @@ function Home() {
           {
             homeCards.length ? homeCards.reverse().slice(0,3).map(c => {
               return(             
-          <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          <Link to='/'>
+        <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to={'/estate/' + c.id}>
             <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
           </Link>
         </div>) 

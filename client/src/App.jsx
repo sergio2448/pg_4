@@ -14,7 +14,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/estate' element={<List />} />
-                    {/* <Route path='/state/:id' element={<Detail />}/> */}
+                    <Route path='/estate/:id' element={<Detail />}/>
                     <Route path='/state/create' element={<Create />} />
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
