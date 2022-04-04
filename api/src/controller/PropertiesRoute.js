@@ -95,6 +95,20 @@ router.get('/images/:key', (req, res) => {
   readStream.pipe(res)
 })
 
+router.put('/images/:id',fileUpload, async (req, res) => {
+  const {id}= req.params;
+  const files= req.files;
+  const resultSearch = await getProperties(id);
+  resultSearch?.map(photo => photo.photos);
+  if(resultSearch){
+    //delete photos en DB
+
+    //delete photos en AWS
+  }
+
+  const result = await uploadFile(file);
+})
+
 
 //router.put('/imagen/:key',)
 
