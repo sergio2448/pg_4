@@ -5,7 +5,8 @@ import {
 const initialState = {
     oneEstate: [],
     allEstate: [],
-    properties: []
+    properties: [],
+    homeCards: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -16,6 +17,20 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 searchBar: action.payload
+            }
+        case 'GET_HOMECARDS':
+            let newHomeCards = action.payload.sort((a,b) => {
+                if(a.createdAt < b.createdAt){
+                    return -1
+                }else if(a.createdAt > b.createdAt){
+                    return 1
+                }else{
+                    return 0
+                }
+            })
+            return {
+                ...state,
+                homeCards: newHomeCards
             }
         default:
             return ({

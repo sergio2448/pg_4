@@ -5,9 +5,20 @@ import Nav from './Nav.jsx';
 import Card from './Card.jsx';
 import hardcodeHouse from '../styles/images/hardcode-house.jpg'
 import SearchBar from './SearchBar';
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHomeCards } from '../redux/actions';
 
 function Home() {
+
+  const dispatch = useDispatch();  
+  const homeCards = useSelector((state) => state.homeCards);
+
+  useEffect(() => {
+    dispatch(getHomeCards());
+  }, []);
+
+  console.log(homeCards);
 
 
   return (
