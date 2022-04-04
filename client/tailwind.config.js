@@ -8,8 +8,8 @@ module.exports = {
       height: {
         '120': '60rem',
       },
-      backgroundImage: {
-        'city': "url('./src//styles/images/city5.jpg')",
+      boxShadow: {
+        'nav': '-1px 16px 40px -5px rgba(0,0,0,1)',
       },
       colors:{
         'my-Blue': '#0028FF',
