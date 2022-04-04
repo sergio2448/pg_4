@@ -19,15 +19,14 @@ export default function Cards({
       <div className="relative bg-black w-full h-64">
         <iframe
           className="w-full h-full "
-          frameborder="0"
+          frameBorder="0"
           scrolling="no"
-          marginheight="0"
-          marginwidth="0"
+          marginHeight="0"
+          marginWidth="0"
           src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=Tucuman,%20Argentina+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=6&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
         >
         </iframe>
       </div>
-      <div></div>
       <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
         {city + ", " + country}
       </h2>
@@ -58,11 +57,9 @@ export default function Cards({
           {lease == 'Venta' ? 'For Sale' : 'Rent'}
         </span>
       </div>
-      <Link to='/detail'>
         <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
           {name + ", " + city + ", " + country}
         </h2>
-      </Link>
       <div className="px-6 grid grid-cols-2 gap-x-10">
         <span className="text-left text-stone-600/60">{rooms} Rooms </span>
         <span className="text-right text-stone-600/60">Measure: {measure} m2</span>
