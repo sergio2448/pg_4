@@ -1,5 +1,7 @@
+import hardcodeHouse from "../../styles/images/hardcode-house.jpg"
 import poolHouse from "../../styles/images/house-back2.jpg"
 import bigHouse from "../../styles/images/house-back4.jpg"
+import doubleHouse from "../../styles/images/house2.jpg"
 import { Link } from 'react-router-dom';
 import Card from "../Card"
 import Nav from '../Nav'
@@ -21,7 +23,7 @@ function List() {
   return (
     <div>
       <div className='relative z-6  text-center'>
-      <div className='bg-stone-900 h-20 relative z-20'>
+      <div className='bg-black h-20 relative z-20 shadow-nav'>
                 <Nav />
             </div>
       <div className='relative z-6 text-center'> 
@@ -31,8 +33,11 @@ function List() {
       <div className=' mt-45 pt-10 py-15 text-center'>    
       <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
+          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          </div>
+          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
           {
-            listCards.length ? listCards.reverse().map(c => {
+            listCards.length ? listCards.reverse().slice(0,4).map(c => {
               return(             
           <div className='text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
           <Link to='/'>
@@ -41,15 +46,13 @@ function List() {
         </div>) 
             }) : (<div>loading..</div>)
           }
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
               <Card image={poolHouse} />
           </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-              <Card image={bigHouse} />
-          </div>
         </div>                
-      </div>        
       </div>
+                  
+      </div>
+   
   )
 }
 
