@@ -18,8 +18,8 @@ function Home() {
     dispatch(getHomeCards());
   }, []);
 
-  console.log(homeCards);
-
+  
+  
 
   return (
     <div>
@@ -50,41 +50,39 @@ function Home() {
               <Card image={hardcodeHouse} featured={true} isMap={true}/>
             </Link>
           </div>
-        </div>  
-        <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>                      
+        </div>                 
       </div>
       <div className=' py-16 text-center bg-stone-200/75 '>
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Featured Properties</h2>        
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
+          {
+            homeCards.length ? homeCards.slice(0,3).map(c => {
+              return(             
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true}/>
-            </Link>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true}/>
-            </Link>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true}/>
-            </Link>
-          </div>
+          <Link to='/'>
+            <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={true} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
+          </Link>
+        </div>) 
+            }) : (<div>loading..</div>)
+          }
         </div>  
         <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
       </div>
       <div className=' py-16 text-center '>
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale</h2>
-        <div className='mx-4 px-6 mt-12 grid grid-cols-3 gap-6'>
-          <div className='border-2 '>
-            <Link to='/'>
-              <Card image={hardcodeHouse}/>
-            </Link>
-          </div>
-          <div className='border-2 h-60'></div>
-          <div className='border-2 h-60'></div>
-        </div>                
+        <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
+          {
+            homeCards.length ? homeCards.reverse().slice(0,3).map(c => {
+              return(             
+          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to='/'>
+            <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
+          </Link>
+        </div>) 
+            }) : (<div>loading..</div>)
+          }
+        </div>   
+        <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>                  
       </div>
     </div>
   )

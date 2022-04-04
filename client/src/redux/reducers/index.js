@@ -20,9 +20,9 @@ const rootReducer = (state = initialState, action) => {
             }
         case 'GET_HOMECARDS':
             let newHomeCards = action.payload.sort((a,b) => {
-                if(a.createdAt < b.createdAt){
+                if(a.order < b.order){
                     return -1
-                }else if(a.createdAt > b.createdAt){
+                }else if(a.order > b.order){
                     return 1
                 }else{
                     return 0

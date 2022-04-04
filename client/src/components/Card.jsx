@@ -5,6 +5,7 @@ export default function Cards({
   image,
   featured = false,
   isMap = false,
+  lease,
   name,
   city,
   country,
@@ -12,11 +13,6 @@ export default function Cards({
   measure,
   rooms,
 }) {
-  name = "Hardcode Street";
-  city = "Hardcode City";
-  country = "Hardcode Country";
-  cost = "$4000 usd";
-  measure = "300 sq m";
   rooms = 5;
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
@@ -29,9 +25,6 @@ export default function Cards({
           marginwidth="0"
           src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=Tucuman,%20Argentina+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=6&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
         >
-          <a href="https://www.gps.ie/car-satnav-gps/">
-            Car Navigation Systems
-          </a>
         </iframe>
       </div>
       <div></div>
@@ -62,7 +55,7 @@ export default function Cards({
           <span></span>
         )}
         <span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
-          For Sale
+          {lease == 'Venta' ? 'For Sale' : 'Rent'}
         </span>
       </div>
       <Link to='/detail'>
@@ -72,11 +65,11 @@ export default function Cards({
       </Link>
       <div className="px-6 grid grid-cols-2 gap-x-10">
         <span className="text-left text-stone-600/60">{rooms} Rooms </span>
-        <span className="text-right text-stone-600/60">Measure: {measure}</span>
+        <span className="text-right text-stone-600/60">Measure: {measure} m2</span>
         <span className="text-left text-stone-600/60">other details</span>
       </div>
       <div className="text-stone-600 border-stone-600/40 w-4/5 m-auto mt-4 pt-4 border-t-2 text-left">
-        <h2>Cost: {cost}</h2>
+        <h2>Cost: $ {cost} usd</h2>
       </div>
     </div>
   );
