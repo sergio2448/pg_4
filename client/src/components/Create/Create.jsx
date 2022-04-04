@@ -1,7 +1,8 @@
 import React from 'react'
 import Nav from '../Nav'
 import axios from 'axios'
-import house from "../../styles/images/house2.jpg"
+import house from "../../styles/images/house8.jpg"
+import { useAuth0 } from "@auth0/auth0-react"
 import Page1 from './Page1'
 import Page2 from './Page2'
 import Page3 from './Page3'
@@ -41,6 +42,7 @@ export default function Create() {
         features: [],
         propertyType: ''
     });
+    const { isAuthenticated } = useAuth0()
 
     React.useEffect(async () => {
         try {
@@ -153,5 +155,6 @@ export default function Create() {
                 </div>
             </div>
         </div>
+        
     )
 }
