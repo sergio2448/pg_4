@@ -41,7 +41,7 @@ export default function Filter() {
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
-        <div className='w-80'>
+        <div className='w-80 '>
           <Listbox.Label className="block text-sm font-medium text-grey-300">Filtrar por</Listbox.Label>
           <div className="mt-1 relative">
             <Listbox.Button className="relative w-full bg-white border border-gray-600 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">

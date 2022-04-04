@@ -15,14 +15,14 @@ export default function List() {
    
     <div>
       <div className='relative z-6  text-center'>
-      <div className='bg-[#00000060] h-20 relative z-20'>
+      <div className='bg-black h-20 relative z-20'>
                 <Nav />
             </div>
-      <div className='relative z-6 pt-5 text-center'> 
+      <div className='relative z-6 text-center'> 
         <SearchBar/>
       </div>
       </div>
-      <div className=' mt-64 py-15 text-center'>    
+      <div className=' mt-45 pt-10 py-15 text-center'>    
       <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>

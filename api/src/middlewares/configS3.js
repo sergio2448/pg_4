@@ -15,15 +15,19 @@ const s3 = new S3({
 
 // uploads a file to s3
 function uploadFile(file) {
-  const fileStream = fs.createReadStream(file.path)
-
-  const uploadParams = {
-    Bucket: bucketName,
-    Body: fileStream,
-    Key: file.filename
-  }
-
-  return s3.upload(uploadParams).promise()
+  let listResponse=[];
+  file.forEach(async element => {
+    const fileStream = fs.createReadStream(element.path)
+    
+    const uploadParams = {
+      Bucket: bucketName,
+      Body: fileStream,
+      Key: element.filename
+    }
+  
+    listResponse.push(s3.upload(uploadParams).promise())
+  })
+  return listResponse;
 }
 exports.uploadFile = uploadFile
 
