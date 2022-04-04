@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        '120': '60rem',
+      },
       backgroundImage: {
         'city': "url('./src//styles/images/city5.jpg')",
       },
