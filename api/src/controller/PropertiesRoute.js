@@ -67,7 +67,6 @@ router.post("/pro", fillProperties);
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
   try {
     const {idProperty}= req.params;
-    console.log(">>>>>");
     //const arrayImagenes = req.files.map(img => img.)
     // console.log(req.files);
     const file= req.files;
@@ -93,6 +92,20 @@ router.get('/images/:key', (req, res) => {
   const readStream = getFileStream(key)
 
   readStream.pipe(res)
+})
+
+router.put('/images/:id',fileUpload, async (req, res) => {
+  const {id}= req.params;
+  const files= req.files;
+  const resultSearch = await getProperties(id);
+  resultSearch?.map(photo => photo.photos);
+  if(resultSearch){
+    //delete photos en DB
+
+    //delete photos en AWS
+  }
+
+  const result = await uploadFile(file);
 })
 
 
