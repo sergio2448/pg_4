@@ -17,7 +17,7 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/estate' element={<List />} />
                     <Route path='/estate/:id' element={<Detail />}/>
-                    <Route path='/state/create' element={<Create />} />
+                    <Route path='/estate/create' element={<Create />} />
                     <Route path='/logged' element={<SideBar/>}/>
                     
                     {/* <Route path='*' element={<PageNotFound />} /> */}
