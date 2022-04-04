@@ -9,3 +9,14 @@ export const createEstate = (estateToCreate) => dispatch => {
             payload: data
         }))
 };
+
+export function getSearchbar(input){
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/Properties?' + input);
+        return dispatch({
+            type: 'GET_SEARCHBAR',
+            payload: json.data
+        })
+    }
+}
+
