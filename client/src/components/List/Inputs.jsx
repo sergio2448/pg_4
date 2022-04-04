@@ -21,26 +21,24 @@ const features = [
     id: 4,
     name: 'Balcón'
   },
-]
-
-const location = [
   {
-    id: 1,
+    id: 5,
     name: 'Ciudad',
   },
   {
-    id: 2,
+    id: 6,
     name: 'País',
   },
   {
-    id: 3,
+    id: 7,
     name: 'Código postal',
   },
   {
-    id: 4,
+    id: 8,
     name: 'Barrio',
   },
 ]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
