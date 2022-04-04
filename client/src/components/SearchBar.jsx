@@ -2,15 +2,17 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchbar } from '../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar (){
+    const navigate = useNavigate();
     const [filterSelect, setFilterSelect] = useState('Venta');
     const [input, setInput] = useState({
         searchType: 'address',
         searchInput: '',
         searchDivs: 'Venta'
     });
-    const dispatch = useDispatch();    
+    const dispatch = useDispatch();
 
     function handleInput (e){
         setInput({
@@ -42,6 +44,9 @@ export default function SearchBar (){
         e.preventDefault();
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
         dispatch(getSearchbar(aInput));
+        if(window.location.pathname == '/'){
+            navigate('/estate');
+        }
     }
 
     return (
@@ -56,7 +61,7 @@ export default function SearchBar (){
             </div>)            
             }
             <form onSubmit={(e) => handleForm(e)} className='flex items-center m-auto justify-center z-10 w-6/12 h-16 bg-stone-800'>
-              <select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded w-2/12 transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+              <select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                   <option value='address' >Address</option>
                   <option value='city' >City</option>
                   <option value='state' >State</option>
