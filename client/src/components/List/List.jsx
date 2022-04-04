@@ -20,7 +20,7 @@ function List() {
 
   return (
     <div>
-      <div className='relative z-6  text-center'>
+      <div className='relative z-6 text-center'>
       <div className='bg-stone-900 h-20 relative z-20'>
                 <Nav />
             </div>

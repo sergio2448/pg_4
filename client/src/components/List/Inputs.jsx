@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { HiSelector } from "react-icons/hi"
 import { BsCheckLg } from "react-icons/bs"
 
-const people = [
+const features = [
  
   {
     id: 1,
@@ -21,13 +21,24 @@ const people = [
     id: 4,
     name: 'Balcón'
   },
+]
+
+const location = [
   {
-    id: 5,
+    id: 1,
     name: 'Ciudad',
   },
   {
-    id: 6,
+    id: 2,
     name: 'País',
+  },
+  {
+    id: 3,
+    name: 'Código postal',
+  },
+  {
+    id: 4,
+    name: 'Barrio',
   },
 ]
 
@@ -36,7 +47,7 @@ function classNames(...classes) {
 }
 
 export default function Filter() {
-  const [selected, setSelected] = useState(people[3])
+  const [selected, setSelected] = useState(features[3])
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -61,7 +72,7 @@ export default function Filter() {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                {people.map((person) => (
+                {features.map((person) => (
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
