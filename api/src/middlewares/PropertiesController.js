@@ -78,16 +78,17 @@ const fillProperties = async (req, res) => {
 
             newProperty.addFeatures(propFeature, { through: { value: element.value } });
         });
-        res.send("Propiedad creada con éxito");
+        res.send({message:"Propiedad creada con éxito",id:newProperty.id});
     } catch (error) {
         console.log(error.message);
     }
 };
 
-const fillPhotos = async (data) => {
+const fillPhotos = async (data,id) => {
   try {
     let newPhoto = await Photos.create({
       photos: data,
+      propertyId:id
     });
   } catch (error) {
     console.log(error.message);
