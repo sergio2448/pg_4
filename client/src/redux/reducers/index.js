@@ -12,8 +12,6 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_ESTATE:
-            return ({});
         case 'GET_SEARCHBAR':
             return {
                 ...state,
