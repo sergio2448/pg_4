@@ -33,10 +33,7 @@ function List() {
       <div className=' mt-45 pt-10 py-15 text-center'>    
       <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          {
+        {
             listCards.length ? listCards.reverse().slice(0,4).map(c => {
               return(             
           <div className='text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
@@ -46,6 +43,13 @@ function List() {
         </div>) 
             }) : (<div>loading..</div>)
           }
+          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          
+          <Card image={poolHouse} />
+         </div>
+          
+          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          
               <Card image={poolHouse} />
           </div>
         </div>                

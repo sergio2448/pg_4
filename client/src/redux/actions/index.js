@@ -49,3 +49,13 @@ export function getHomeDetail(input){
         })
     }
 }
+
+export function getApiKey(input){
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/apikey');
+        return dispatch({
+            type: 'GET_APIKEY',
+            payload: json.data
+        })
+    }
+}
