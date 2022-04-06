@@ -100,7 +100,7 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
 
 const fillProperties = async (req, res) => {
     try {
-        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType } = req.body;
+        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId } = req.body;
         let newProperty = await Properties.create({
             description,
             m2,
@@ -112,6 +112,7 @@ const fillProperties = async (req, res) => {
             cp,
             lease,
             propertyType,
+            sellerId
         });
 
         features.forEach(async element => {
@@ -124,6 +125,8 @@ const fillProperties = async (req, res) => {
         res.send({message:"Propiedad creada con éxito",id:newProperty.id});
     } catch (error) {
         console.log(error.message);
+        res.status(500).send({message:error.message});
+        
     }
 };
 
