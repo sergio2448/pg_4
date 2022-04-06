@@ -91,7 +91,11 @@ const Produc_Features = sequelize.define(
 Properties.belongsToMany(Features, { through: Produc_Features });
 Features.belongsToMany(Properties, { through: Produc_Features });
 
+// Properties.hasMany(Produc_Features);
+// Produc_Features.belongsTo(Features);
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
+  Produc_Features,
 };
