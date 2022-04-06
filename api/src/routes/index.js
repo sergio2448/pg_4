@@ -6,6 +6,7 @@ const postcards = require('../controller/postcard.js')
 const getroles = require('../controller/getroles.js')
 const PropertiesRoute = require('../controller/PropertiesRoute');
 const getFeatures = require('../controller/getFeatures')
+const postReview = require('../controller/postReview')
 
 const router = Router();
 router.use("/Properties", PropertiesRoute);
@@ -25,7 +26,10 @@ router.use('/roles', getroles)
 //todo: crea una tarjeta y asocia segun el nombre
 router.use('/cards', postcards)
 
-//todo: crea una tarjeta y asocia segun el nombre
+//todo: lista las features 
 router.use('/feature', getFeatures)
+
+//todo: crear una Review 
+router.use('/review', postReview)
 
 module.exports = router;

@@ -2,7 +2,7 @@ const { DataTypes} = require('sequelize');
 
 module.exports =  (sequelize) => {
    sequelize.define(
-     "reviws",
+     "reviews",
      {
        id: {
          type: DataTypes.UUID,
@@ -22,10 +22,10 @@ module.exports =  (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-     },
-     {
-       timestamps: false,
-       createdAt: false,
+      enabled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue:false
+      },
      }
    );
 }

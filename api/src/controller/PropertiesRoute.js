@@ -63,7 +63,8 @@ router.get("/", async (req, res) => {
       return res.status(404).json({ message: "No se encontraron registros" });
     }
   } catch (error) {
-    console.log("Ocurrio un error en PropertiesRoute / get :" + error);
+    console.log("Ocurrio un error en PropertiesRoute / get :" + error.message);
+    return res.status(500).json({ message:error.message});
   }
 });
 
@@ -92,7 +93,6 @@ router.post("/img/:idProperty", fileUpload, async (req, res) => {
 });
 
 router.get('/images/:key', (req, res) => {
-  console.log(req.params)
   const key = req.params.key
   const readStream = getFileStream(key)
 
