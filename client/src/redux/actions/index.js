@@ -50,11 +50,11 @@ export function getHomeDetail(input){
     }
 }
 
-export function getApiKey(input){
+export function getFeatureList(){
     return async (dispatch) => {
-        let json = await axios.get('http://localhost:3001/apikey');
+        let json = await axios.get('http://localhost:3001/feature');
         return dispatch({
-            type: 'GET_APIKEY',
+            type: 'GET_FEATURE_LIST',
             payload: json.data
         })
     }

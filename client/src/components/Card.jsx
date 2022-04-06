@@ -23,7 +23,6 @@ export default function Cards({
 }) {
   rooms = 5;
   const mapRef = useRef();
-  console.log(apiKey)
   const [ dataMap, setDataMap ] = useState({
     latitude: 52.6376,
     longitude: -1.135171,

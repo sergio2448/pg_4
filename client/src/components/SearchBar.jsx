@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchbar } from '../redux/actions';
@@ -7,13 +7,15 @@ import { useNavigate } from 'react-router-dom';
 export default function SearchBar (){
     const navigate = useNavigate();
     const [filterSelect, setFilterSelect] = useState('Venta');
-    const searchBarList = useSelector((state) => state.searchbar);
+    const features = useSelector((state) => state.features);
     const [input, setInput] = useState({
         searchType: 'address',
         searchInput: '',
-        searchDivs: 'Venta'
+        searchDivs: 'Venta',
+        features: ''
     });
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();    
+    
 
     function handleInput (e){
         setInput({
@@ -64,8 +66,13 @@ export default function SearchBar (){
             <form onSubmit={(e) => handleForm(e)} className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-6/12 h-16 bg-stone-800') : ('flex items-center m-auto justify-center z-10 w-9/12 h-16 bg-stone-800')}>
                 {
                     window.location.pathname !== '/' ? (
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                        <select onChange={(e)=>handleInput(e)} name='features' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                             <option>Features</option>
+                            {
+                                features.length ? features.map(f => {
+                                   return (<option key={f.id} value={f.name} >{f.name}</option>)
+                                }) : <option></option>
+                            }
                         </select>) : <span></span>
                 }
                 <select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>

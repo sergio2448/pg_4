@@ -7,7 +7,7 @@ import hardcodeHouse from '../styles/images/hardcode-house.jpg'
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHomeCards, getApiKey } from '../redux/actions';
+import { getHomeCards, getApiKey, getFeatureList } from '../redux/actions';
 
 function Home() {
 
@@ -16,7 +16,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(getHomeCards());
-    dispatch(getApiKey())
+    dispatch(getFeatureList());
   }, []);
   
   const apiKey = useSelector((state) => state.apikey);

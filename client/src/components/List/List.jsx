@@ -1,7 +1,5 @@
 import hardcodeHouse from "../../styles/images/hardcode-house.jpg"
 import poolHouse from "../../styles/images/house-back2.jpg"
-import bigHouse from "../../styles/images/house-back4.jpg"
-import doubleHouse from "../../styles/images/house2.jpg"
 import { Link } from 'react-router-dom';
 import Card from "../Card"
 import Nav from '../Nav'
@@ -23,13 +21,14 @@ function List() {
   return (
     <div>
       <div className='relative z-6  text-center'>
-      <div className='bg-black h-20 relative z-20 shadow-nav'>
+      <div className='bg-stone-900 h-20 relative z-20 shadow-nav'>
                 <Nav />
             </div>
       <div className='relative z-6 text-center'> 
         <SearchBar/>
       </div>
       </div>
+      
       <div className=' mt-45 pt-10 py-15 text-center'>    
       <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
@@ -44,14 +43,13 @@ function List() {
             }) : (<div>loading..</div>)
           }
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          
-          <Card image={poolHouse} />
-         </div>
-          
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          
-              <Card image={poolHouse} />
+              <Card name="San Martín 308" country="Argentina" city="Calafate" cost="$77.000" measure="180" rooms="3" image={poolHouse} />
           </div>
+          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+              <Card name="Av Francisco" country="México" city="Acapulco" cost="$80.000" measure="289" rooms="5"  image={hardcodeHouse} />
+          </div>
+
+
         </div>                
       </div>
                   
