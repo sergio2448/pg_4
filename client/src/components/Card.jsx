@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from "react-router-dom";
+import { useState } from 'react';
+import ReactMapGL, { Marker } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+
+
+
 
 export default function Cards({
   image,
@@ -12,20 +19,29 @@ export default function Cards({
   cost,
   measure,
   rooms,
+  apiKey
 }) {
   rooms = 5;
+  const mapRef = useRef();
+  const [ dataMap, setDataMap ] = useState({
+    latitude: 52.6376,
+    longitude: -1.135171,
+    width: "100%",
+    height: "100%",
+    zoom: 12
+  })
+
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
       <div className="relative bg-black w-full h-64">
-        <iframe
-          className="w-full h-full "
-          frameBorder="0"
-          scrolling="no"
-          marginHeight="0"
-          marginWidth="0"
-          src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=Tucuman,%20Argentina+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=6&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-        >
-        </iframe>
+        {
+          apiKey ? (<ReactMapGL 
+      initialViewState={{
+        longitude: -122.4,
+        latitude: 37.8,
+        zoom: 14
+      }}
+      mapStyle="mapbox://styles/mapbox/streets-v9" mapboxAccessToken={apiKey} ></ReactMapGL>) : 'Loading..'}
       </div>
       <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
         {city + ", " + country}
@@ -38,7 +54,7 @@ export default function Cards({
       </div>
     </div>
   ) : (
-    <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
+    <div className="border border-stone-600/40 pb-6 h-full transition ease-in-out duration-200 hover:text-sky-500">
       <div className="relative bg-black w-full h-64">
         <img
           className="w-full h-full object-cover transition ease-in-out duration-200 hover:opacity-60"
@@ -65,7 +81,7 @@ export default function Cards({
         <span className="text-right text-stone-600/60">Measure: {measure} m2</span>
         <span className="text-left text-stone-600/60">other details</span>
       </div>
-      <div className="text-stone-600 border-stone-600/40 w-4/5 m-auto mt-4 pt-4 border-t-2 text-left">
+      <div className="text-stone-600  border-stone-600/40 w-4/5 m-auto mt-4 pt-4 border-t-2 text-left">
         <h2>Cost: $ {cost} usd</h2>
       </div>
     </div>

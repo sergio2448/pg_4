@@ -8,7 +8,10 @@ const initialState = {
     properties: [],
     homeCards: [],
     listCards: [],
-    homeDetail:[]
+    homeDetail:[],
+    searchBar: [],
+    features: [],
+    apikey: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -50,6 +53,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 homeDetail: action.payload
+            }
+        case 'GET_FEATURE_LIST':
+            return {
+                ...state,
+                features: action.payload
             }
         default:
             return ({

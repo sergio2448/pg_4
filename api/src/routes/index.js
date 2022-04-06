@@ -8,7 +8,9 @@ const PropertiesRoute = require('../controller/PropertiesRoute');
 const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
 
+
 const router = Router();
+
 router.use("/Properties", PropertiesRoute);
 
 //todo: crea un usuario
