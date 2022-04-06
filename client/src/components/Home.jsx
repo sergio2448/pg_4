@@ -7,7 +7,7 @@ import hardcodeHouse from '../styles/images/hardcode-house.jpg'
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHomeCards, getApiKey, getFeatureList } from '../redux/actions';
+import { getHomeCards, getFeatureList } from '../redux/actions';
 
 function Home() {
 
