@@ -18,8 +18,7 @@ export default function Cards({
   country,
   cost,
   measure,
-  rooms,
-  apiKey
+  rooms,  
 }) {
   rooms = 5;
   const mapRef = useRef();
@@ -29,7 +28,10 @@ export default function Cards({
     width: "100%",
     height: "100%",
     zoom: 12
+    
   })
+
+    let apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
 
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
