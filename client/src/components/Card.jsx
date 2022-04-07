@@ -18,7 +18,7 @@ export default function Cards({
   country,
   cost,
   measure,
-  rooms,
+  rooms,  
 }) {
   rooms = 5;
   const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
@@ -28,7 +28,8 @@ export default function Cards({
     longitude: -1.135171,
     width: "100%",
     height: "100%",
-    zoom: 50
+    zoom: 12
+    
   })
 
   return isMap ? (

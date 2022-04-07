@@ -28,10 +28,11 @@ function Home() {
     <div className='z-1 absolute bg-black w-full h-screen shadow-stone-600 shadow-xl'>
       <img className='opacity-60 z-2 object-cover w-full h-full' src={houseBackground} />
     </div>
-    <Nav/>
+    <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>
+    <Nav />
       <div className='relative z-6 pt-28 text-center'>
         <h2 className='text-white text-2xl font-semi-bold font-Poppins'>Best place to</h2>
-        <h2 className='text-white text-5xl font-bold font-Poppins'>Find your perfect home</h2>
+        <h2 className='text-white text-5xl pb-32 font-bold font-Poppins'>Find your perfect home</h2>
         <SearchBar/>
       </div>
       <div className=' mt-64 py-16 text-center'>

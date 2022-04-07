@@ -100,7 +100,7 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
 
 const fillProperties = async (req, res) => {
     try {
-        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId } = req.body;
+        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId,latitude,longitude,highlighted } = req.body;
         let newProperty = await Properties.create({
             description,
             m2,
@@ -112,7 +112,10 @@ const fillProperties = async (req, res) => {
             cp,
             lease,
             propertyType,
-            sellerId
+            sellerId,
+            latitude,
+            longitude,
+            highlighted
         });
 
         features.forEach(async element => {
