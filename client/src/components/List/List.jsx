@@ -19,7 +19,7 @@ function List() {
   }, []);
   
   return (
-    <div className='bg-stone-200/75'>
+    <div className='bg-stone-200/75 pb-20'>
       <div className='z-1 absolute bg-black w-full h-screen shadow-stone-600 shadow-xl'>
         <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
       </div>
