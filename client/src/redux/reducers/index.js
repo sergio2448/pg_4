@@ -11,6 +11,7 @@ const initialState = {
     homeDetail:[],
     searchBar: [],
     features: [],
+    features2: [],
     apikey: {}
 };
 

@@ -13,6 +13,7 @@ function List() {
 
   const dispatch = useDispatch();  
   const listCards = useSelector((state) => state.homeCards);
+  const searchFeatures = useSelector((state) => state.searchBar)
 
   useEffect(() => {
     dispatch(getListCards());
@@ -21,19 +22,27 @@ function List() {
   return (
     <div>
       <div className='relative z-6  text-center'>
-      <div className='bg-stone-900 h-20 relative z-20 shadow-nav'>
+      <div className="h-20 relative z-20 shadow-nav">
+      <div class="bg-[url('../../styles/images/house2.jpg')]"/>
                 <Nav />
             </div>
       <div className='relative z-6 text-center'> 
         <SearchBar/>
+        {
+            searchFeatures.length ? searchFeatures.map(c => {
+              return(             
+          <div className='text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to='/'>
+            <Card image={'http://localhost:3001/Properties' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2}/>
+          </Link>
+        </div>) 
+            }) : (<div>loading..</div>)
+          }
       </div>
       </div>
-      
-      <div className=' mt-45 pt-10 py-15 text-center'>    
-      <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
         {
-            listCards.length ? listCards.reverse().slice(0,4).map(c => {
+            listCards.length ? listCards.reverse().slice(0,6).map(c => {
               return(             
           <div className='text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
           <Link to='/'>
@@ -42,15 +51,9 @@ function List() {
         </div>) 
             }) : (<div>loading..</div>)
           }
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-              <Card name="San Martín 308" country="Argentina" city="Calafate" cost="$77.000" measure="180" rooms="3" image={poolHouse} />
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-              <Card name="Av Francisco" country="México" city="Acapulco" cost="$80.000" measure="289" rooms="5"  image={hardcodeHouse} />
-          </div>
 
 
-        </div>                
+                       
       </div>
                   
       </div>
