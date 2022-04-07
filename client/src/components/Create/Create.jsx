@@ -9,6 +9,7 @@ import Page2 from './Page2'
 import Page3 from './Page3'
 import Page4 from './Page4'
 import house from "../../styles/images/house8.jpg"
+import Map from  "../Map/Map"
 let apiKey = ""
 
 
@@ -48,6 +49,15 @@ export default function Create() {
         features: [],
         propertyType: ''
     });
+    const [input, setInput] = React.useState({
+        name: "",
+        country: "",
+        city: "",
+        street: "",
+        streetNumber: "",
+        latitude: 0,
+        longitude: 0,
+      });
     const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     React.useEffect(async () => {
@@ -129,6 +139,18 @@ export default function Create() {
         inner.innerHTML += `<p>${quantity}</p>`
     }
 
+    function handleDrag(getLngLat) {
+        console.log(getLngLat);
+        // if(getLngLat.lngLat){
+        //   setInput({
+        //     ...input,
+        //     longitude: getLngLat.lngLat[0],
+        //     latitude: getLngLat.lngLat[1],
+        //   });
+        //   console.log(input)
+        // }
+      }
+
     return (
         /* isAuthenticated ? */
             <div className='h-120'>
@@ -146,6 +168,28 @@ export default function Create() {
                                 <div className="px-4 sm:px-0">
                                     <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Datos Del Inmueble</h3>
                                     <p className="mt-1 text-sm text-lightProject">Use a permanent address where you can receive mail.</p>
+                                        <Map location={[-64.19450712912459, -31.408336004083672]}
+              draggable={true}
+              handleDrag={handleDrag}
+              markers={{
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      establishment: "",
+                      site: "",
+                      court: "",
+                      address: "",
+                      sport: "deporte",
+                      price: "",
+                    },
+                    geometry: {
+                      coordinates:[-64.19450712912459, -31.408336004083672],
+                      type: "Point",
+                    },
+                  },
+                ],
+              }}/>
                                 </div>
                             </div>
                             <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
