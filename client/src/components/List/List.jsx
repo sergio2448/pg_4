@@ -19,9 +19,9 @@ function List() {
   }, []);
 
   return (
-    <div>
-      <div className='relative z-6  text-center'>
-      <div className='bg-stone-900 h-20 relative z-20 shadow-nav'>
+    <div className=" bg-stone-200/75">
+      <div className='relative z-6 bg-stone-200/75 text-center'>
+      <div className='bg-stone-800 h-20 relative z-20 shadow-nav'>
                 <Nav />
             </div>
       <div className='relative z-6 text-center'> 
@@ -29,7 +29,7 @@ function List() {
       </div>
       </div>
       
-      <div className=' mt-45 pt-10 py-15 text-center'>    
+      <div className=' mt-45 pt-10 py-15  bg-stone-200/75 text-center'>    
       <ConteinInputs/>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
         {

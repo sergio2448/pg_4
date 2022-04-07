@@ -19,16 +19,16 @@ export default function Cards({
   cost,
   measure,
   rooms,
-  apiKey
 }) {
   rooms = 5;
+  const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
   const mapRef = useRef();
   const [ dataMap, setDataMap ] = useState({
     latitude: 52.6376,
     longitude: -1.135171,
     width: "100%",
     height: "100%",
-    zoom: 12
+    zoom: 50
   })
 
   return isMap ? (
