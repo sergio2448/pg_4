@@ -149,7 +149,7 @@ export default function Create() {
                         <div className="md:grid md:grid-cols-3 md:gap-6">
                             <div className="md:col-span-1 mx-4 bg-[#00000099] p-3 mt-16 h-16 rounded-sm">
                                 <div className="px-4 sm:px-0">
-                                    <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Datos Del Inmueble</h3>
+                                    <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Property details</h3>
                                     <p className="mt-1 text-sm text-lightProject">Use the exact or declared data of your property.</p>
                                 </div>
                             </div>

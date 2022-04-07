@@ -18,19 +18,13 @@ export default function Cards({
   country,
   cost,
   measure,
-  rooms,  
+  rooms,
+  latitude,
+  longitude 
 }) {
   rooms = 5;
+  const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
   const mapRef = useRef();
-  const [ dataMap, setDataMap ] = useState({
-    latitude: 52.6376,
-    longitude: -1.135171,
-    width: "100%",
-    height: "100%",
-    zoom: 12
-    
-  })
-    let apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
 
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
@@ -38,9 +32,9 @@ export default function Cards({
         {
           apiKey ? (<ReactMapGL 
       initialViewState={{
-        longitude: -122.4,
-        latitude: 37.8,
-        zoom: 14
+        latitude: latitude,
+        longitude: longitude,
+        zoom: 10
       }}
       mapStyle="mapbox://styles/mapbox/streets-v9" mapboxAccessToken={apiKey} ></ReactMapGL>) : 'Loading..'}
       </div>
