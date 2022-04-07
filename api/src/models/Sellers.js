@@ -18,16 +18,11 @@ module.exports =  (sequelize) => {
         },
         phoneNumber:{
             type: DataTypes.STRING,
-            allowNull:false,
+            allowNull:true,
         },
-        email:{
-            type: DataTypes.STRING,
-            allowNull:false,
-            },
-        pc:{
-            type: DataTypes.INTEGER,
-            allowNull:false,
-            },
-
+        dateBirth:{
+            type: DataTypes.DATE,
+            allowNull:true,
+        },
    })
 }
