@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ConteinInputs from "./ConteinInputs"
 import { getListCards } from '../../redux/actions';
+import houseBackground from '../../styles/images/house-back.jpg';
 
 function List() {
 
@@ -20,13 +21,19 @@ function List() {
 
   return (
     <div>
+      
+        
+      <div className='z-1 absolute bg-black w-full h-screen shadow-stone-600 shadow-xl'>
+        <img className='opacity-60 z-2 object-cover w-full h-full' src={houseBackground} />
+      </div>
       <div className='relative z-6  text-center'>
-      <div className='bg-stone-900 h-20 relative z-20 shadow-nav'>
+      <div className=' h-20 relative z-20 shadow-nav'>
                 <Nav />
-            </div>
+      </div>
+      </div>
+      <div className="bg-white pt-32 relative z-150">
       <div className='relative z-6 text-center'> 
         <SearchBar/>
-      </div>
       </div>
       
       <div className=' mt-45 pt-10 py-15 text-center'>    
@@ -51,6 +58,7 @@ function List() {
 
 
         </div>                
+      </div>
       </div>
                   
       </div>

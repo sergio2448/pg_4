@@ -30,7 +30,6 @@ export default function Cards({
     zoom: 12
     
   })
-
     let apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
 
   return isMap ? (
