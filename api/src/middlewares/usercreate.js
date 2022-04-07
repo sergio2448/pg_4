@@ -1,15 +1,16 @@
 const { Roles, Users, BanckCards, Properties, Features, Photos } = require('../db')
-async function insert(name, email, password, roleid) {
+async function insert(name, email, image, roleid) {
     try {
         const newUser = await Users.create(
             {
                 name,
                 email,
-                password,
+                image,
             }
         )
         const Role = await getRolebyId(roleid)
         await Role.addUser(newUser)
+        return newUser
     } catch (err) {
         return err
     }
