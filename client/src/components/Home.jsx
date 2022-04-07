@@ -31,7 +31,7 @@ function Home() {
     <Nav/>
       <div className='relative z-6 pt-28 text-center'>
         <h2 className='text-white text-2xl font-semi-bold font-Poppins'>Best place to</h2>
-        <h2 className='text-white text-5xl font-bold font-Poppins'>Find your perfect home</h2>
+        <h2 className='text-white text-5xl pb-32 font-bold font-Poppins'>Find your perfect home</h2>
         <SearchBar/>
       </div>
       <div className=' mt-64 py-16 text-center'>
