@@ -8,7 +8,7 @@ function Steps({currentStep, setCurrentStep, pages, setPages}) {
     <div className="pt-4 mb-12">
       <div className="w-11/12 mx-auto">
         <ChevronDots
-          steps={["Paso 1", "Paso 2", "Carga Imagenes", "Publica!"]}
+          steps={["Step1", "Step2", "Step3", "Step4"]}
           currentStep={currentStep}
           onStepClick={step => setCurrentStep(step)}
         />
