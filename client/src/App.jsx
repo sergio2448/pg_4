@@ -5,6 +5,8 @@ import Home from "./components/Home"
 import Create from "./components/Create/Create"
 import Detail from "./components/Detail/Detail";
 import List from './components/List/List';
+import SideBar from './components/LoggedRoute/SideBar';
+
 
 function App() {
     return (
@@ -15,7 +17,9 @@ function App() {
                     <Route path='/' element={<Home />} />
                     <Route path='/estate' element={<List />} />
                     <Route path='/estate/:id' element={<Detail />}/>
-                    <Route path='/state/create' element={<Create />} />
+                    <Route path='/estate/create' element={<Create />} />
+                    <Route path='/logged' element={<SideBar/>}/>
+                    
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>

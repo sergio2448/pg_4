@@ -133,7 +133,7 @@ export default function Create() {
         /* isAuthenticated ? */
             <div className='h-120'>
                 <img className='absolute z-0 h-120 w-screen' src={house} alt="" />
-                <div className='bg-[#00000060] h-16 relative z-20'>
+                <div className='shadow-nav h-16 relative z-20 bg-black'>
                     <Nav />
                 </div>
                 

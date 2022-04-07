@@ -7,7 +7,7 @@ import hardcodeHouse from '../styles/images/hardcode-house.jpg'
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHomeCards } from '../redux/actions';
+import { getHomeCards, getFeatureList } from '../redux/actions';
 
 function Home() {
 
@@ -16,8 +16,10 @@ function Home() {
 
   useEffect(() => {
     dispatch(getHomeCards());
+    dispatch(getFeatureList());
   }, []);
-
+  
+  const apiKey = useSelector((state) => state.apikey);
   
   
 
@@ -37,17 +39,17 @@ function Home() {
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
             <Link to='/'>
-              <Card image={hardcodeHouse} featured={true} isMap={true}/>
+              <Card image={hardcodeHouse} featured={true} isMap={true} city='Tucuman' country='Argentina' cost='4000' apiKey={apiKey.APIKEY}/>
             </Link>
           </div>
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
             <Link to='/'>
-              <Card image={hardcodeHouse} featured={true} isMap={true}/>
+              <Card image={hardcodeHouse} featured={true} isMap={true} city='Tucuman' country='Argentina' cost='4000'/>
             </Link>
           </div>
           <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
             <Link to='/'>
-              <Card image={hardcodeHouse} featured={true} isMap={true}/>
+              <Card image={hardcodeHouse} featured={true} isMap={true} city='Tucuman' country='Argentina' cost='4000'/>
             </Link>
           </div>
         </div>                 
