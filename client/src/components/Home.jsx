@@ -37,22 +37,17 @@ function Home() {
       </div>
       <div className=' mt-64 py-16 text-center'>
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Explore the Neighbourhoods</h2>        
-        <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true} isMap={true} city='Tucuman' country='Argentina' cost='4000' apiKey={apiKey.APIKEY}/>
-            </Link>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true} isMap={true} city='Tucuman' country='Argentina' cost='4000'/>
-            </Link>
-          </div>
-          <div className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-            <Link to='/'>
-              <Card image={hardcodeHouse} featured={true} isMap={true} city='Tucuman' country='Argentina' cost='4000'/>
-            </Link>
-          </div>
+        <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>          
+        {
+            homeCards.length ? homeCards.reverse().slice(0,3).map(c => {
+              return(             
+        <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to={'/estate/' + c.id}>
+            <Card featured={true} isMap={true} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2} latitude={c.longitude} longitude={c.latitude}/>
+          </Link>
+        </div>) 
+            }) : (<div>Loading...</div>)
+          }
         </div>                 
       </div>
       <div className=' py-16 text-center bg-stone-200/75 '>
