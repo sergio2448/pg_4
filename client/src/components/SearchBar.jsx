@@ -67,7 +67,7 @@ export default function SearchBar (){
                 {
                     window.location.pathname !== '/' ? (
                         <select onChange={(e)=>handleInput(e)} name='features' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Features</option>
+                            <option selected="false" disabled>Features</option>
                             {
                                 features.length ? features.map(f => {
                                    return (<option key={f.id} value={f.name} >{f.name}</option>)
@@ -76,7 +76,8 @@ export default function SearchBar (){
                         </select>) : <span></span>
                 }
                 <select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                  <option value='address' >Address</option>
+                <option selected="false" disabled>Location/Cost</option>
+                  <option value='address'>Address</option>
                   <option value='city' >City</option>
                   <option value='state' >State</option>
                   <option value='country' >Country</option>
