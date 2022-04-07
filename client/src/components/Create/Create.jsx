@@ -9,6 +9,7 @@ import Page2 from './Page2'
 import Page3 from './Page3'
 import Page4 from './Page4'
 import house from "../../styles/images/house8.jpg"
+import { validate } from '../../validators/createValidator';
 let apiKey = ""
 
 
@@ -24,8 +25,9 @@ const changeCitys = async (country, set) => {
 
 export default function Create() {
 
-    /* const [errors, setErrors] = React.useState({}); */
+    const [errors, setErrors] = React.useState({});
     let navigate = useNavigate();
+
     const [citys, setCitys] = React.useState([])
     const [images, setImages] = React.useState(null)
     const [pages, setPages] = React.useState({
@@ -36,6 +38,7 @@ export default function Create() {
     })
     const [countries, setCountries] = React.useState([]);
     const [currentStep, setCurrentStep] = React.useState(1)
+    const { isAuthenticated, loginWithRedirect, user } = useAuth0()
     const [newEstate, setNewEstate] = React.useState({
         lease: '',
         cost: '',
@@ -46,9 +49,9 @@ export default function Create() {
         address: '',
         cp: '',
         features: [],
-        propertyType: ''
+        propertyType: '',
+        sellerId: ''
     });
-    const { isAuthenticated, loginWithRedirect } = useAuth0()
 
     React.useEffect(async () => {
         try {
@@ -103,10 +106,10 @@ export default function Create() {
             ...newEstate,
             [event.target.name]: event.target.value
         })
-        /* setErrors(validate({
-            ...newPokemon,
+        setErrors(validate({
+            ...newEstate,
             [event.target.name]: event.target.value
-        })) */
+        }))
     };
 
     const handleFeatures = (event) => {
@@ -129,23 +132,25 @@ export default function Create() {
         inner.innerHTML += `<p>${quantity}</p>`
     }
 
+    /* console.log(user) */
+
     return (
         /* isAuthenticated ? */
             <div className='h-120'>
                 <img className='absolute z-0 h-120 w-screen' src={house} alt="" />
-                <div className='shadow-nav h-16 relative z-20 bg-black'>
+                <div className='shadow-[-1px_16px_30px_-5px_rgba(0,0,0,1)] h-16 relative z-20 bg-[#00000099]'>
                     <Nav />
                 </div>
                 
 
 
-                <div className='mt-16 relative z-10 mb-20'>
+                <div className=' mt-16 relative z-10 mb-20'>
                     <div className="mt-10 sm:mt-0 mb-24">
                         <div className="md:grid md:grid-cols-3 md:gap-6">
-                            <div className="md:col-span-1 mx-4 bg-[#00000060] mt-16 h-16 rounded-sm">
+                            <div className="md:col-span-1 mx-4 bg-[#00000099] p-3 mt-16 h-16 rounded-sm">
                                 <div className="px-4 sm:px-0">
                                     <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Datos Del Inmueble</h3>
-                                    <p className="mt-1 text-sm text-lightProject">Use a permanent address where you can receive mail.</p>
+                                    <p className="mt-1 text-sm text-lightProject">Use the exact or declared data of your property.</p>
                                 </div>
                             </div>
                             <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
@@ -162,7 +167,7 @@ export default function Create() {
                                             pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
                                         }
                                         {
-                                            pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                            pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate}/> : ""
                                         }
                                     </div>
                                 </form>
@@ -171,6 +176,9 @@ export default function Create() {
                     </div>
                 </div>
             </div>
-            /* : loginWithRedirect() */
+           /*  : loginWithRedirect() */
     )
+
+
+    /* sellerId */
 }

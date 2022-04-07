@@ -25,9 +25,9 @@ function List() {
         <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
       </div>
       <div className='relative z-6  text-center'>
-      <div className=' h-20 relative z-20 '>
-                <Nav />
-      </div>
+        <div className=' h-20 relative z-20 '>
+          <Nav />
+        </div>
       </div>
       <div className=" pt-32 relative z-150">
       <div className='relative z-6 text-center'> 
