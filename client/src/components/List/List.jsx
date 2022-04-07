@@ -24,20 +24,19 @@ function List() {
       
         
       <div className='z-1 absolute bg-black w-full h-screen shadow-stone-600 shadow-xl'>
-        <img className='opacity-60 z-2 object-cover w-full h-full' src={houseBackground} />
+        <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
       </div>
       <div className='relative z-6  text-center'>
-      <div className=' h-20 relative z-20 shadow-nav'>
+      <div className=' h-20 relative z-20 '>
                 <Nav />
       </div>
       </div>
-      <div className="bg-white pt-32 relative z-150">
+      <div className=" pt-32 relative z-150">
       <div className='relative z-6 text-center'> 
         <SearchBar/>
       </div>
       
-      <div className=' mt-45 pt-10 py-15 text-center'>    
-      <ConteinInputs/>  
+      <div className=' mt-45 pt-10 py-15 text-center'>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
         {
             listCards.length ? listCards.reverse().slice(0,4).map(c => {
