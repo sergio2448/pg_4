@@ -17,15 +17,14 @@ function List() {
     dispatch(getListCards());
     dispatch(getFeatureList());
   }, []);
-
   
   return (
-    <div>
+    <div className='bg-stone-200/75 pb-20'>
       <div className='z-1 absolute bg-black w-full h-screen shadow-stone-600 shadow-xl'>
         <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
       </div>
-      <div className='relative z-6  text-center'>
-      <div className=' h-20 relative z-20 '>
+      <div className='relative z-6'>
+      <div className=' relative z-20 '>
                 <Nav />
       </div>
       </div>
@@ -34,7 +33,7 @@ function List() {
         <SearchBar/>
       </div>
       
-      <div className=' mt-45 pt-10 py-15 text-center'>  
+      <div className=' mt-45 pt-24 py-15 text-center'>  
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
         {
             searchFeatures.length ? searchFeatures.slice(0,6).map(c => {

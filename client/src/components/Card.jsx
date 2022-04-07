@@ -21,6 +21,7 @@ export default function Cards({
   rooms,  
 }) {
   rooms = 5;
+  const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
   const mapRef = useRef();
   const [ dataMap, setDataMap ] = useState({
     latitude: 52.6376,
@@ -30,7 +31,6 @@ export default function Cards({
     zoom: 12
     
   })
-    let apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
 
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
