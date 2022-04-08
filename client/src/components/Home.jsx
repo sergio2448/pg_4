@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import houseBackground from '../styles/images/house-back.jpg';
 import Nav from './Nav.jsx';
 import Card from './Card.jsx';
-import hardcodeHouse from '../styles/images/hardcode-house.jpg'
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
