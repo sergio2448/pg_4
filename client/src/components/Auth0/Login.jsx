@@ -14,7 +14,7 @@ export const LoginButton = () => {
         //Consultar a base de datos si existe
         //Si existe traer todo
         //Si no pues crealo
-    }, [user])
+    }, [])//user
 
     return <button className="text-base mr-5 transition ease-in-out duration-300 hover:border-b-sky-500 border-b-transparent hover:border-b-2 pt-1" onClick={(e)=> login(e)}>Log in or Sign up</button>
 };
