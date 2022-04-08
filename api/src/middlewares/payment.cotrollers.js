@@ -24,7 +24,7 @@ const createOrder = async (req, res) => {
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
                 return_url: `${host}/pay/capture-order?idProperty=${id}`,
-                cancel_url: `${host}/pay/cancel-order`,
+                cancel_url: `${host}/pay/cancel-order?idProperty=${id}`,
             }
         }
         const params = new URLSearchParams()
@@ -68,17 +68,18 @@ const captureOrder = async (req, res) => {
     const { status } = data
     console.log(status)  //completed
     if (status === "COMPLETED") {
-        const property  = await getById(idProperty)
-        console.log(property)
+        const property = await getById(idProperty)
+        console.log(property.__proto__)
     }
 
 
-    res.redirect("http://localhost:3000/pay/1/");
+    res.redirect(`http://localhost:3000/pay/${idProperty}`);
     // res.send('orden capturada')
 }
 const cancelOrder = async (req, res) => {
     try {
-        res.redirect('http://localhost:3000/pay/1/')
+        const { idProperty } = req.query
+        res.redirect(`http://localhost:3000/pay/${idProperty}`);
     } catch (error) {
         res.status(500).json(error)
     }
