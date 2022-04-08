@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import houseBackground from '../styles/images/house-back.jpg';
 import Nav from './Nav.jsx';
 import Card from './Card.jsx';
-import hardcodeHouse from '../styles/images/hardcode-house.jpg'
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeCards, getFeatureList } from '../redux/actions';
+import Footer from './Footer';
 
 function Home() {
 
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
   const homeCards = useSelector((state) => state.homeCards);
 
   useEffect(() => {
@@ -82,6 +82,7 @@ function Home() {
         </div>   
         <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>                  
       </div>
+          <Footer/>
     </div>
   )
 }

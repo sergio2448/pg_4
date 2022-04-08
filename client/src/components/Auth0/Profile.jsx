@@ -19,3 +19,15 @@ export const Profile = () => {
         )
     )
 }
+
+{/* <div className="flex px-8 py-6 items-center">
+        <Avatar image="https://gustui.s3.amazonaws.com/avatar.png" />
+        <div class="flex-1 ml-4">
+          <p className="font-medium leading-none">Cesar Rome</p>
+          <a
+            href="#"
+            className="no-underline text-xs text-gray-300 leading-none"
+          >
+            Edit Profile
+          </a>
+        </div> */}

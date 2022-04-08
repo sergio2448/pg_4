@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import {ImLocation2} from "react-icons/im"
 
 
 
@@ -36,7 +37,16 @@ export default function Cards({
         longitude: longitude,
         zoom: 10
       }}
-      mapStyle="mapbox://styles/mapbox/streets-v9" mapboxAccessToken={apiKey} ></ReactMapGL>) : 'Loading..'}
+      mapStyle="mapbox://styles/mapbox/streets-v9" mapboxAccessToken={apiKey} >
+      <Marker
+          latitude={latitude}
+          longitude={longitude}
+          draggable={false}
+          >
+          <ImLocation2 className='h-8 w-8 text-teal-600'/>
+          
+          
+      </Marker></ReactMapGL>) : 'Loading..'}
       </div>
       <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
         {city + ", " + country}

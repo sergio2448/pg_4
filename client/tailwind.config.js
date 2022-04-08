@@ -5,6 +5,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'inOut': 'wiggle 1s ease-in-out 1',
+      },
+      keyframes: {
+        wiggle: {
+          '0%': { top: '0' },
+          '50%': { transform: 'rotate(3deg)' },
+          '100%': {top: '-30rem'}
+        }
+      },
       height: {
         '120': '60rem',
       },
