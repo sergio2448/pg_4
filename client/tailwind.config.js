@@ -5,11 +5,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'inOut': 'wiggle 1s ease-in-out 1',
+      },
+      keyframes: {
+        wiggle: {
+          '0%': { top: '0' },
+          '50%': { transform: 'rotate(3deg)' },
+          '100%': {top: '-30rem'}
+        }
+      },
       height: {
         '120': '60rem',
       },
-      backgroundImage: {
-        'city': "url('./src//styles/images/city5.jpg')",
+      boxShadow: {
+        'nav': '-1px 16px 40px -5px rgba(0,0,0,1)',
       },
       colors:{
         'my-Blue': '#0028FF',

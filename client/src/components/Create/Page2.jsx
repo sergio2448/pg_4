@@ -2,13 +2,13 @@ import React from 'react'
 
 export default function Page2({handleFeatures, setCurrentStep, setPages, pages}) {
     return (
-        <div className="px-4 py-5 sm:p-6 bg-[#29252480]">
+        <div className="px-4 py-5 sm:p-6 bg-[#00000099]">
             <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                 <div id='inner'>
 
                 </div>
                 <label htmlFor="features" className="block text-white text-sm font-medium">
-                    Detalles
+                    Details
                 </label>
                 <select
                     id="features"
@@ -28,7 +28,7 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages})
             </div>
             <div className="col-span-6 sm:col-span-6 lg:col-span-2 mb-4">
                 <label htmlFor="quantity" className="block text-white text-sm font-medium">
-                    Cantidad
+                    Quantity
                 </label>
                 <input
                     type="number"
@@ -42,7 +42,7 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages})
                 onClick={handleFeatures}
                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-                Agregar
+                Add
             </button>
             <div className="px-4 py-3 text-center sm:px-6">
                 <button
@@ -56,7 +56,7 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages})
                         })
                     }}
                 >
-                    Anterior
+                    Previous
                 </button>
             </div>
             <div className="px-4 py-3 text-center sm:px-6">
@@ -71,7 +71,7 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages})
                         })
                     }}
                 >
-                    Siguiente
+                    Next
                 </button>
             </div>
         </div>

@@ -1,15 +1,16 @@
 const { Roles, Users, BanckCards, Properties, Features, Photos } = require('../db')
-async function insert(name, email, password, roleid) {
+async function insert(name, email, image, roleid) {
     try {
         const newUser = await Users.create(
             {
                 name,
                 email,
-                password,
+                image,
             }
         )
         const Role = await getRolebyId(roleid)
         await Role.addUser(newUser)
+        return newUser
     } catch (err) {
         return err
     }
@@ -17,6 +18,7 @@ async function insert(name, email, password, roleid) {
 
 async function getbyEmail(pEmail) {
     const matched = await Users.findOne({
+        include:[{ model: Roles }],
         where: {
             email: pEmail
         }
@@ -72,6 +74,20 @@ async function setfeatures(features, newProperty) {
     })
 }
 
+async function getUserById(id){
+    const user = await Users.findByPk(id)
+    return user
+}
+
+function getEmailUser(user){
+    const email = user.getDataValue('email')
+    return email
+}
+
+function getUserName(user){
+    const name = user.getDataValue('name')
+    return name
+}
 module.exports = {
     insert,
     getbyEmail,
@@ -79,5 +95,8 @@ module.exports = {
     getById,
     addphoto,
     addfeatures,
-    setfeatures
+    setfeatures,
+    getUserById,
+    getEmailUser,
+    getUserName
 }

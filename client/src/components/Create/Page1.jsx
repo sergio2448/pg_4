@@ -2,11 +2,11 @@ import React from 'react'
 
 export default function Page1({ handleSubmit, countries, citys, setCurrentStep, setPages, pages }) {
     return (
-        <div className="px-4 py-5 sm:p-6 bg-[#29252480]">
+        <div className="px-4 py-5 sm:p-6 bg-[#00000099]">
             <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-2">
                     <label htmlFor="lease" className="block text-sm text-white font-medium">
-                        Tipo De Publicacion
+                        Type of publication
                     </label>
                     <select
                         id="lease"
@@ -22,7 +22,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                 </div>
                 <div className="col-span-6 sm:col-span-2">
                     <label htmlFor="cost" className="block text-white text-sm font-medium">
-                        Costo En Dolares
+                        Cost in dollars
                     </label>
                     <input
                         type="number"
@@ -35,7 +35,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                 </div>
                 <div className="col-span-6 sm:col-span-2">
                     <label htmlFor="m2" className="block text-white text-sm font-medium">
-                        Metros Cuadrados De La Propiedad
+                        Square meters of the property
                     </label>
                     <input
                         type="number"
@@ -49,7 +49,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
 
                 <div className="col-span-6 sm:col-span-4">
                     <label htmlFor="country" className="block text-white text-sm font-medium">
-                        Pais
+                        Country
                     </label>
                     <select
                         id="country"
@@ -69,7 +69,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
 
                 <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label htmlFor="state" className="block text-white text-sm font-medium">
-                        Estado/Provincia
+                        State/Province
                     </label>
                     <select
                         id="state"
@@ -88,7 +88,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                 </div>
                 <div className="col-span-6">
                     <label htmlFor="address" className="block text-white text-sm font-medium ">
-                        Direccion
+                        Adress
                     </label>
                     <input
                         type="text"
@@ -101,7 +101,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                 </div>
                 <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                     <label htmlFor="city" className="block text-white text-sm font-medium">
-                        Ciudad
+                        City
                     </label>
                     <input
                         type="text"
@@ -114,7 +114,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                 </div>
                 <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label htmlFor="cp" className="block text-white text-sm font-medium">
-                        Codigo Postal
+                        Postal code
                     </label>
                     <input
                         type="text"
@@ -140,7 +140,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                 </div>
                 <div className="col-span-6 sm:col-span-6 lg:col-span-6">
                     <label htmlFor="description" className="block text-white text-sm font-medium">
-                        Descripcion
+                        Description
                     </label>
                     <textarea
                         type="text"
@@ -151,19 +151,6 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                         onChange={handleSubmit}
                     />
                 </div>
-                {/* <div className="col-span-6 sm:col-span-3 lg:col-span-4">
-                        <label htmlFor="img" className="block text-sm font-medium">
-                            Subi tus fotos
-                        </label>
-                        <input
-                            type="file"
-                            name="img"
-                            id="img"
-                            autoComplete="postal-code"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            onChange={handleSubmit} 
-                        />
-                    </div> */}
                 <div className="px-4 py-3 text-center sm:px-6">
                     <button
                         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -176,7 +163,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                             })
                         }}
                     >
-                        Siguiente
+                        Next
                     </button>
                 </div>
             </div>

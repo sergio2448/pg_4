@@ -6,6 +6,7 @@ const {
     addassociations,
     fillProperties,
     fillPhotos,
+    deletePhotos
 } = require('../middlewares/PropertiesController')
 const multer = require("multer");
 const router = express.Router();
@@ -39,7 +40,9 @@ router.get("/", async (req, res) => {
       lease,
       propertyType,
       search,
+      
     } = req.query;
+    const {listFeatures} = req.body;
     const result = await getProperties(
       id,
       cost,
@@ -50,7 +53,8 @@ router.get("/", async (req, res) => {
       cp,
       lease,
       propertyType,
-      search
+      search,
+      listFeatures
     );
     if (result?.length > 0) {
       return res.json(result);
@@ -58,7 +62,8 @@ router.get("/", async (req, res) => {
       return res.status(404).json({ message: "No se encontraron registros" });
     }
   } catch (error) {
-    console.log("Ocurrio un error en PropertiesRoute / get :" + error);
+    console.log("Ocurrio un error en PropertiesRoute / get :" + error.message);
+    return res.status(500).json({ message:error.message});
   }
 });
 
@@ -87,7 +92,6 @@ router.post("/img/:idProperty", fileUpload, async (req, res) => {
 });
 
 router.get('/images/:key', (req, res) => {
-  console.log(req.params)
   const key = req.params.key
   const readStream = getFileStream(key)
 
@@ -101,8 +105,14 @@ router.put('/images/:id',fileUpload, async (req, res) => {
   resultSearch?.map(photo => photo.photos);
   if(resultSearch){
     //delete photos en DB
-
+    const result= await deletePhotos(id);
+    if (result?.length > 0) {
     //delete photos en AWS
+
+
+    } else {
+      return res.status(404).json({ message: "No se encontraron registros" });
+    }    
   }
 
   const result = await uploadFile(file);
