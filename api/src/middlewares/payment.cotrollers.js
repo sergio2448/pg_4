@@ -10,6 +10,10 @@ const createOrder = async (req, res) => {
     console.log(req.body)
     console.log(id)
     try {
+        const property = await getById(id)
+        console.log(!!property)
+        if (property === null) return res.redirect(`${host}/pay/propertyNotFound?idProperty=${id}`)
+        //* ------------objeto que define la orden------------*//
         const order = {
             intent: 'CAPTURE',
             purchase_units: [
@@ -29,6 +33,8 @@ const createOrder = async (req, res) => {
                 cancel_url: `${host}/pay/cancel-order?idProperty=${id}`,
             }
         }
+        //* ------------^^^^^^^^^^^^^^^^^^^^^^------------*//
+        //*-------------genera un token de autorización----------------- *//
         const params = new URLSearchParams()
         params.append('grant_type', 'client_credentials')
         const { data: { access_token } } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
@@ -40,13 +46,15 @@ const createOrder = async (req, res) => {
                 password: PAYPAL_API_SECRET
             }
         })
+        //* ------------^^^^^^^^^^^^^^^^^^^^^^------------*//
+        //* ------------realiza la orden de pago ------------*//
         const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`, order, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
         })
         console.log(response.data)
-        console.log('back')
+
 
 
         res.json(response.data)
@@ -81,11 +89,11 @@ const captureOrder = async (req, res) => {
 
         res.redirect(`${hostclient}/pay/${idProperty}`);
     } catch (error) {
-        res.send(500).json(error)
+        res.sendStatus(500).json(error)
     }
 
 
-    
+
 }
 const cancelOrder = async (req, res) => {
     try {
@@ -97,8 +105,15 @@ const cancelOrder = async (req, res) => {
 
 }
 
+const propertyNotFound = async (req, res) => {
+    const { idProperty } = req.query
+    console.log(idProperty)
+    res.status(404).json("property not found")
+}
+
 module.exports = {
     createOrder,
     captureOrder,
-    cancelOrder
+    cancelOrder,
+    propertyNotFound
 }

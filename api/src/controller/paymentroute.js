@@ -5,6 +5,7 @@ const {
     cancelOrder,
     // createProduct,
     // redirectPayment
+    propertyNotFound
 } = require('../middlewares/payment.cotrollers.js')
 const router = Router();
 
@@ -18,4 +19,4 @@ router.get('/capture-order', captureOrder)
 
 router.get('/cancel-order', cancelOrder)
 
-// router.get('/redirect-payment', redirectPayment)
+router.get('/propertyNotFound', propertyNotFound)

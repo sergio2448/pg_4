@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-
+// const { IDBUTTON } = process.env
 
 let counter = 0;
 const generateId = () => {
@@ -10,9 +10,10 @@ const Paypalbutton = () => {
     const buttonRef = useRef(null);
     const buttonId = useMemo(() => `ID-${generateId()}`, []);
     useEffect(() => {
+        // console.log(IDBUTTON)
         const button = window.PayPal.Donation.Button({
             env: 'sandbox',
-            hosted_button_id: 'T26QVZCLKVLHG',
+            hosted_button_id: `T26QVZCLKVLHG`,
             image: {
                 src: 'https://www.paypalobjects.com/es_XC/i/btn/btn_donate_SM.gif',
                 alt: 'Donar con el botón PayPal',
@@ -20,13 +21,6 @@ const Paypalbutton = () => {
             },
             onComplete: async function (params) {
                 // Your onComplete handler
-                const response = await fetch('http://localhost:3001/pay/redirect', {
-                    method: 'POST'
-                })
-                console.log(response)
-                const data = await response.json()
-                console.log(data)
-                window.location.href = data.links[1].href
             },
         });
         button.render(`#${buttonRef.current.id}`); // you can change the code and run it when DOM is ready
