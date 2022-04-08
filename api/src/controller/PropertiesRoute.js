@@ -8,7 +8,6 @@ const {
     fillPhotos,
     deletePhotos
 } = require('../middlewares/PropertiesController')
-// const {addphoto} = require('../middlewares/usercreate.js')
 const multer = require("multer");
 const router = express.Router();
 const path = require("path");
@@ -70,6 +69,11 @@ router.get("/", async (req, res) => {
 
 router.post("/pro", fillProperties);
 
+router.put("/:idProperty",async (req,res)=>{
+  const {idProperty}= req.params;
+  const {} = req.body;
+})
+
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
   try {
     const {idProperty}= req.params;
@@ -120,34 +124,26 @@ router.put('/images/:id',fileUpload, async (req, res) => {
 })
 
 
-//router.put('/imagen/:key',)
-
-
-//! ----------------  En contrucción----------------//
-router.put('/put/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { override } = req.query
     const { id } = req.params
-    const { features /*, photos*/ } = req.body
+    const { features } = req.body
     try {
         let values = {};
         for (let key in req.body) {
-            if (key !== 'features' || key !== 'photos') {
+            if (key !== 'features') {
                 (req.body[key].length > 0) && (values[key] = req.body[key])
             }
         }
-        
-        // await addphoto(photos) //*pendiiente asociacion de fotos
         await updateProperties(values, id)
         if (override === 'true') {
-            setassociations(features /*, photos*/, id)
+            setassociations(features, id)
         } else if (override === 'false') {
-            await addassociations(features /*, photos*/, id)
+            await addassociations(features, id)
         }
         return res.json({ status: 'update' })
     } catch (error) {
         return res.status(404).json(error)
     }
-
 })
-//! ----------------^^^^^----------------//
 module.exports = router;

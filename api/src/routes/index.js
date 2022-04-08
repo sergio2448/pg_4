@@ -5,9 +5,11 @@ const postroles = require('../controller/postroles.js')
 const postcards = require('../controller/postcard.js')
 const getroles = require('../controller/getroles.js')
 const PropertiesRoute = require('../controller/PropertiesRoute');
+const nodemailer = require('../controller/sendemails.js')
+const payment = require('../controller/paymentroute.js')
 const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
-const postSeller = require('../controller/postUserSellers')
+const postUser = require('../controller/postUserSellers')
 
 
 const router = Router();
@@ -35,6 +37,12 @@ router.use('/feature', getFeatures)
 //todo: crear una Review 
 router.use('/review', postReview)
 
-//todo: create Seller
-router.use('/seller', postSeller)
+//todo: create Usuario
+router.use('/optionUser', postUser)
+
+//todo: envia los emails
+router.use('/send-email', nodemailer)
+
+//todo: añade el metodo de pago de paypal
+router.use('/pay', payment)
 module.exports = router;

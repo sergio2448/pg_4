@@ -138,7 +138,7 @@ export default function Create() {
     /* console.log(user) */
 
     return (
-        /* isAuthenticated ? */
+        isAuthenticated ?
             <div className='h-120'>
                 <img className='absolute z-0 h-120 w-screen' src={house} alt="" />
                 <div className='shadow-[-1px_16px_30px_-5px_rgba(0,0,0,1)] h-16 relative z-20 bg-[#00000099]'>
@@ -179,7 +179,7 @@ export default function Create() {
                     </div>
                 </div>
             </div>
-           /*  : loginWithRedirect() */
+            : loginWithRedirect()
     )
 
 
