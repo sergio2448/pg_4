@@ -6,10 +6,12 @@ import Create from "./components/Create/Create"
 import Detail from "./components/Detail/Detail";
 import List from './components/List/List';
 import Settings from './components/DropdownProfile/Settings';
+import "@material-tailwind/react/tailwind.css";
 import PaypalButton from './components/paypal/paypalbutton.jsx';          
 import Payment from './components/paypal/payment';          
 
 function App() {
+
     return (
       <div>
         <div>
