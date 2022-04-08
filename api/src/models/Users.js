@@ -25,13 +25,13 @@ module.exports =  (sequelize) => {
             }
         },
        },
-       password:{
-        type: DataTypes.STRING,
-        allowNull:false
-       },
        email:{
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull:true,
+       },
+       image:{
+        type: DataTypes.STRING,
+        allowNull:true,
        }
    })
 }

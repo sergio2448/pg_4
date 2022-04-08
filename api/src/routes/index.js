@@ -7,8 +7,13 @@ const getroles = require('../controller/getroles.js')
 const PropertiesRoute = require('../controller/PropertiesRoute');
 const nodemailer = require('../controller/sendemails.js')
 const payment = require('../controller/paymentroute.js')
+const getFeatures = require('../controller/getFeatures')
+const postReview = require('../controller/postReview')
+const postSeller = require('../controller/postUserSellers')
+
 
 const router = Router();
+
 router.use("/Properties", PropertiesRoute);
 
 //todo: crea un usuario
@@ -26,7 +31,18 @@ router.use('/roles', getroles)
 //todo: crea una tarjeta y asocia segun el nombre
 router.use('/cards', postcards)
 
+//todo: lista las features 
+router.use('/feature', getFeatures)
+
+//todo: crear una Review 
+router.use('/review', postReview)
+
+//todo: create Seller
+router.use('/seller', postSeller)
+
+//todo: envia los emails
 router.use('/send-email', nodemailer)
 
+//todo: añade el metodo de pago de paypal
 router.use('/pay', payment)
 module.exports = router;

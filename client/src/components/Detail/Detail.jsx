@@ -40,24 +40,25 @@ const Detail = ({ name, city, country, cost, measure, rooms }) => {
         <div>
           <img
             className="border-2 h-full object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={detail.length>0?'http://localhost:3001/Properties/images/'+detail[0].photos[0].photos:hardcodeHouse}
+            src={detail[0]?.photos?.length>0?'http://localhost:3001/Properties/images/'+detail[0].photos[0].photos:hardcodeHouse}
           />
         </div>
         <div>
           <img
             className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
+            src={detail[0]?.photos?.length>1?'http://localhost:3001/Properties/images/'+detail[0].photos[1].photos:hardcodeHouse}
           />
           <img
             className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
+            src={detail[0]?.photos?.length>2?'http://localhost:3001/Properties/images/'+detail[0].photos[2].photos:hardcodeHouse}
           />
         </div>
         <div>
           <img
             className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
+            src={detail[0]?.photos?.length>3?'http://localhost:3001/Properties/images/'+detail[0].photos[3].photos:hardcodeHouse}
           />
+          
           <img
             className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
             src={hardcodeHouse}
