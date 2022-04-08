@@ -7,6 +7,7 @@ const getroles = require('../controller/getroles.js')
 const PropertiesRoute = require('../controller/PropertiesRoute');
 const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
+const postSeller = require('../controller/postUserSellers')
 
 
 const router = Router();
@@ -34,4 +35,6 @@ router.use('/feature', getFeatures)
 //todo: crear una Review 
 router.use('/review', postReview)
 
+//todo: create Seller
+router.use('/seller', postSeller)
 module.exports = router;
