@@ -69,6 +69,11 @@ router.get("/", async (req, res) => {
 
 router.post("/pro", fillProperties);
 
+router.put("/:idProperty",async (req,res)=>{
+  const {idProperty}= req.params;
+  const {} = req.body;
+})
+
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
   try {
     const {idProperty}= req.params;
