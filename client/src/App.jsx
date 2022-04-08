@@ -6,7 +6,8 @@ import Create from "./components/Create/Create"
 import Detail from "./components/Detail/Detail";
 import List from './components/List/List';
 import SideBar from './components/LoggedRoute/SideBar';
-
+import PaypalButton from './components/paypal/paypalbutton.jsx';          
+import Payment from './components/paypal/payment';          
 
 function App() {
     return (
@@ -19,7 +20,8 @@ function App() {
                     <Route path='/estate/:id' element={<Detail />}/>
                     <Route path='/estate/create' element={<Create />} />
                     <Route path='/logged' element={<SideBar/>}/>
-                    
+                    <Route path='/pay/:id' element={<PaypalButton/>}/>
+                    <Route path='/payment' element={<Payment/>}/>
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>
