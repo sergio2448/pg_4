@@ -1,6 +1,8 @@
 const axios = require('axios')
 const { getById } = require('../middlewares/usercreate.js')
+const { Properties } = require('../db')
 const host = 'http://localhost:3001'
+const hostclient = 'http://localhost:3000'
 
 const { PAYPAL_API, PAYPA_API_CLIENT, PAYPAL_API_SECRET } = process.env
 const createOrder = async (req, res) => {
@@ -57,31 +59,40 @@ const createOrder = async (req, res) => {
 const captureOrder = async (req, res) => {
     const { token, PayerID, idProperty } = req.query
     console.log(token, PayerID)
-
-    const { data } = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {}, {
-        auth: {
-            username: PAYPA_API_CLIENT,
-            password: PAYPAL_API_SECRET
+    try {
+        const { data } = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {}, {
+            auth: {
+                username: PAYPA_API_CLIENT,
+                password: PAYPAL_API_SECRET
+            }
+        })
+        console.log(data)
+        const { status } = data
+        console.log(status)  //completed
+        if (status === "COMPLETED") {
+            await Properties.update({ statuspromotion: true }, {
+                where: {
+                    id: idProperty
+                }
+            })
         }
-    })
-    console.log(data)
-    const { status } = data
-    console.log(status)  //completed
-    if (status === "COMPLETED") {
         const property = await getById(idProperty)
-        console.log(property.__proto__)
+        console.log(property)
+
+        res.redirect(`${hostclient}/pay/${idProperty}`);
+    } catch (error) {
+        res.send(500).json(error)
     }
 
 
-    res.redirect(`http://localhost:3000/pay/${idProperty}`);
-    // res.send('orden capturada')
+    
 }
 const cancelOrder = async (req, res) => {
     try {
         const { idProperty } = req.query
-        res.redirect(`http://localhost:3000/pay/${idProperty}`);
+        res.redirect(`${hostclient}/pay/${idProperty}`);
     } catch (error) {
-        res.status(500).json(error)
+        res.sendStatus(500).json(error)
     }
 
 }

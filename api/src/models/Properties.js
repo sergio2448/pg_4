@@ -69,7 +69,8 @@ module.exports = (sequelize) => {
             defaultValue: 0
         },
         statuspromotion: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            defaultValue: false,
         }
     })
 }
