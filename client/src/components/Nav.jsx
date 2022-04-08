@@ -27,10 +27,7 @@ function Nav() {
             
           </div>
           <div className='text-right'>
-            {isAuthenticated? <>
-            <Profile/>
-            <LogoutButton/>
-            </>
+            {isAuthenticated? <Profile />
             :<LoginButton/>
 }
           </div>
