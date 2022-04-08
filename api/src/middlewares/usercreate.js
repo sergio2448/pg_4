@@ -18,6 +18,7 @@ async function insert(name, email, image, roleid) {
 
 async function getbyEmail(pEmail) {
     const matched = await Users.findOne({
+        include:[{ model: Roles }],
         where: {
             email: pEmail
         }
