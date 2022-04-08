@@ -12,7 +12,7 @@ const initialState = {
     searchBar: [],
     features: [],
     features2: [],
-    apikey: {}
+    maplist: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -59,6 +59,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 features: action.payload
+            }
+        case 'GET_MAP_LIST':
+            return {
+                ...state,
+                maplist: state.maplist.concat([action.payload])
             }
         default:
             return ({
