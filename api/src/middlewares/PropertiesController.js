@@ -43,9 +43,10 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
 
             //Busqueda de Caracteristicas
             let objeModelFeature={model:Features};
-            listFeatures?.length>0 ? objeModelFeature.where={name:{[Op.in]:listFeatures}}:null;
+            const nameFeatures = listFeatures.map(f => f.name);
+            listFeatures?.length>0 ? objeModelFeature.where={name:{[Op.in]:nameFeatures}}:null;
    
-
+            //BUsqueda con todo lo anterior
             respProperties = await Properties.findAll({
                 logging: console.log,
                 include: [objeModelFeature, { model: Photos }],
@@ -55,6 +56,7 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
             if(listFeatures){
                 let joinSearchFeatures;
                 if(respProperties?.length>0){
+                    //Busca que contenga todas las features solicidas
                     joinSearchFeatures=respProperties.map(properties => properties.features)
                                     .map(features => {
                                         let arrFeatures=[];
@@ -71,18 +73,37 @@ const getProperties = async (id, cost, address, city,state, country, cp, lease, 
                                     .filter(data =>   {
                                         let resultCompare=true;
                                         listFeatures.forEach(element => {
-                                            if(!data.name.includes(element)){
+                                            if(!data.name.includes(element.name)){
                                                 resultCompare= false;
                                             }
                                         });
                                         return resultCompare;
                                     })
-                                    console.log(joinSearchFeatures);
                     respProperties = await Properties.findAll({
                         include: [objeModelFeature, { model: Photos }],
                         where: {
                             id:joinSearchFeatures.map(data => data.produc_features)
                         }
+                    });
+
+                    //Busca que tenga el numero de elemntos de cada feature
+                  return  respProperties.filter(element => {
+                        let objFeature=element.dataValues.features.map(elem => elem.dataValues);
+                        let contadorCoincidencia=0;
+                         objFeature.filter(detalle => {
+                           return listFeatures.filter(data => {
+                                if(data.name===detalle.name){
+                                    if(detalle.produc_features.dataValues.value>=data.value){
+                                        contadorCoincidencia++
+                                        return detalle.produc_features.dataValues.value>=data.value
+                                    }
+                                }
+                            })
+                        })
+                        if(contadorCoincidencia==listFeatures.length){
+                            return element;
+                        }
+                        return false;
                     });
                 }
             }
