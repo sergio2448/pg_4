@@ -54,6 +54,9 @@ module.exports =  (sequelize) => {
         propertyType:{
             type:DataTypes.STRING,
             allowNull:false,
+        },
+        statuspromotion:{
+            type:DataTypes.STRING
         }
    })
 }

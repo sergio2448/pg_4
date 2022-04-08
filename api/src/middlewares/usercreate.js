@@ -53,10 +53,28 @@ async function addphoto(photo) {
         })
     })
 }
+
+async function getUserById(id){
+    const user = await Users.findByPk(id)
+    return user
+}
+
+function getEmailUser(user){
+    const email = user.getDataValue('email')
+    return email
+}
+
+function getUserName(user){
+    const name = user.getDataValue('name')
+    return name
+}
 module.exports = {
     insert,
     getbyEmail,
     findByName,
     getById,
-    addphoto
+    addphoto,
+    getUserById,
+    getEmailUser,
+    getUserName
 }
