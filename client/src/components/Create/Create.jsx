@@ -49,8 +49,7 @@ export default function Create() {
         address: '',
         cp: '',
         features: [],
-        propertyType: '',
-        sellerId: ''
+        propertyType: ''
     });
 
     React.useEffect(async () => {
@@ -110,13 +109,15 @@ export default function Create() {
             ...newEstate,
             [event.target.name]: event.target.value
         }))
+        console.log(errors)
     };
+
+    
 
     const handleFeatures = (event) => {
         event.preventDefault()
         let option = document.querySelector("#features").value
         let quantity = document.querySelector("#quantity").value
-        let inner = document.querySelector("#inner")
         let newFeature = {
             name: option,
             value: quantity
@@ -127,9 +128,11 @@ export default function Create() {
             ...newEstate,
             features: features
         })
-        document.querySelector("#quantity").value = ""
-        inner.innerHTML += `<p>${option}</p>`
-        inner.innerHTML += `<p>${quantity}</p>`
+        if(newEstate.features.length !== 0) {
+            setErrors(validate({
+                ...newEstate
+            }))
+        }
     }
 
     /* console.log(user) */
@@ -158,16 +161,16 @@ export default function Create() {
                                 <form action="" method="POST" onSubmit={onSubmit}>
                                     <div className="shadow overflow-hidden sm:rounded-xl">
                                         {
-                                            pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                            pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate}/> : ""
                                         }
                                         {
-                                            pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                            pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit}/> : ""
                                         }
                                         {
-                                            pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages}/> : ""
+                                            pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit}/> : ""
                                         }
                                         {
-                                            pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate}/> : ""
+                                            pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors}/> : ""
                                         }
                                     </div>
                                 </form>
