@@ -41,7 +41,7 @@ export default function Create() {
     const [currentStep, setCurrentStep] = React.useState(1)
     const { isAuthenticated, loginWithRedirect, user } = useAuth0()
     const [newEstate, setNewEstate] = React.useState({
-        sellerId: userDB.seller.id,
+        sellerId: userDB.user.sellers[0].id,
         lease: '',
         cost: '',
         m2: '',
@@ -78,25 +78,23 @@ export default function Create() {
     const onSubmit = async (event) => {
         event.preventDefault()
         let idEstateCreated
-        /* if(Object.values(errors).length === 0) {
-            console.log(newEstate)
-            dispatch(createEstate(newEstate));
+        if(Object.values(errors).length === 0) {
+            try {
+                let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
+                idEstateCreated = estateCreated.data.id
+                const f = new FormData()
+                for (let i = 0; i < images.length; i++) {
+                    f.append("files", images[i])
+                }
+                const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                /* navigate("/") */
+            } catch (error) {
+                console.log(error)
+            }
         } else {
             console.log("ERROR")
-        } */
-        /* dispatch(createEstate(newEstate)); */
-        try {
-            let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
-            idEstateCreated = estateCreated.data.id
-            const f = new FormData()
-            for (let i = 0; i < images.length; i++) {
-                f.append("files", images[i])
-            }
-            const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
-            navigate("/")
-        } catch (error) {
-            console.log(error)
         }
+        
     };
 
     const handleSubmit = (event) => {
@@ -111,7 +109,6 @@ export default function Create() {
             ...newEstate,
             [event.target.name]: event.target.value
         }))
-        console.log(errors)
     };
 
 
@@ -136,8 +133,6 @@ export default function Create() {
             }))
         }
     }
-
-    /* console.log(user) */
 
     return (
         isAuthenticated ?

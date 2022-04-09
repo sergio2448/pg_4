@@ -1,8 +1,7 @@
-const { Sellers } = require('../db')
+const { Sellers,Users,Roles,Properties,Photos,Features,BanckCards } = require('../db')
 const { getbyEmail } = require('./usercreate')
 
-const postSeller = async (firstName,lastName,phoneNumber,dateBirth,email) =>{
-   
+const postSeller = async (firstName,lastName,phoneNumber,dateBirth,email) =>{ 
     try {
         const resultCreate= await Sellers.create({firstName,lastName,phoneNumber,dateBirth});
         const user = await getbyEmail(email)
@@ -13,6 +12,7 @@ const postSeller = async (firstName,lastName,phoneNumber,dateBirth,email) =>{
     }
 }
 
+
 module.exports = {
-    postSeller
+    postSeller,
 }

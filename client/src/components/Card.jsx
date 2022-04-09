@@ -21,7 +21,8 @@ export default function Cards({
   measure,
   rooms,
   latitude,
-  longitude 
+  longitude,
+  maplist
 }) {
   rooms = 5;
   const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
@@ -35,26 +36,32 @@ export default function Cards({
       initialViewState={{
         latitude: latitude,
         longitude: longitude,
-        zoom: 10
+        zoom: 5
       }}
       mapStyle="mapbox://styles/mapbox/streets-v9" mapboxAccessToken={apiKey} >
-      <Marker
-          latitude={latitude}
-          longitude={longitude}
-          draggable={false}
-          >
-          <ImLocation2 className='h-8 w-8 text-teal-600'/>
-          
-          
-      </Marker></ReactMapGL>) : 'Loading..'}
+        {
+          maplist?.map(m => {
+            return (
+            <Marker
+              latitude={m.longitude}
+              longitude={m.latitude}
+              draggable={false}
+              >
+              <ImLocation2 className='h-8 w-8 text-teal-600'/>
+              
+              
+          </Marker>)
+          })
+        }
+      </ReactMapGL>) : 'Loading..'}
       </div>
       <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
-        {city + ", " + country}
+        { city + ", " + country}
       </h2>
       <div className="px-6 grid grid-cols-1 gap-x-10">
-        <span className="text-left text-stone-600/60">Listings: {rooms} </span>
+        <span className="text-left text-stone-600/60">Listings: {maplist.length} </span>
         <span className="text-left text-stone-600/60">
-          Price: {cost + " ~ " + cost}
+          Price: {parseFloat(maplist[0].cost) < parseFloat(maplist[maplist.length-1].cost) ? maplist[0].cost + " ~ " + maplist[maplist.length-1].cost : maplist[maplist.length-1].cost+ " ~ " + maplist[0].cost}
         </span>
       </div>
     </div>

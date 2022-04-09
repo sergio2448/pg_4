@@ -67,3 +67,13 @@ export function loadUser(user) {
         })
     }
 }
+
+export function getMapList(city){
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/Properties?city=' + city );
+        return dispatch({
+            type: 'GET_MAP_LIST',
+            payload: json.data
+        })
+    }
+}

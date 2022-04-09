@@ -26,7 +26,6 @@ export const Profile = () => {
             let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
             setUserLoged(userExist.data)
             if(userExist.data.result === "Existente") {
-                console.log("Existe o no??", userLoged)
                 dispatch(loadUser(userExist.data))
             }
         } catch (error) {
@@ -45,12 +44,9 @@ export const Profile = () => {
             "role": e.target.name
         })
         let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
-        console.log(newUser.data)
         dispatch(loadUser(userExist.data))
         setShowModal(false)
     }
-
-    console.log(user)
    
     return (
         isAuthenticated && (
@@ -77,7 +73,7 @@ export const Profile = () => {
                                         onClick={(e) => userSubmit(e)}
                                         ripple="dark"
                                     >
-                                        Buy
+                                        Sell
                                     </Button>
             
                                     <Button
@@ -86,7 +82,7 @@ export const Profile = () => {
                                         onClick={(e) => userSubmit(e)}
                                         ripple="light"
                                     >
-                                        Sell
+                                        Buy
                                     </Button>
                                 </div>
                             </ModalFooter>

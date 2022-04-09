@@ -10,6 +10,7 @@ const initialState = {
     features2: [],
     apikey: {},
     user: {},
+    maplist: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -61,6 +62,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload
+            }
+        case 'GET_MAP_LIST':
+            return {
+                ...state,
+                maplist: state.maplist.concat([action.payload])
             }
         default:
             return ({
