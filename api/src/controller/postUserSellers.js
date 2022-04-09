@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { postSeller } = require('../middlewares/SellerMidd')
+const { postBuyer } = require('../middlewares/BuyerMidd')
 const { insert } = require('../middlewares/usercreate')
 const { getbyEmail } = require('../middlewares/usercreate')
 const { Roles } = require('../db')
@@ -26,7 +27,14 @@ router.post('/', async (req, res) => {
             const idRol=await Roles.findAll({where:{rolName:role} })
             console.log(idRol[0]?.dataValues?.id);
             const newUser=await insert(nickName, email, image, idRol[0]?.dataValues?.id);
-            const createReview=await postSeller(firstName,lastName,phoneNumber,dateBirth,email);
+            let createReview
+            if(role==="seller"){
+                createReview =await postSeller(firstName,lastName,phoneNumber,dateBirth,email);
+            }
+            if(role==="buyer"){
+                createReview = await postBuyer(firstName,lastName,phoneNumber,dateBirth,email)
+            }
+            
             if(createReview?.dataValues ){
                 seller=createReview?.dataValues;
                 res.status(200).json({result:"Nuevo",seller})

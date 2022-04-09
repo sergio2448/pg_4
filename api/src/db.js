@@ -77,7 +77,7 @@ Sales.belongsTo(Buyers);
 
 //Uno a uno, 1:1
 //Un Comprador tiene un usuario, una cuenta de usuario le pertenece a un comprador
-Users.hasOne(Buyers);
+Users.hasMany(Buyers);
 Buyers.belongsTo(Users);
 
 
