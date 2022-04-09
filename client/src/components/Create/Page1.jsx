@@ -14,6 +14,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                         autoComplete="lease-name"
                         className="bg-[#f8fafc95] text-center mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         onChange={handleSubmit}
+                        value={newEstate.lease}
                     >
                         <option hidden>~</option>
                         <option>Venta</option>
@@ -68,6 +69,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                         autoComplete="country-name"
                         className="bg-[#f8fafc95] text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleSubmit}
+                        value={newEstate.country}
                     >
                         <option hidden>~</option>
                         {
@@ -91,6 +93,7 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                         autoComplete="state"
                         className="bg-[#f8fafc95] text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         onChange={handleSubmit}
+                        value={newEstate.state}
                     >
                         {
                             citys.map(elem => {
