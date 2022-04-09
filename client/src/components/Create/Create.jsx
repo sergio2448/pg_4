@@ -41,7 +41,7 @@ export default function Create() {
     const [currentStep, setCurrentStep] = React.useState(1)
     const { isAuthenticated, loginWithRedirect, user } = useAuth0()
     const [newEstate, setNewEstate] = React.useState({
-        sellerId: userDB.user.sellers[0].id,
+        sellerId: userDB.user.sellers[0] ? userDB.user.sellers[0].id : 0,
         lease: '',
         cost: '',
         m2: '',
@@ -134,6 +134,7 @@ export default function Create() {
         }
     }
 
+
     return (
         isAuthenticated ?
             <div className='h-120'>
@@ -145,39 +146,46 @@ export default function Create() {
                         <Nav />
                     </div>
                 </div>
-
-
-                <div className=' mt-16 relative z-10 mb-20'>
-                    <div className="mt-10 sm:mt-0 mb-24">
-                        <div className="md:grid md:grid-cols-3 md:gap-6">
-                            <div className="md:col-span-1 mx-4 bg-[#00000099] p-3 mt-16 h-16 rounded-sm">
-                                <div className="px-4 sm:px-0">
-                                    <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Property details</h3>
-                                    <p className="mt-1 text-sm text-gray-400">Use the exact or declared data of your property.</p>
+            {
+                userDB.user.sellers[0] ? <div className=' mt-16 relative z-10 mb-20'>
+                <div className="mt-10 sm:mt-0 mb-24">
+                    <div className="md:grid md:grid-cols-3 md:gap-6">
+                        <div className="md:col-span-1 mx-4 bg-[#00000099] p-3 mt-16 h-16 rounded-sm">
+                            <div className="px-4 sm:px-0">
+                                <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Property details</h3>
+                                <p className="mt-1 text-sm text-gray-400">Use the exact or declared data of your property.</p>
+                            </div>
+                        </div>
+                        <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
+                            <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
+                            <form action="" method="POST" onSubmit={onSubmit}>
+                                <div className="shadow overflow-hidden sm:rounded-xl">
+                                    {
+                                        pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
+                                    }
+                                    {
+                                        pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit} /> : ""
+                                    }
+                                    {
+                                        pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} /> : ""
+                                    }
+                                    {
+                                        pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
+                                    }
                                 </div>
-                            </div>
-                            <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
-                                <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
-                                <form action="" method="POST" onSubmit={onSubmit}>
-                                    <div className="shadow overflow-hidden sm:rounded-xl">
-                                        {
-                                            pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
-                                        }
-                                        {
-                                            pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit} /> : ""
-                                        }
-                                        {
-                                            pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} /> : ""
-                                        }
-                                        {
-                                            pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
-                                        }
-                                    </div>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
+            : <div className='relative z-10 w-1/2 flex justify-center items-center my-32 mx-auto bg-[#00000090] p-8'>
+                <p className='text-4xl text-white'>  
+                    You are not a seller, if you want to change your account type, go to the top menu and select my profile.
+                </p>
+            </div>
+            }
+
+                
             </div>
             : loginWithRedirect()
     )
