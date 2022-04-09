@@ -1,7 +1,3 @@
-import {
-    CREATE_ESTATE,
-} from '../actions/index';
-
 const initialState = {
     oneEstate: [],
     allEstate: [],
@@ -12,6 +8,8 @@ const initialState = {
     searchBar: [],
     features: [],
     features2: [],
+    apikey: {},
+    user: {},
     maplist: [],
 };
 
@@ -59,6 +57,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 features: action.payload
+            }
+        case 'LOAD_USER':
+            return {
+                ...state,
+                user: action.payload
             }
         case 'GET_MAP_LIST':
             return {

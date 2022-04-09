@@ -1,5 +1,4 @@
 import axios from 'axios';
-export const CREATE_ESTATE = 'CREATE_POKEMON';
 
 export const createEstate = (estateToCreate) => dispatch => {
     return axios.post(`http://localhost:3001/Properties/pro`, estateToCreate)
@@ -56,6 +55,15 @@ export function getFeatureList(){
         return dispatch({
             type: 'GET_FEATURE_LIST',
             payload: json.data
+        })
+    }
+}
+
+export function loadUser(user) {
+    return async (dispatch) => {
+        return dispatch({
+            type: 'LOAD_USER',
+            payload: user
         })
     }
 }

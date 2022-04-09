@@ -8,8 +8,6 @@ export default function DropDown() {
 
     const {user, isAuthenticated, isLoading, logout} =  useAuth0()
 
-    console.log(user)
-
     return (
         <div className="relative">
             <div className="absolute -left-4 -top-1 z-30 flex justify-center items-center overflow-hidden h-12 w-12">
