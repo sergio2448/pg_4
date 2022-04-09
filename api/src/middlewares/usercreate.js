@@ -1,4 +1,4 @@
-const { Roles, Users, BanckCards, Properties, Features, Photos } = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos ,Sellers,Buyers,Sales} = require('../db')
 async function insert(name, email, image, roleid) {
     try {
         const newUser = await Users.create(
@@ -18,7 +18,13 @@ async function insert(name, email, image, roleid) {
 
 async function getbyEmail(pEmail) {
     const matched = await Users.findOne({
-        include:[{ model: Roles }],
+        // include:[{ model: Roles }],
+        include:[{model:Roles}
+            ,{model:Sellers,
+                include:{model:Properties,include:[{model:Photos},{model:Features} ]}}
+            ,{model:BanckCards}
+            ,{model:Buyers,include:{model:Sales}}
+        ],
         where: {
             email: pEmail
         }

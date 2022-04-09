@@ -71,7 +71,23 @@ router.post("/pro", fillProperties);
 
 router.put("/:idProperty",async (req,res)=>{
   const {idProperty}= req.params;
-  const {} = req.body;
+  const { description, 
+          features, 
+          m2, 
+          address, 
+          city, 
+          state , 
+          country, 
+          cost, 
+          cp,
+          lease,
+          propertyType,
+          sellerId,
+          latitude,
+          longitude,
+          highlighted } = req.body;
+
+
 })
 
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
@@ -103,6 +119,7 @@ router.get('/images/:key', (req, res) => {
   readStream.pipe(res)
 })
 
+// ====EN CONSTRUCCION ====
 router.put('/images/:id',fileUpload, async (req, res) => {
   const {id}= req.params;
   const files= req.files;

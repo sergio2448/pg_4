@@ -115,6 +115,14 @@ Address.belongsTo(Buyers, { foreignKey: { allowNull: true }})
 Sellers.hasOne(Address, { foreignKey: { allowNull: true }})
 Address.belongsTo(Sellers,  { foreignKey: { allowNull: true }})
 
+
+//Uno a muchos, 1:N
+//Un usuario puede adquirir una o más propiedades, una propiedad sólo puede ser comprada por un usuario
+Properties.hasMany(Sales);
+Sales.belongsTo(Properties);
+
+
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
