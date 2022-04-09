@@ -17,9 +17,8 @@ router.post("/", async (req, res) => {
     try {
         const user = await getUserById(userid)
         const emailUser = await getEmailUser(user)
-        console.log(emailUser)
         const userName = getUserName(user)
-        console.log(userName)
+        
         
         const handlebarsOptions = {
             viewEngine: {
@@ -30,25 +29,25 @@ router.post("/", async (req, res) => {
             viewPath: './views',
             extName: ".handlebars",
         }
-    
-        transporter.use('compile', hbs(handlebarsOptions));
+        // console.log(transporter)
+        transporter.use('compile', hbs(handlebarsOptions))
     
         await transporter.verify()
+        // console.log(response)
     
         let mailOptions = {
-            from: '"Publicación completa 👻" <dominicode.xyz@gmail.com>',
+            from: '"Publicación completa 👻" <casillas588@hotmail.com>',
             to: emailUser,
             subject: 'Testing and Testing',
             template: postStatus,
             context: {
                 Document:`Publicacion completa`,
-                title: `Hola ${userName},`,
+                title: `Hola mundo`,
             }
-    
         }
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                console.log(err)
+                console.log(err.response.body)
                 return res.status(500).send(err.message)
             } else {
                 console.log("email enviado")

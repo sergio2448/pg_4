@@ -1,18 +1,23 @@
 const { Router } = require('express');
 const { postSeller } = require('../middlewares/SellerMidd')
+const { postBuyer } = require('../middlewares/BuyerMidd')
 const { insert } = require('../middlewares/usercreate')
 const { getbyEmail } = require('../middlewares/usercreate')
 const { Roles } = require('../db')
 const router = Router();
 
+const ROL_SELLER="seller";
+const ROL_BUYER="buyer";
+
 router.get('/:email',async (req, res)=>{
     const {email}= req.params;
     const userexistente = await getbyEmail(email)
+    let resp;
     if(userexistente===null){
         res.status(200).json({result:"Sin Registros"})
     }
     else{
-        res.status(200).json({result:"Existente",seller:userexistente})
+        res.status(200).json({result:"Existente",user:userexistente})
     }
 })
 
@@ -26,7 +31,14 @@ router.post('/', async (req, res) => {
             const idRol=await Roles.findAll({where:{rolName:role} })
             console.log(idRol[0]?.dataValues?.id);
             const newUser=await insert(nickName, email, image, idRol[0]?.dataValues?.id);
-            const createReview=await postSeller(firstName,lastName,phoneNumber,dateBirth,email);
+            let createReview
+            if(role===ROL_SELLER){
+                createReview =await postSeller(firstName,lastName,phoneNumber,dateBirth,email);
+            }
+            if(role===ROL_BUYER){
+                createReview = await postBuyer(firstName,lastName,phoneNumber,dateBirth,email)
+            }
+            
             if(createReview?.dataValues ){
                 seller=createReview?.dataValues;
                 res.status(200).json({result:"Nuevo",seller})
