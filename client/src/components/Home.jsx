@@ -6,17 +6,20 @@ import Card from './Card.jsx';
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHomeCards, getFeatureList } from '../redux/actions';
+import { getHomeCards, getFeatureList, getMapList } from '../redux/actions';
 import Footer from './Footer';
 
 function Home() {
 
   const dispatch = useDispatch();
   const homeCards = useSelector((state) => state.homeCards);
+  const mapasList = useSelector((state) => state.maplist);
 
+  const places = ['Gregoire', 'Villa', 'Cholula']
   useEffect(() => {
     dispatch(getHomeCards());
     dispatch(getFeatureList());
+    places.map(p => dispatch(getMapList(p)));
   }, []);
   
   const apiKey = useSelector((state) => state.apikey);
@@ -39,11 +42,11 @@ function Home() {
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Explore the Neighbourhoods</h2>        
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>          
         {
-            homeCards.length ? homeCards.reverse().slice(0,3).map(c => {
+            mapasList.length ? mapasList.map(c => {
               return(             
-        <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          <Link to={'/estate/' + c.id}>
-            <Card featured={true} isMap={true} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2} latitude={c.longitude} longitude={c.latitude}/>
+        <div key={c[0].id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
+          <Link to={'/estate/' + c[0].id}>
+            <Card featured={true} isMap={true} lease={c[0].lease} name={c[0].address} city={c[0].state} country={c[0].country} cost={c[0].cost} measure={c[0].m2} latitude={c[0].longitude} longitude={c[0].latitude} maplist={c} />
           </Link>
         </div>) 
             }) : (<div>Loading...</div>)
