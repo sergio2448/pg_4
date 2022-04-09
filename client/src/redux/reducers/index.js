@@ -1,7 +1,3 @@
-import {
-    CREATE_ESTATE,
-} from '../actions/index';
-
 const initialState = {
     oneEstate: [],
     allEstate: [],
@@ -12,7 +8,8 @@ const initialState = {
     searchBar: [],
     features: [],
     features2: [],
-    apikey: {}
+    apikey: {},
+    user: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -59,6 +56,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 features: action.payload
+            }
+        case 'LOAD_USER':
+            return {
+                ...state,
+                user: action.payload
             }
         default:
             return ({
