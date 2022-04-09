@@ -6,14 +6,16 @@ const {
     addassociations,
     fillProperties,
     fillPhotos,
-    deletePhotos
+    deletePhotos,
+    removeFeature,
+    getPhotos
 } = require('../middlewares/PropertiesController')
 const multer = require("multer");
 const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 
-const { uploadFile, getFileStream } = require('../middlewares/configS3')
+const { uploadFile, getFileStream,deleteFile } = require('../middlewares/configS3')
 
 const diskstorage = multer.diskStorage({
 //  destination: path.join(__dirname, "../images"),
@@ -69,27 +71,6 @@ router.get("/", async (req, res) => {
 
 router.post("/pro", fillProperties);
 
-router.put("/:idProperty",async (req,res)=>{
-  const {idProperty}= req.params;
-  const { description, 
-          features, 
-          m2, 
-          address, 
-          city, 
-          state , 
-          country, 
-          cost, 
-          cp,
-          lease,
-          propertyType,
-          sellerId,
-          latitude,
-          longitude,
-          highlighted } = req.body;
-
-
-})
-
 router.post("/img/:idProperty", fileUpload, async (req, res) => {
   try {
     const {idProperty}= req.params;
@@ -122,22 +103,37 @@ router.get('/images/:key', (req, res) => {
 // ====EN CONSTRUCCION ====
 router.put('/images/:id',fileUpload, async (req, res) => {
   const {id}= req.params;
-  const files= req.files;
+  const { listImage } = req.body
   const resultSearch = await getProperties(id);
-  resultSearch?.map(photo => photo.photos);
   if(resultSearch){
     //delete photos en DB
     const result= await deletePhotos(id);
-    if (result?.length > 0) {
-    //delete photos en AWS
+    //add photos
+    listImage.forEach(async element => {
+      await fillPhotos(element,id)
+    })
 
+    if (result > 0) {
+      //delete photos en AWS
+      const listPhotoAct=await getPhotos(id);
+      console.log(listPhotoAct);
+      listPhotoAct.forEach(element => {
+        if(!listImage.include(element)){
+            try {
+              //deleteFile(element);  
+            } catch (error) {
+              console.log("No se puedo eliminar la imagen:"+element);
+            }
+          }
+        })
+      } else {
+        return res.status(404).json({ message: "No se encontraron registros" });
+      } 
 
-    } else {
-      return res.status(404).json({ message: "No se encontraron registros" });
-    }    
+       
   }
 
-  const result = await uploadFile(file);
+  return res.status(200).json({ message: "Se eliminaron las imagenes" });
 })
 
 
@@ -154,6 +150,7 @@ router.put('/:id', async (req, res) => {
         }
         await updateProperties(values, id)
         if (override === 'true') {
+            await removeFeature(id);
             setassociations(features, id)
         } else if (override === 'false') {
             await addassociations(features, id)

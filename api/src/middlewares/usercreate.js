@@ -54,6 +54,13 @@ async function getById(id) {
     return Property
 }
 
+async function getByIdInFeature(id) {
+    const Property = await Properties.findByPk(id, {
+        include: [{ model: Features }]
+    })
+    return Property
+}
+
 async function addphoto(photo) {
     photo.map((value) => {
         Photos.findOrCrate({
@@ -76,7 +83,7 @@ async function setfeatures(features, newProperty) {
         const propFeature = await Features.findAll({
             where: { name },
         });
-        newProperty.setFeatures(propFeature, { through: { value } });
+        newProperty.addFeatures(propFeature, { through: { value } });
     })
 }
 
@@ -104,5 +111,6 @@ module.exports = {
     setfeatures,
     getUserById,
     getEmailUser,
-    getUserName
+    getUserName,
+    getByIdInFeature
 }
