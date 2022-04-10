@@ -2,14 +2,14 @@ import React from "react"
 
 function StripedTable() {
   const thClass =
-    "px-2 py-2 text-left bg-blue-900 text-white text-sm font-medium"
+    "px-2 py-2 text-left bg-blue-900 text-white text-sm font-medium "
   const tdClass = "px-4 py-8 border-t border-b border-gray-300 text-sm"
   const trClass = "border-gray-300 bg-gray-300 "
   return (
-    <div  className="flex flex-col items-center		">
+    <div  className="flex flex-col">
     <h2 className='text-white text-3xl font-semi-bold font-Poppins'>Favorite Properties</h2>
 
-    <table className="w-1/2 table-auto rounded-sm">
+    <table className="w-1/2 table-auto rounded-md ">
       <thead>
         <tr>
           <th className={thClass}>Properties</th>
