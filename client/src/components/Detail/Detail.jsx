@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getHomeDetail } from "../../redux/actions/index";
-import Modal1 from "./Modal1";
+import Gallery from "./Gallery";
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -21,6 +21,12 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   let { id } = useParams();
   const dispatch = useDispatch();
   const detail = useSelector((state) => state.homeDetail);
+  /*   const mapasList = useSelector((state) => state.maplist);
+
+  const places = ["Gregoire", "Villa", "Cholula"];
+  useEffect(() => {
+    places.map((p) => dispatch(getMapList(p)));
+  }, []); */
 
   useEffect(() => {
     dispatch(getHomeDetail(id));
@@ -29,82 +35,31 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     };
   }, [id]);
 
-  console.log(detail);
+  const photos =
+    detail[0]?.photos?.length > 0
+      ? detail[0].photos.map((photo) => photo.photos)
+      : null;
+
   return (
-    <div className=" text-center ">
-      <div className="bg-[#075985]">
-        <div className="bg-black shadow-nav h-20 relative z-20">
+    <div class=" text-center ">
+      <div class="bg-[#075985]">
+        <div class="bg-black shadow-nav h-20 relative z-20">
           <Nav />
         </div>
       </div>
-      <h2 className="mt-6 text-stone-600 text-5xl font-base font-Poppins">
+      <h2 class="mt-6 text-stone-600 text-5xl font-base font-Poppins">
         <strong>
           {detail[0]?.country},{detail[0]?.city}
         </strong>
       </h2>
-      <div className="mx-32 px-5 mt-12 grid grid-cols-4 gap-6">
-        <Modal1 />
-        <div>
-          <img
-            className="border-2 h-full object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 0
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[0].photos
-                : hardcodeHouse
-            }
-          />
-        </div>
-        <div>
-          <img
-            className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 1
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[1].photos
-                : hardcodeHouse
-            }
-          />
-          <img
-            className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 2
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[2].photos
-                : hardcodeHouse
-            }
-          />
-        </div>
-        <div>
-          <img
-            className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 3
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[3].photos
-                : hardcodeHouse
-            }
-          />
-
-          <img
-            className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
-          />
-        </div>
-        <div>
-          <img
-            className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
-          />
-          <img
-            className="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
-          />
-        </div>
+      <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
+        {photos ? <Gallery photos={photos} /> : null}
       </div>
-      <div className="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
+      {/* {photos ? <Modal1 photos={photos} /> : null} */}
+
+      <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
         <div>
-          <h5 className="text-center">
+          <h5 class="text-center">
             Measure: <strong> {detail[0]?.m2 ? detail[0].m2 : 45} m²</strong>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +81,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </h5>
         </div>
         <div>
-          <h5 className="text-center">
+          <h5 class="text-center">
             Rooms:
             <strong>
               {detail[0]?.features[0]?.produc_features.value
@@ -151,7 +106,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </svg>
         </div>
         <div>
-          <h5 className="text-center">
+          <h5 class="text-center">
             Bathrooms:
             <strong>
               {detail[0]?.features[1]?.produc_features.value
@@ -179,64 +134,50 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </svg>
         </div>
         <div>
-          <div className="grid grid-cols-2 gap-3">
-            <h5 className="text-right">
+          <div class="grid grid-cols-2 gap-3">
+            <h5 class="text-right">
               <strong>User:</strong> Pepito Perez
             </h5>
-            <img className="h-10 w-10 rounded-full" src={seller} alt="" />
+            <img class="h-10 w-10 rounded-full" src={seller} alt="" />
           </div>
-          <button className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
+          <button class="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
             Check Availability
           </button>
         </div>
       </div>
 
       <hr />
-      <div className="py-8 px-6 mb-6 text-xl font-bold font-Monserrat">
-        <p className="mb-6">
+      <div class="py-8 px-6 mb-6 text-xl font-bold font-Monserrat">
+        <p class="mb-6">
           {detail[0]?.description ? detail[0]?.description : description}
         </p>
         <hr />
         <div>
           <h3>Main data of the property</h3>
         </div>
-        <div className="mx-32 px-6 mt-12 grid grid-cols-3 gap-6 mb-6">
+        <div class="mx-32 px-6 mt-12 grid grid-cols-3 gap-6 mb-6">
           <div>
-            <h5 className="text-center">
+            <h5 class="text-center">
               <strong>City:</strong> {city}
             </h5>
-            <h5 className="text-center">
+            <h5 class="text-center">
               <strong>Country:</strong> {country}
             </h5>
           </div>
           <div>
-            <h5 className="text-center">
+            <h5 class="text-center">
               <strong>Cost:</strong> {cost}{" "}
             </h5>
-            <h5 className="text-center">
+            <h5 class="text-center">
               <strong>Measure:</strong> {measure}{" "}
             </h5>
           </div>
         </div>
         <hr />
         <div>
-          <h3 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
+          <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
             You will live here
           </h3>
-          <div className="relative bg-black w-full h-64 mt-6">
-            <iframe
-              className="w-full h-full "
-              frameborder="0"
-              scrolling="no"
-              marginheight="0"
-              marginwidth="0"
-              src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=Tucuman,%20Argentina+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=6&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-            >
-              <a href="https://www.gps.ie/car-satnav-gps/">
-                Car Navigation Systems
-              </a>
-            </iframe>
-          </div>
         </div>
       </div>
     </div>
