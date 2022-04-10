@@ -11,22 +11,78 @@ const Slideshow2 = ({ photos }) => {
       <div className="carousel-inner relative w-full overflow-hidden">
         <div className="carousel-item active relative float-left w-full">
           <img
-            src={"http://localhost:3001/Properties/images/" + photos[0]}
-            className="block w-full"
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[0]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
             alt="Wild Landscape"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
-            src={"http://localhost:3001/Properties/images/" + photos[1]}
-            className="block w-full"
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[1]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
             alt="Camera"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
-            src={"http://localhost:3001/Properties/images/" + photos[2]}
-            className="block w-full"
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[2]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
+            alt="Exotic Fruits"
+          />
+        </div>
+        <div className="carousel-item relative float-left w-full">
+          <img
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[3]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
+            alt="Exotic Fruits"
+          />
+        </div>
+        <div className="carousel-item relative float-left w-full">
+          <img
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[4]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
+            alt="Exotic Fruits"
+          />
+        </div>
+        <div className="carousel-item relative float-left w-full">
+          <img
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[5]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
+            alt="Exotic Fruits"
+          />
+        </div>
+        <div className="carousel-item relative float-left w-full">
+          <img
+            src={
+              photos
+                ? "http://localhost:3001/Properties/images/" + photos[6]
+                : hardcodeHouse
+            }
+            className="block w-96 h-60"
             alt="Exotic Fruits"
           />
         </div>

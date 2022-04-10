@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getHomeDetail } from "../../redux/actions/index";
-import Modal1 from "./Modal1";
 import Gallery from "./Gallery";
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
@@ -22,6 +21,12 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   let { id } = useParams();
   const dispatch = useDispatch();
   const detail = useSelector((state) => state.homeDetail);
+  /*   const mapasList = useSelector((state) => state.maplist);
+
+  const places = ["Gregoire", "Villa", "Cholula"];
+  useEffect(() => {
+    places.map((p) => dispatch(getMapList(p)));
+  }, []); */
 
   useEffect(() => {
     dispatch(getHomeDetail(id));
@@ -35,8 +40,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       ? detail[0].photos.map((photo) => photo.photos)
       : null;
 
-  console.log(detail);
-  console.log(photos);
   return (
     <div class=" text-center ">
       <div class="bg-[#075985]">
@@ -52,66 +55,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
         {photos ? <Gallery photos={photos} /> : null}
       </div>
-      {photos ? <Modal1 photos={photos} /> : null}
-      <div class="mx-32 px-5 mt-12 grid grid-cols-4 gap-6">
-        <div>
-          <img
-            class="border-2 h-full object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 0
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[0].photos
-                : hardcodeHouse
-            }
-          />
-        </div>
-        <div>
-          <img
-            class="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 1
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[1].photos
-                : hardcodeHouse
-            }
-          />
-          <img
-            class="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 2
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[2].photos
-                : hardcodeHouse
-            }
-          />
-        </div>
-        <div>
-          <img
-            class="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={
-              detail[0]?.photos?.length > 3
-                ? "http://localhost:3001/Properties/images/" +
-                  detail[0].photos[3].photos
-                : hardcodeHouse
-            }
-          />
+      {/* {photos ? <Modal1 photos={photos} /> : null} */}
 
-          <img
-            class="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
-          />
-        </div>
-        <div>
-          <img
-            class="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
-          />
-          <img
-            class="w-60 border-2 object-cover transition ease-in-out duration-200 hover:opacity-60"
-            src={hardcodeHouse}
-          />
-        </div>
-      </div>
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
         <div>
           <h5 class="text-center">
@@ -233,20 +178,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
             You will live here
           </h3>
-          <div class="relative bg-black w-full h-64 mt-6">
-            <iframe
-              class="w-full h-full "
-              frameborder="0"
-              scrolling="no"
-              marginheight="0"
-              marginwidth="0"
-              src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=es&amp;q=Tucuman,%20Argentina+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=6&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-            >
-              <a href="https://www.gps.ie/car-satnav-gps/">
-                Car Navigation Systems
-              </a>
-            </iframe>
-          </div>
         </div>
       </div>
     </div>
