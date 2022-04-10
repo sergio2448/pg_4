@@ -3,6 +3,7 @@ import Nav from '../Nav'
 import HouseBackGround from '../../styles/images/house-back.jpg'
 import FormInfo from './FormInfo'
 import StripedTable from './StripedTable'
+import UserInfo from './UserInfo'
 
 function Settings() {
   return (
@@ -12,9 +13,12 @@ function Settings() {
     </div>
     <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>
     <Nav />
-    <div className='relative z-5 pt-28 text-center'>
-        {/* <StripedTable/> */}
-        <FormInfo/>
+    <div className='relative z-5 pt-28 text-center flex flex-col  bg-black '>
+          {/* <StripedTable/> */}
+         {/* <FormInfo/>  */}
+          <UserInfo/>
+         
+
       </div>
     
       </div>
