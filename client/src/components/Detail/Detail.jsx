@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getHomeDetail } from "../../redux/actions/index";
 import Modal1 from "./Modal1";
+import Gallery from "./Gallery";
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -48,6 +49,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           {detail[0]?.country},{detail[0]?.city}
         </strong>
       </h2>
+      <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
+        {photos ? <Gallery photos={photos} /> : null}
+      </div>
       {photos ? <Modal1 photos={photos} /> : null}
       <div class="mx-32 px-5 mt-12 grid grid-cols-4 gap-6">
         <div>
