@@ -2,65 +2,67 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./src/**/*.{html,js}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     extend: {
       animation: {
-        'inOut': 'wiggle 1s ease-in-out 1',
+        inOut: "wiggle 1s ease-in-out 1",
       },
       keyframes: {
         wiggle: {
-          '0%': { top: '0' },
-          '50%': { transform: 'rotate(3deg)' },
-          '100%': {top: '-30rem'}
-        }
+          "0%": { top: "0" },
+          "50%": { transform: "rotate(3deg)" },
+          "100%": { top: "-30rem" },
+        },
       },
       height: {
-        '120': '60rem',
+        120: "60rem",
       },
       boxShadow: {
-        'nav': '-1px 16px 40px -5px rgba(0,0,0,1)',
+        nav: "-1px 16px 40px -5px rgba(0,0,0,1)",
       },
-      colors:{
-        'my-Blue': '#0028FF',
-        'darkProject': '#132C33',
-        'lightProject': '#51C4D380',
-        'whiteProject': '#D8E3E7'
+      colors: {
+        "my-Blue": "#0028FF",
+        darkProject: "#132C33",
+        lightProject: "#51C4D380",
+        whiteProject: "#D8E3E7",
       },
       fontFamily: {
-        'Monserrat': ['Montserrat', 'sans-serif'],
-        'Poppins': ['Poppins', 'sans-serif']
+        Monserrat: ["Montserrat", "sans-serif"],
+        Poppins: ["Poppins", "sans-serif"],
       },
       spacing: {
-        "72": "18rem",
-        "84": "21rem",
-        "96": "24rem"
+        72: "18rem",
+        84: "21rem",
+        96: "24rem",
       },
       maxWidth: {
         "1/4": "25%",
         "1/2": "50%",
         "3/4": "75%",
-        "9/10": "90%"
+        "9/10": "90%",
       },
       translate: {
         double: "200%",
         triple: "300%",
-        quad: "400%"
+        quad: "400%",
       },
       height: {
-        "2px": "2px"
+        "2px": "2px",
       },
       inset: {
-        "24": "5rem", // not for real
+        24: "5rem", // not for real
         "1/2": "50%",
-        full: "100%"
+        full: "100%",
       },
       transitionProperty: {
-        width: "width"
-      }
+        width: "width",
+      },
     },
     container: {
-      padding: "2rem"
+      padding: "2rem",
     },
     fontSize: {
       xs: ".75rem",
@@ -77,7 +79,7 @@ module.exports = {
       "7xl": "5rem",
       "8xl": "6rem",
       "9xl": "7rem",
-      "10xl": "8rem"
+      "10xl": "8rem",
     },
   },
   variants: {
@@ -91,10 +93,10 @@ module.exports = {
       "2xl": "0 20px 66px 0 rgba(34,48,73,.2)",
       inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
       outline: "0 0 0 3px rgba(66, 153, 225, 0.5)",
-      none: "none"
+      none: "none",
     },
     backgroundColor: ["responsive", "hover", "focus", "checked", "even"],
-    margin: ["responsive", "group-hover", "last"]
+    margin: ["responsive", "group-hover", "last"],
   },
-  plugins: [],
-}
+  plugins: [require("tw-elements/dist/plugin")],
+};

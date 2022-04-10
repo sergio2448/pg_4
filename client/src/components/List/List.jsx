@@ -38,18 +38,52 @@ function List() {
                         {
                             searchFeatures.length ? searchFeatures.slice(0, 6).map(c => {
                                 return (
-                                    <div className='text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-                                        <Link to='/'>
-                                            <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2} />
-                                        </Link>
-                                    </div>)
+                                  <div
+                                    key={c.id}
+                                    className="text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl "
+                                  >
+                                    <Link to={"/estate/" + c.id}>
+                                      <Card
+                                        image={
+                                          "http://localhost:3001/Properties/images/" +
+                                          c.photos[0].photos
+                                        }
+                                        featured={false}
+                                        isMap={false}
+                                        lease={c.lease}
+                                        name={c.address}
+                                        city={c.city}
+                                        country={c.country}
+                                        cost={c.cost}
+                                        measure={c.m2}
+                                      />
+                                    </Link>
+                                  </div>
+                                );
                             }) : listCards.reverse().slice(0, 6).map(c => {
                                 return (
-                                    <div className='text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-                                        <Link to='/'>
-                                            <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2} />
-                                        </Link>
-                                    </div>)
+                                  <div
+                                    key={c.id}
+                                    className="text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl "
+                                  >
+                                    <Link to={"/estate/" + c.id}>
+                                      <Card
+                                        image={
+                                          "http://localhost:3001/Properties/images/" +
+                                          c.photos[0].photos
+                                        }
+                                        featured={false}
+                                        isMap={false}
+                                        lease={c.lease}
+                                        name={c.address}
+                                        city={c.city}
+                                        country={c.country}
+                                        cost={c.cost}
+                                        measure={c.m2}
+                                      />
+                                    </Link>
+                                  </div>
+                                );
                             })
                         }
                     </div>
