@@ -1,18 +1,10 @@
 const express = require('express');
-const {
-    getUserById,
-    getEmailUser,
-    getUserName
-} = require('../middlewares/usercreate.js')
 const userdata = require('../middlewares/emailuserdata.js')
 const transporter = require('../middlewares/transporterconfig.js')
 
-// const hbs = require('nodemailer-express-handlebars')
 const router = express();
 
 module.exports = router
-
-
 
 router.post("/published", async (req, res) => {
     const { userid } = req.body
