@@ -4,50 +4,38 @@ const {
     getEmailUser,
     getUserName
 } = require('../middlewares/usercreate.js')
-
+const userdata = require('../middlewares/emailuserdata.js')
 const transporter = require('../middlewares/transporterconfig.js')
 
-const hbs = require('nodemailer-express-handlebars')
+// const hbs = require('nodemailer-express-handlebars')
 const router = express();
 
 module.exports = router
 
-router.post("/", async (req, res) => {
-    const { userid, postStatus } = req.body
+
+
+router.post("/published", async (req, res) => {
+    const { userid } = req.body
     try {
-        const user = await getUserById(userid)
-        const emailUser = await getEmailUser(user)
-        const userName = getUserName(user)
         
-        
-        const handlebarsOptions = {
-            viewEngine: {
-                extName: '.handlebars',
-                partialsDir: './views',
-                defaultLayout: false,
-            },
-            viewPath: './views',
-            extName: ".handlebars",
-        }
-        // console.log(transporter)
-        transporter.use('compile', hbs(handlebarsOptions))
-    
-        await transporter.verify()
-        // console.log(response)
-    
+        const {
+            emailUser,
+            userName
+        } = userdata(userid)
+
         let mailOptions = {
-            from: '"Publicación completa 👻" <casillas588@hotmail.com>',
+            from: '"Inmobiliaria" <casillas588@hotmail.com>',
             to: emailUser,
-            subject: 'Testing and Testing',
-            template: postStatus,
+            subject: 'Publicación completa 👻',
+            template: 'Publicado',
             context: {
-                Document:`Publicacion completa`,
-                title: `Hola mundo`,
+                Document: `Publicacion completa`,
+                title: `Hola ${userName}`,
             }
         }
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                console.log(err.response.body)
+                console.log(err)
                 return res.status(500).send(err.message)
             } else {
                 console.log("email enviado")
@@ -57,8 +45,37 @@ router.post("/", async (req, res) => {
     } catch (error) {
         res.status(500).json(error)
     }
-   
-
-
 })
 
+router.post('/welcome', async (req, res) => {
+    const { userid } = req.body
+    try {
+
+        const {
+            emailUser,
+            userName
+        } = await userdata(userid)
+
+        let mailOptions = {
+            from: '"Inmobiliaria" <casillas588@hotmail.com>',
+            to: emailUser,
+            subject: '¡Te damos la bienvenida ✅¡',
+            template: 'Welcome',
+            context: {
+                Document: `Welcome to my page`,
+                title: `Hola ${userName}`,
+            }
+        }
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).send(err.message)
+            } else {
+                console.log("email enviado")
+                return res.status(200).json(info.response)
+            }
+        })
+    } catch (error) {
+        res.send(500).json(error)
+    }
+})

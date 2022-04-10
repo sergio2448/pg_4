@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer')
+const hbs = require('nodemailer-express-handlebars')
 const nodemailerSendgrid = require('nodemailer-sendgrid')
-const { MY_EMAIL, PASSWORD, API_KEY } = process.env
+const { API_KEY } = process.env
 
 // let transporter = nodemailer.createTransport({
 //     host: "smtp.mailtrap.io",
@@ -22,5 +23,17 @@ const transporter = nodemailer.createTransport(
         apiKey: API_KEY
     })
 )
+
+const handlebarsOptions = {
+    viewEngine: {
+        extName: '.handlebars',
+        partialsDir: './views',
+        defaultLayout: false,
+    },
+    viewPath: './views',
+    extName: ".handlebars",
+}
+
+transporter.use('compile', hbs(handlebarsOptions))
 module.exports = transporter
 
