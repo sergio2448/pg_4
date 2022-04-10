@@ -1,9 +1,10 @@
-const { Properties, Features, Photos } = require('../db')
+const { Properties, Features, Photos,Produc_Features } = require('../db')
 const { Op, fn, col } = require("sequelize")
 const {
     getById,
     addfeatures,
-    setfeatures
+    setfeatures,
+    getByIdInFeature
 } = require('../middlewares/usercreate.js')
 const getProperties = async (id, cost, address, city, state, country, cp, lease, propertyType, search, listFeatures) => {
     try {
@@ -47,12 +48,15 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
 
             //Busqueda de Caracteristicas
             let objeModelFeature={model:Features};
-            const nameFeatures = listFeatures.map(f => f.name);
+            let nameFeatures;
+            if(listFeatures?.length>0){
+                nameFeatures = listFeatures.map(f => f.name);
+            }
             listFeatures?.length>0 ? objeModelFeature.where={name:{[Op.in]:nameFeatures}}:null;
    
             //BUsqueda con todo lo anterior
             respProperties = await Properties.findAll({
-                logging: console.log,
+                //logging: console.log,
                 include: [objeModelFeature, { model: Photos }],
                 where: filterSearch
             });
@@ -197,11 +201,31 @@ const addassociations = async (features, id) => {
     }
 }
 
+const removeFeature = async(id) =>{
+     const res = await Produc_Features.destroy({where:{propertyId :id} });
+     return res;
+}
+
 const setassociations = async (features, id) => {
     const propUpdate = await getById(id)
     if (features.length > 0) {
         await setfeatures(features, propUpdate)
     }
+}
+const getPhotos= async(id) =>{
+    try {
+        const listPhotos =await Photos.findAll({
+            logging: console.log,
+            where:{
+                propertyId:id
+            }
+        });
+        console.log(listPhotos);
+        return listPhotos;
+    } catch (error) {
+        console.log("Ocurrio un error en PropertiesControllrt/ getPhotos:"+error.message);
+    }
+   
 }
 
 module.exports = {
@@ -211,5 +235,7 @@ module.exports = {
   setassociations,
   fillProperties,
   fillPhotos,
-  deletePhotos
+  deletePhotos,
+  removeFeature,
+  getPhotos
 };
