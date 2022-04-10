@@ -14,15 +14,6 @@ const Gallery = ({ photos }) => {
   return (
     <div>
       <>
-        {/*  <Button
-          color="lightBlue"
-          type="button"
-          onClick={(e) => setShowModal(true)}
-          ripple="light"
-        >
-          More images
-        </Button> */}
-
         <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
           <ModalHeader toggler={() => setShowModal(false)}>Sale</ModalHeader>
           <ModalBody>
