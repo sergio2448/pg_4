@@ -24,7 +24,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   let { id } = useParams();
   const dispatch = useDispatch();
-  const detail = useSelector((state) => state.homeDetail);
+  var detail = useSelector((state) => state.homeDetail);
   const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
 
@@ -178,11 +178,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
             You will live here I
           </h3>
           <div className="relative bg-black w-full h-64">
-            {apiKey ? (
+            {apiKey ? (detail.length ? 
               <ReactMapGL
                 initialViewState={{
-                  latitude: detail[0]?.longitude,
-                  longitude: detail[0]?.latitude,
+                  latitude: detail[0].longitude,
+                  longitude: detail[0].latitude,
                   zoom: 5,
                 }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
@@ -190,15 +190,15 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
               >
                 {
                   <Marker
-                    latitude={detail[0]?.longitude}
-                    longitude={detail[0]?.latitude}
+                    latitude={detail[0].longitude}
+                    longitude={detail[0].latitude}
                     draggable={false}
                   >
                     <ImLocation2 className="h-8 w-8 text-teal-600" />
                   </Marker>
                 }
               </ReactMapGL>
-            ) : (
+            : "loading..") : (
               "Loading.."
             )}
           </div>
