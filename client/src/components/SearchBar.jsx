@@ -81,39 +81,18 @@ export default function SearchBar (){
 
     function handleForm (e){
             e.preventDefault();
-            
             let featuresArr = [];
-            if(features.pool.length){
-                featuresArr.push({
-                    name: 'pool',
-                    value: parseInt(features.pool)
-                })
-            }
-            if(features.floor.length){
-                featuresArr.push(
-                    {
-                        name: 'floor',
-                        value: parseInt(features.floor)
+            let objKeys = Object.keys(features);
+            console.log(objKeys)
+            objKeys.map(k => {
+                if(features[k].length){
+                    featuresArr.push({
+                        name: k,
+                        value: parseInt(features[k])
                     })
-            }
-            if(features.bathrooms.length){
-                featuresArr.push({
-                    name: 'bathrooms',
-                    value: parseInt(features.bathrooms)
-                })
-            }
-            if(features.garden.length){
-                featuresArr.push({
-                    name: 'garden',
-                    value: parseInt(features.garden)
-                })
-            }
-            if(features.rooms.length){
-                featuresArr.push({
-                    name: 'rooms',
-                    value: parseInt(features.rooms)
-                })
-            }   
+                }
+            })
+            
             let listFeature = {
                 listFeatures: [...featuresArr]
             }    
