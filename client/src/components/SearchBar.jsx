@@ -31,6 +31,20 @@ export default function SearchBar (){
         );
     }
 
+    function handleSelect (e){
+        let value = e.target.value
+        if(value === 'Yes') {
+            value = 1;
+        } else if(value === 'No') {
+            value = 0;
+        }
+        setFeatures({
+                ...features,
+                [e.target.name]: value
+            }
+        );
+    }
+
     function handleDivs (e){
         if(e.target.title == 'Venta'){
             setFilterSelect('Venta');
