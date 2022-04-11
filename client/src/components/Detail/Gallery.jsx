@@ -51,7 +51,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[0]
                       ? "http://localhost:3001/Properties/images/" + photos[0]
                       : hardcodeHouse
                   }
@@ -65,7 +65,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[1]
                       ? "http://localhost:3001/Properties/images/" + photos[1]
                       : hardcodeHouse
                   }
@@ -77,7 +77,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[2]
                       ? "http://localhost:3001/Properties/images/" + photos[2]
                       : hardcodeHouse
                   }
@@ -89,7 +89,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[3]
                       ? "http://localhost:3001/Properties/images/" + photos[3]
                       : hardcodeHouse
                   }
@@ -101,7 +101,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[4]
                       ? "http://localhost:3001/Properties/images/" + photos[4]
                       : hardcodeHouse
                   }
@@ -113,7 +113,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[5]
                       ? "http://localhost:3001/Properties/images/" + photos[5]
                       : hardcodeHouse
                   }
@@ -125,7 +125,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos[6]
                       ? "http://localhost:3001/Properties/images/" + photos[6]
                       : hardcodeHouse
                   }
