@@ -10,24 +10,15 @@ import Pagination1 from "./Pagination1";
 
 const Gallery = ({ photos }) => {
   const [showModal, setShowModal] = useState(false);
-
   return (
     <div>
       <>
-        {/*  <Button
-          color="lightBlue"
-          type="button"
-          onClick={(e) => setShowModal(true)}
-          ripple="light"
-        >
-          More images
-        </Button> */}
-
         <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
           <ModalHeader toggler={() => setShowModal(false)}>Sale</ModalHeader>
           <ModalBody>
             <div className="">
               <Slideshow2 photos={photos} />
+              
               <Pagination1 />
             </div>
           </ModalBody>
@@ -60,7 +51,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=1
                       ? "http://localhost:3001/Properties/images/" + photos[0]
                       : hardcodeHouse
                   }
@@ -74,7 +65,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=2
                       ? "http://localhost:3001/Properties/images/" + photos[1]
                       : hardcodeHouse
                   }
@@ -86,7 +77,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=3
                       ? "http://localhost:3001/Properties/images/" + photos[2]
                       : hardcodeHouse
                   }
@@ -98,7 +89,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=4
                       ? "http://localhost:3001/Properties/images/" + photos[3]
                       : hardcodeHouse
                   }
@@ -110,7 +101,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=5
                       ? "http://localhost:3001/Properties/images/" + photos[4]
                       : hardcodeHouse
                   }
@@ -122,7 +113,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=6
                       ? "http://localhost:3001/Properties/images/" + photos[5]
                       : hardcodeHouse
                   }
@@ -134,7 +125,7 @@ const Gallery = ({ photos }) => {
                   alt="gallery"
                   class="block object-cover object-center w-full h-full rounded-lg"
                   src={
-                    photos
+                    photos.length>=7
                       ? "http://localhost:3001/Properties/images/" + photos[6]
                       : hardcodeHouse
                   }

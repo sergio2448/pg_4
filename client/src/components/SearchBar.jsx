@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router-dom';
 export default function SearchBar (){
     const navigate = useNavigate();
     const [filterSelect, setFilterSelect] = useState('Venta');
-    // const features = useSelector((state) => state.features);
     const [features, setFeatures] = useState({
-        pool: '',
-        floor: '',
-        bathrooms: '',
-        garden: '',
-        rooms: ''
+        'pool': '',
+        'floor': '',
+        'bathrooms': '',
+        'garden': '',        
+        'rooms': ''
     })
     const [input, setInput] = useState({
         searchType: 'address',
@@ -48,12 +47,62 @@ export default function SearchBar (){
                 }
             );
         }
+    }    
+    function handleSelect(e){
+        let value = '';
+        if(e.target.value == 'Yes'){
+            value = 1;
+        }else if(e.target.value == 'No'){
+            value = 0;
+        }else{
+            value = e.target.value;
+        }
+        setFeatures({
+            ...features,
+            [e.target.name]: value
+        })
     }
 
     function handleForm (e){
         e.preventDefault();
+        let featuresArr = [];
+        if(features.pool.length){
+            featuresArr.push({
+                name: 'pool',
+                value: parseInt(features.pool)
+            })
+        }
+        if(features.floor.length){
+            featuresArr.push(
+                {
+                    name: 'floor',
+                    value: parseInt(features.floor)
+                })
+        }
+        if(features.bathrooms.length){
+            featuresArr.push({
+                name: 'bathrooms',
+                value: parseInt(features.bathrooms)
+            })
+        }
+        if(features.garden.length){
+            featuresArr.push({
+                name: 'garden',
+                value: parseInt(features.garden)
+            })
+        }
+        if(features.rooms.length){
+            featuresArr.push({
+                name: 'rooms',
+                value: parseInt(features.rooms)
+            })
+        }   
+        let listFeature = {
+            listFeatures: [...featuresArr]
+        }    
+
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
-        dispatch(getSearchbar(aInput, features));
+        dispatch(getSearchbar(aInput, listFeature))
         if(window.location.pathname == '/'){
             navigate('/estate');
         }
@@ -93,30 +142,30 @@ export default function SearchBar (){
                 </select>
               <input onChange={(e)=>handleInput(e)} name='searchInput' type='text' placeholder='Address, Cost, Country, Zip Code..' className='pl-2 rounded w-9/12 transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'/>
               <button type='submit' className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Search!</button></div>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Rooms</option>
+                        <select name='rooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option>Rooms</option>
                             <option>1</option>
                             <option>2</option>
                             <option>+3</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Bathrooms</option>
+                        <select name='bathrooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option>Bathrooms</option>
                             <option>1</option>
                             <option>2</option>
                             <option>+3</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Garden</option>
+                        <select name='garden' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option>Garden</option>
                             <option>Yes</option>
                             <option>No</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Pool</option>
+                        <select name='pool' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option>Pool</option>
                             <option>Yes</option>
                             <option>No</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Floors</option>
+                        <select name='floor' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option>Floors</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>

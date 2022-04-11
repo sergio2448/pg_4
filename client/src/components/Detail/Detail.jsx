@@ -21,12 +21,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   let { id } = useParams();
   const dispatch = useDispatch();
   const detail = useSelector((state) => state.homeDetail);
-  /*   const mapasList = useSelector((state) => state.maplist);
-
-  const places = ["Gregoire", "Villa", "Cholula"];
-  useEffect(() => {
-    places.map((p) => dispatch(getMapList(p)));
-  }, []); */
 
   useEffect(() => {
     dispatch(getHomeDetail(id));
@@ -55,7 +49,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
         {photos ? <Gallery photos={photos} /> : null}
       </div>
-      {/* {photos ? <Modal1 photos={photos} /> : null} */}
 
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
         <div>
