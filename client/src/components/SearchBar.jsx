@@ -32,6 +32,20 @@ export default function SearchBar (){
         );
     }
 
+    function handleSelect (e){
+        let value = e.target.value
+        if(value === 'Yes') {
+            value = 1;
+        } else if(value === 'No') {
+            value = 0;
+        }
+        setFeatures({
+                ...features,
+                [e.target.name]: value
+            }
+        );
+    }
+
     function handleDivs (e){
         if(e.target.title == 'Venta'){
             setFilterSelect('Venta');
@@ -53,7 +67,7 @@ export default function SearchBar (){
     function handleForm (e){
         e.preventDefault();
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
-        dispatch(getSearchbar(aInput, features));
+        dispatch(getSearchbar(aInput, {listFeatures : features}));
         if(window.location.pathname == '/'){
             navigate('/estate');
         }
@@ -93,30 +107,30 @@ export default function SearchBar (){
                 </select>
               <input onChange={(e)=>handleInput(e)} name='searchInput' type='text' placeholder='Address, Cost, Country, Zip Code..' className='pl-2 rounded w-9/12 transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'/>
               <button type='submit' className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Search!</button></div>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Rooms</option>
+                        <select  onChange={(e) => {handleSelect(e)}} name='rooms' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option>Rooms</option>
                             <option>1</option>
                             <option>2</option>
                             <option>+3</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Bathrooms</option>
+                        <select  onChange={(e) => {handleSelect(e)}} name='bathrooms' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option >Bathrooms</option>
                             <option>1</option>
                             <option>2</option>
                             <option>+3</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Garden</option>
+                        <select onChange={(e) => {handleSelect(e)}} name='garden' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option >Garden</option>
                             <option>Yes</option>
                             <option>No</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Pool</option>
+                        <select onChange={(e) => {handleSelect(e)}} name='pool' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option >Pool</option>
                             <option>Yes</option>
                             <option>No</option>
                         </select>
-                        <select className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="faslse" disabled>Floors</option>
+                        <select  onChange={(e) => {handleSelect(e)}} name='floor' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                            <option >Floors</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>

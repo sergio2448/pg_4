@@ -27,10 +27,11 @@ const Detail = ({ name, city, country, cost, measure, rooms }) => {
 
     console.log(detail);
   return (
-    <div className=" text-center ">
+  
+    <div className="  text-center  ">
       <div className="bg-[#075985]">
-      <div className='bg-black shadow-nav h-20 relative z-20'>
-                <Nav />
+      <div className='bg-stone-200 shadow-nav h-20 relative z-20'>
+                <Nav prop={"black"}/>
             </div>
       </div>
       <h2 className="mt-6 text-stone-600 text-5xl font-base font-Poppins">
