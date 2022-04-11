@@ -14,78 +14,78 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item active relative float-left w-full">
           <img
             src={
-              photos.length>=1
+              photos.length >= 1
                 ? "http://localhost:3001/Properties/images/" + photos[0]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Wild Landscape"
+            alt="Photo 1"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos.length>=2
+              photos.length >= 2
                 ? "http://localhost:3001/Properties/images/" + photos[1]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Camera"
+            alt="Photo 2"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos.length>=3
+              photos.length >= 3
                 ? "http://localhost:3001/Properties/images/" + photos[2]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Exotic Fruits"
+            alt="Photo 3"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos.length>=4
+              photos.length >= 4
                 ? "http://localhost:3001/Properties/images/" + photos[3]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Exotic Fruits"
+            alt="Photo 4"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos.length>=5
+              photos.length >= 5
                 ? "http://localhost:3001/Properties/images/" + photos[4]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Exotic Fruits"
+            alt="Photo 5"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos.length>=6
+              photos.length >= 6
                 ? "http://localhost:3001/Properties/images/" + photos[5]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Exotic Fruits"
+            alt="Photo 6"
           />
         </div>
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos.length>=7
+              photos.length >= 7
                 ? "http://localhost:3001/Properties/images/" + photos[6]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
-            alt="Exotic Fruits"
+            alt="Photo 7"
           />
         </div>
       </div>
