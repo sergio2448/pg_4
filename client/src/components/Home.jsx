@@ -6,7 +6,7 @@ import Card from './Card.jsx';
 import SearchBar from './SearchBar';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHomeCards, getFeatureList, getMapList } from '../redux/actions';
+import { getHomeCards, getFeatureList, getMapList, getSearchbar } from '../redux/actions';
 import Footer from './Footer';
 
 function Home() {
@@ -25,6 +25,7 @@ function Home() {
   }, []);
   
   const apiKey = useSelector((state) => state.apikey);
+
   
   
 
@@ -47,7 +48,7 @@ function Home() {
             mapasList.length ? mapasList.map(c => {
               return(             
         <div key={c[0].id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
-          <Link to={'/estate/' + c[0].id}>
+          <Link onClick={() => dispatch(getSearchbar(`state=${c[0].state}`))} to={'/estate'}>
             <Card featured={true} isMap={true} lease={c[0].lease} name={c[0].address} city={c[0].state} country={c[0].country} cost={c[0].cost} measure={c[0].m2} latitude={c[0].longitude} longitude={c[0].latitude} maplist={c} />
           </Link>
         </div>) 
@@ -69,7 +70,9 @@ function Home() {
             }) : (<div>Loading...</div>)
           }
         </div>  
-        <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
+        <Link to='/estate'>
+          <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button> 
+        </Link>
       </div>
       <div className=' py-16 text-center '>
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale/Rent</h2>
@@ -84,8 +87,11 @@ function Home() {
         </div>) 
             }) : (<div>loading..</div>)
           }
-        </div>   
-        <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>                  
+        </div>
+        
+        <Link to='/estate'> 
+          <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>                  
+        </Link>  
       </div>
           <Footer/>
     </div>
