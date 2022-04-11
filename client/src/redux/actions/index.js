@@ -1,5 +1,4 @@
 import axios from 'axios';
-export const CREATE_ESTATE = 'CREATE_POKEMON';
 
 export const createEstate = (estateToCreate) => dispatch => {
     return axios.post(`http://localhost:3001/Properties/pro`, estateToCreate)
@@ -11,11 +10,17 @@ export const createEstate = (estateToCreate) => dispatch => {
 };
 
 export function getSearchbar(input, body){
-    return async (dispatch) => {
-        let json = await axios.get('http://localhost:3001/Properties?' + input, body);
-        return dispatch({
-            type: 'GET_SEARCHBAR',
-            payload: json.data
+    return (dispatch) => {
+        axios.get('http://localhost:3001/Properties?' + input, body).then((response) => {
+            return dispatch({
+                type: 'GET_SEARCHBAR',
+                payload: response.data
+            })
+        }).catch((error) => {
+            return dispatch({
+                type: 'GET_SEARCHBAR',
+                payload: 'error'
+            })
         })
     }
 }
@@ -55,6 +60,25 @@ export function getFeatureList(){
         let json = await axios.get('http://localhost:3001/feature');
         return dispatch({
             type: 'GET_FEATURE_LIST',
+            payload: json.data
+        })
+    }
+}
+
+export function loadUser(user) {
+    return async (dispatch) => {
+        return dispatch({
+            type: 'LOAD_USER',
+            payload: user
+        })
+    }
+}
+
+export function getMapList(city){
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/Properties?city=' + city );
+        return dispatch({
+            type: 'GET_MAP_LIST',
             payload: json.data
         })
     }

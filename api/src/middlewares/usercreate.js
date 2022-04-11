@@ -1,4 +1,4 @@
-const { Roles, Users, BanckCards, Properties, Features, Photos } = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos ,Sellers,Buyers,Sales} = require('../db')
 async function insert(name, email, image, roleid) {
     try {
         const newUser = await Users.create(
@@ -18,7 +18,13 @@ async function insert(name, email, image, roleid) {
 
 async function getbyEmail(pEmail) {
     const matched = await Users.findOne({
-        include:[{ model: Roles }],
+        // include:[{ model: Roles }],
+        include:[{model:Roles}
+            ,{model:Sellers,
+                include:{model:Properties,include:[{model:Photos},{model:Features} ]}}
+            ,{model:BanckCards}
+            ,{model:Buyers,include:{model:Sales}}
+        ],
         where: {
             email: pEmail
         }
@@ -48,6 +54,13 @@ async function getById(id) {
     return Property
 }
 
+async function getByIdInFeature(id) {
+    const Property = await Properties.findByPk(id, {
+        include: [{ model: Features }]
+    })
+    return Property
+}
+
 async function addphoto(photo) {
     photo.map((value) => {
         Photos.findOrCrate({
@@ -70,7 +83,7 @@ async function setfeatures(features, newProperty) {
         const propFeature = await Features.findAll({
             where: { name },
         });
-        newProperty.setFeatures(propFeature, { through: { value } });
+        newProperty.addFeatures(propFeature, { through: { value } });
     })
 }
 
@@ -98,5 +111,6 @@ module.exports = {
     setfeatures,
     getUserById,
     getEmailUser,
-    getUserName
+    getUserName,
+    getByIdInFeature
 }

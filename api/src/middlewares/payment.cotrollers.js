@@ -111,9 +111,14 @@ const propertyNotFound = async (req, res) => {
     res.status(404).json("property not found")
 }
 
+const donationCompleted = (req, res) => {
+    res.json(`${hostclient}/payment`);
+}
+
 module.exports = {
     createOrder,
     captureOrder,
     cancelOrder,
-    propertyNotFound
+    propertyNotFound,
+    donationCompleted
 }

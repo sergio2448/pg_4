@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect, useDispatch } from 'react-redux';
+
+
 
 function FormInfo() {
+
+    us
+
+
   return (
     <div class="flex justify-center  h-1/2  ">
     <div class="w-1/2 bg-white rounded shadow-2xl p-8 m-4">

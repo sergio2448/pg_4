@@ -21,6 +21,15 @@ const Paypalbutton = () => {
             },
             onComplete: async function (params) {
                 // Your onComplete handler
+                // console.log(params)
+                // const response = await fetch("http://localhost:3001/pay/redirect-home", {
+                //     method: 'GET'
+                // })
+                // console.log(response)
+                // const json= await response.json()
+                // console.log(json)
+                // window.location.href = json
+
             },
         });
         button.render(`#${buttonRef.current.id}`); // you can change the code and run it when DOM is ready

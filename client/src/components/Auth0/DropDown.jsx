@@ -8,7 +8,7 @@ export default function DropDown() {
 
     const {user, isAuthenticated, isLoading, logout} =  useAuth0()
 
-    console.log(user)
+    
 
     return (
         <div className="relative">
@@ -32,18 +32,17 @@ export default function DropDown() {
                 >
                     
                 <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={(e) => {
-                    e.preventDefault()
+                    window.location = "http://localhost:3000/logged"
                     console.log("Action")
                 }}>
                     My profile
                 </DropdownItem>
                 <DropdownLink
-                    href="#"
                     color="lightBlue"
                     ripple="light"
                     size="lg"
                     onClick={(e) => {
-                        e.preventDefault()
+                        window.location = "http://localhost:3000/logged/Favorites"
                     }}
                 >
                     Favorites
