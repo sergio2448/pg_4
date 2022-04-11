@@ -3,11 +3,12 @@ import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import DropdownLink from "@material-tailwind/react/DropdownLink"
 import  { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from "react-router-dom";
 
 export default function DropDown() {
 
     const {user, isAuthenticated, isLoading, logout} =  useAuth0()
-
+    const navigate = useNavigate()
     
 
     return (
@@ -29,10 +30,11 @@ export default function DropDown() {
                 block={false}
                 ripple="light"
                 img={user.picture}
+                
                 >
                     
-                <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={(e) => {
-                    window.location = "http://localhost:3000/logged"
+                <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                    navigate("/logged")
                     console.log("Action")
                 }}>
                     My profile
@@ -42,7 +44,7 @@ export default function DropDown() {
                     ripple="light"
                     size="lg"
                     onClick={(e) => {
-                        window.location = "http://localhost:3000/logged/Favorites"
+                        navigate("/Favorites")
                     }}
                 >
                     Favorites

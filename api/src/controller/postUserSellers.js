@@ -3,7 +3,8 @@ const { postSeller } = require('../middlewares/SellerMidd')
 const { postBuyer } = require('../middlewares/BuyerMidd')
 const { insert } = require('../middlewares/usercreate')
 const { getbyEmail } = require('../middlewares/usercreate')
-const { Roles } = require('../db')
+const { Roles } = require('../db');
+const Sellers = require('../models/Sellers');
 const router = Router();
 
 const ROL_SELLER="seller";
@@ -53,6 +54,19 @@ router.post('/', async (req, res) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send({message:error.message});
+    }
+
+})
+router.put('/', async (req, res) => {
+    const { firstName,lastName,nickName,email,phoneNumber,role,dateBirth} = req.body;
+    const userexistente = await getbyEmail(email)
+    if(userexistente){
+        if(role===ROL_SELLER){
+            createReview =await Sellers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } });
+        }
+        if(role===ROL_BUYER){
+            createReview = await Buyers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } })
+        }
     }
 
 })
