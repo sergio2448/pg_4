@@ -19,7 +19,9 @@ function Home() {
   useEffect(() => {
     dispatch(getHomeCards());
     dispatch(getFeatureList());
+    if(!mapasList.length){      
     places.map(p => dispatch(getMapList(p)));
+    }
   }, []);
   
   const apiKey = useSelector((state) => state.apikey);

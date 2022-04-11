@@ -36,7 +36,7 @@ export default function Cards({
       initialViewState={{
         latitude: latitude,
         longitude: longitude,
-        zoom: 5
+        zoom: 10
       }}
       mapStyle="mapbox://styles/mapbox/streets-v9" mapboxAccessToken={apiKey} >
         {

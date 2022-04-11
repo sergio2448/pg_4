@@ -46,6 +46,10 @@ export const Profile = () => {
         let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
         dispatch(loadUser(userExist.data))
         setShowModal(false)
+        const notificationUser={
+            userid:userExist.data.user.id
+        }
+        await axios.post(`http://localhost:3001/send-email/welcome`,notificationUser)
     }
    
     return (
