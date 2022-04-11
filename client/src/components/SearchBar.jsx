@@ -63,7 +63,20 @@ export default function SearchBar (){
         })
     }
     function handleReset (e){
-        dispatch(getSearchbar(''))        
+        dispatch(getSearchbar(''))  
+        setInput({
+            searchType: 'address',
+            searchInput: '',
+            searchDivs: 'Venta',
+            features: ''
+        });
+        setFeatures({
+            'pool': '',
+            'floor': '',
+            'bathrooms': '',
+            'garden': '',        
+            'rooms': ''
+        })
     }
 
     function handleForm (e){
