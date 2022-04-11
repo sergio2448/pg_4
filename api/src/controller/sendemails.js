@@ -71,3 +71,30 @@ router.post('/welcome', async (req, res) => {
         res.send(500).json(error)
     }
 })
+
+router.post('/donation', async (req, res) => {
+    const { emailUser } = req.body
+    try {
+
+        let mailOptions = {
+            from: '"Inmobiliaria" <casillas588@hotmail.com>',
+            to: emailUser,
+            subject: '¡Gracias por tu donación¡',
+            template: 'Donation',
+            context: {
+                title: `Gracias por tu contribución`,
+            }
+        }
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).send(err.message)
+            } else {
+                console.log("email enviado")
+                return res.status(200).json(info.response)
+            }
+        })
+    } catch (error) {
+        res.send(500).json(error)
+    }
+})
