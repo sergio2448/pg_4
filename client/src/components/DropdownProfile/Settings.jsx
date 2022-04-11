@@ -15,8 +15,8 @@ function Settings() {
     <Nav />
     <div className='relative z-5 pt-28 text-center flex flex-col  bg-black '>
           {/* <StripedTable/> */}
-         {/* <FormInfo/>  */}
-          <UserInfo/>
+          {/* <FormInfo/>   */}
+           <UserInfo/> 
          
 
       </div>
