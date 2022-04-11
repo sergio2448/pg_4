@@ -1,7 +1,9 @@
 import React from "react";
 import "tw-elements";
+import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
 
 const Slideshow2 = ({ photos }) => {
+  
   return (
     <div
       id="carouselExampleControls"
@@ -12,7 +14,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item active relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=1
                 ? "http://localhost:3001/Properties/images/" + photos[0]
                 : hardcodeHouse
             }
@@ -23,7 +25,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=2
                 ? "http://localhost:3001/Properties/images/" + photos[1]
                 : hardcodeHouse
             }
@@ -34,7 +36,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=3
                 ? "http://localhost:3001/Properties/images/" + photos[2]
                 : hardcodeHouse
             }
@@ -45,7 +47,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=4
                 ? "http://localhost:3001/Properties/images/" + photos[3]
                 : hardcodeHouse
             }
@@ -56,7 +58,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=5
                 ? "http://localhost:3001/Properties/images/" + photos[4]
                 : hardcodeHouse
             }
@@ -67,7 +69,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=6
                 ? "http://localhost:3001/Properties/images/" + photos[5]
                 : hardcodeHouse
             }
@@ -78,7 +80,7 @@ const Slideshow2 = ({ photos }) => {
         <div className="carousel-item relative float-left w-full">
           <img
             src={
-              photos
+              photos.length>=7
                 ? "http://localhost:3001/Properties/images/" + photos[6]
                 : hardcodeHouse
             }
