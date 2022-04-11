@@ -37,7 +37,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   return (
     <div class=" text-center ">
       <div class="bg-[#075985]">
-        <div class="bg-black shadow-nav h-20 relative z-20">
+        <div class="bg-stone-400 shadow-nav h-20 relative z-20">  
           <Nav />
         </div>
       </div>
