@@ -62,50 +62,54 @@ export default function SearchBar (){
             [e.target.name]: value
         })
     }
+    function handleReset (e){
+        dispatch(getSearchbar(''))        
+    }
 
     function handleForm (e){
-        e.preventDefault();
-        let featuresArr = [];
-        if(features.pool.length){
-            featuresArr.push({
-                name: 'pool',
-                value: parseInt(features.pool)
-            })
-        }
-        if(features.floor.length){
-            featuresArr.push(
-                {
-                    name: 'floor',
-                    value: parseInt(features.floor)
+            e.preventDefault();
+            
+            let featuresArr = [];
+            if(features.pool.length){
+                featuresArr.push({
+                    name: 'pool',
+                    value: parseInt(features.pool)
                 })
-        }
-        if(features.bathrooms.length){
-            featuresArr.push({
-                name: 'bathrooms',
-                value: parseInt(features.bathrooms)
-            })
-        }
-        if(features.garden.length){
-            featuresArr.push({
-                name: 'garden',
-                value: parseInt(features.garden)
-            })
-        }
-        if(features.rooms.length){
-            featuresArr.push({
-                name: 'rooms',
-                value: parseInt(features.rooms)
-            })
-        }   
-        let listFeature = {
-            listFeatures: [...featuresArr]
-        }    
-
-        let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
-        dispatch(getSearchbar(aInput, listFeature))
-        if(window.location.pathname == '/'){
-            navigate('/estate');
-        }
+            }
+            if(features.floor.length){
+                featuresArr.push(
+                    {
+                        name: 'floor',
+                        value: parseInt(features.floor)
+                    })
+            }
+            if(features.bathrooms.length){
+                featuresArr.push({
+                    name: 'bathrooms',
+                    value: parseInt(features.bathrooms)
+                })
+            }
+            if(features.garden.length){
+                featuresArr.push({
+                    name: 'garden',
+                    value: parseInt(features.garden)
+                })
+            }
+            if(features.rooms.length){
+                featuresArr.push({
+                    name: 'rooms',
+                    value: parseInt(features.rooms)
+                })
+            }   
+            let listFeature = {
+                listFeatures: [...featuresArr]
+            }    
+    
+            let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
+            dispatch(getSearchbar(aInput, listFeature))
+            if(window.location.pathname == '/'){
+                navigate('/estate');
+            }                
     }
     let ubi = window.location.pathname;
     return (
@@ -124,14 +128,6 @@ export default function SearchBar (){
             <form onSubmit={(e) => handleForm(e)} className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-6/12 h-16 bg-stone-800') : ('flex items-center m-auto justify-center z-10 w-9/12 py-6 bg-stone-800')}>
                 {
                     window.location.pathname !== '/' ? ( <div>
-                        {/* <select onChange={(e)=>handleInput(e)} name='features' className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option selected="false" disabled>Features</option>
-                            {
-                                features.length ? features.map(f => {
-                                   return (<option key={f.id} value={f.name} >{f.name}</option>)
-                                }) : <option></option>
-                            }
-                        </select>  */}
                         <div className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-full h-16 bg-stone-800') : ('flex items-center m-auto justify-center z-10 mb-6 bg-stone-800')}><select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 bg-sky-300 hover:bg-sky-200 text-stone-800 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                   <option value='address' >Address</option>
                   <option value='city' >City</option>
@@ -141,18 +137,18 @@ export default function SearchBar (){
                   <option value='cost' >Cost</option>
                 </select>
               <input onChange={(e)=>handleInput(e)} name='searchInput' type='text' placeholder='Address, Cost, Country, Zip Code..' className='pl-2 rounded w-9/12 transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'/>
-              <button type='submit' className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Search!</button></div>
+              <button type='submit' name='search' className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Search!</button></div>
                         <select name='rooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                             <option>Rooms</option>
                             <option>1</option>
                             <option>2</option>
-                            <option>+3</option>
+                            <option value={3}>+3</option>
                         </select>
                         <select name='bathrooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                             <option>Bathrooms</option>
                             <option>1</option>
                             <option>2</option>
-                            <option>+3</option>
+                            <option value={3}>+3</option>
                         </select>
                         <select name='garden' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                             <option>Garden</option>
@@ -170,6 +166,7 @@ export default function SearchBar (){
                             <option>2</option>
                             <option>3</option>
                         </select>
+                        <button onClick={e => handleReset(e)} type='reset'  className='course-reset ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Reset</button>
                      </div>)
                         
                          :
