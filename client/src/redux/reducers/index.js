@@ -6,6 +6,7 @@ const initialState = {
     listCards: [],
     homeDetail:[],
     searchBar: [],
+    errorSearchBar: [],
     features: [],
     features2: [],
     apikey: {},
@@ -16,8 +17,15 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'GET_SEARCHBAR':
+            if(action.payload == 'error'){
+                return {
+                    ...state,
+                    errorSearchBar: ['error']
+                }
+            }
             return {
                 ...state,
+                errorSearchBar: [],
                 searchBar: action.payload
             }
         case 'GET_HOMECARDS':

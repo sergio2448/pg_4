@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 export default function SearchBar (){
     const navigate = useNavigate();
     const [filterSelect, setFilterSelect] = useState('Venta');
-    // const features = useSelector((state) => state.features);
     const [features, setFeatures] = useState({
         'pool': '',
         'floor': '',
@@ -102,10 +101,8 @@ export default function SearchBar (){
             listFeatures: [...featuresArr]
         }    
 
-        console.log(featuresArr);
-        console.log(listFeature);
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
-        dispatch(getSearchbar(aInput, listFeature));
+        dispatch(getSearchbar(aInput, listFeature))
         if(window.location.pathname == '/'){
             navigate('/estate');
         }
