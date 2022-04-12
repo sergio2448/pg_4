@@ -11,7 +11,7 @@ const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
 const postUser = require('../controller/postUserSellers')
 const getAgenda = require('../controller/getAgenda')
-const postCalendar = require('../controller/postCalendar')
+const calendar = require('../controller/Calendar')
 
 
 
@@ -52,8 +52,8 @@ router.use('/pay', payment)
 //todo: lista de typo de agenda
 router.use('/tyepAgenda', getAgenda)
 
-//todo: craer una cita 
-router.use('/calendar', postCalendar)
+
+router.use('/calendar', calendar)
 
 
 module.exports = router;
