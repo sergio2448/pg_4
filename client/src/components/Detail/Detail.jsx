@@ -7,6 +7,10 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getHomeDetail } from "../../redux/actions/index";
 import Gallery from "./Gallery";
+import Footer from "../Footer";
+import ReactMapGL, { Marker } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { ImLocation2 } from "react-icons/im";
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -20,7 +24,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   let { id } = useParams();
   const dispatch = useDispatch();
-  const detail = useSelector((state) => state.homeDetail);
+  var detail = useSelector((state) => state.homeDetail);
+  const apiKey =
+    "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
 
   useEffect(() => {
     dispatch(getHomeDetail(id));
@@ -33,11 +39,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     detail[0]?.photos?.length > 0
       ? detail[0].photos.map((photo) => photo.photos)
       : null;
-
+  console.log(detail[0]);
   return (
     <div class=" text-center ">
       <div class="bg-[#075985]">
-        <div class="bg-black shadow-nav h-20 relative z-20">
+        <div class="bg-stone-400 shadow-nav h-20 relative z-20">  
           <Nav />
         </div>
       </div>
@@ -151,26 +157,54 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         <div class="mx-32 px-6 mt-12 grid grid-cols-3 gap-6 mb-6">
           <div>
             <h5 class="text-center">
-              <strong>City:</strong> {city}
+              City: <strong>{detail[0]?.city}</strong>
             </h5>
             <h5 class="text-center">
-              <strong>Country:</strong> {country}
+              Country: <strong>{detail[0]?.country}</strong>
             </h5>
           </div>
           <div>
             <h5 class="text-center">
-              <strong>Cost:</strong> {cost}{" "}
+              Cost: <strong>{detail[0]?.cost}</strong>
             </h5>
             <h5 class="text-center">
-              <strong>Measure:</strong> {measure}{" "}
+              State: <strong>{detail[0]?.state}</strong>
             </h5>
           </div>
         </div>
         <hr />
         <div>
           <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
-            You will live here
+            You will live here I
           </h3>
+          <div className="relative bg-black w-full h-64">
+            {apiKey ? (detail.length ? 
+              <ReactMapGL
+                initialViewState={{
+                  latitude: detail[0].longitude,
+                  longitude: detail[0].latitude,
+                  zoom: 5,
+                }}
+                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapboxAccessToken={apiKey}
+              >
+                {
+                  <Marker
+                    latitude={detail[0].longitude}
+                    longitude={detail[0].latitude}
+                    draggable={false}
+                  >
+                    <ImLocation2 className="h-8 w-8 text-teal-600" />
+                  </Marker>
+                }
+              </ReactMapGL>
+            : "loading..") : (
+              "Loading.."
+            )}
+          </div>
+        </div>
+        <div className="mt-6">
+          <Footer />
         </div>
       </div>
     </div>

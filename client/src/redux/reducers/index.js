@@ -57,6 +57,12 @@ const rootReducer = (state = initialState, action) => {
                 homeCards: newListCards
             }
         case 'GET_DATAIL':
+            if(action.payload.length > 1){
+                return {
+                    ...state,
+                    homeDetail: []
+                }
+            }
             return {
                 ...state,
                 homeDetail: action.payload
