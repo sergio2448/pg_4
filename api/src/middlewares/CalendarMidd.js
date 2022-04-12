@@ -21,7 +21,9 @@ const postCalendar = async (date,role, propertyId, userId, agendaId) =>{
 
 const getCalendar = async (userId) =>{
     try {
-        const listCalendar= await Calendar.findAll({where:userId});
+        const listCalendar= await Calendar.findAll({
+            include:[{model:Agenda}],
+            where:userId});
             return listCalendar;
     } catch (error) {
         console.log("Ocurrio un error en CalendarMidd/ getCalendar :"+error);
