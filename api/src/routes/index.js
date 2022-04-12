@@ -10,6 +10,9 @@ const payment = require('../controller/paymentroute.js')
 const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
 const postUser = require('../controller/postUserSellers')
+const getAgenda = require('../controller/getAgenda')
+const calendar = require('../controller/Calendar')
+
 
 
 const router = Router();
@@ -45,4 +48,12 @@ router.use('/send-email', nodemailer)
 
 //todo: añade el metodo de pago de paypal
 router.use('/pay', payment)
+
+//todo: lista de typo de agenda
+router.use('/typeAgenda', getAgenda)
+
+
+router.use('/calendar', calendar)
+
+
 module.exports = router;
