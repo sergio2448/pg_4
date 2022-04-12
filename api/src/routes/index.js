@@ -50,7 +50,7 @@ router.use('/send-email', nodemailer)
 router.use('/pay', payment)
 
 //todo: lista de typo de agenda
-router.use('/tyepAgenda', getAgenda)
+router.use('/typeAgenda', getAgenda)
 
 
 router.use('/calendar', calendar)
