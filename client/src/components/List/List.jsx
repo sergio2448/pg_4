@@ -58,7 +58,7 @@ function List() {
                                 return (
                                   <div
                                     key={c.id}
-                                    className="text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl "
+                                    className="text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-900 hover:shadow-xl "
                                   >
                                     <Link to={"/estate/" + c.id}>
                                       <Card
