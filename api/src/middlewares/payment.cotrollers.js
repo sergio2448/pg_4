@@ -1,6 +1,7 @@
 const axios = require('axios')
 const { getById } = require('../middlewares/usercreate.js')
 const { Properties } = require('../db')
+const userdata = require('../middlewares/emailuserdata.js')
 const host = 'http://localhost:3001'
 const hostclient = 'http://localhost:3000'
 
@@ -85,9 +86,12 @@ const captureOrder = async (req, res) => {
             })
         }
         const property = await getById(idProperty)
-        console.log(property)
-
+        const seller = await property.getSeller()
+        const userid = seller.getDataValue('userId')
+        const { emailUser } = await userdata(userid)
+        await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
         res.redirect(`${hostclient}/pay/${idProperty}`);
+        // res.msg('pagado')
     } catch (error) {
         res.sendStatus(500).json(error)
     }
