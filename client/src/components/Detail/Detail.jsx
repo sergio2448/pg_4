@@ -41,9 +41,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       : null;
   console.log(detail[0]);
   return (
-    <div class=" text-center ">
+    <div class=" text-center  ">
       <div class="bg-[#075985]">
-        <div class="bg-stone-400 shadow-nav h-20 relative z-20">  
+        <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">  
           <Nav />
         </div>
       </div>
@@ -58,7 +58,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
         <div>
-          <h5 class="text-center">
+          <h5 class="text-center font-Poppins">
             Measure: <strong> {detail[0]?.m2 ? detail[0].m2 : 45} m²</strong>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </h5>
         </div>
         <div>
-          <h5 class="text-center">
+          <h5 class="text-center font-Poppins">
             Rooms:
             <strong>
               {detail[0]?.features[0]?.produc_features.value
@@ -105,7 +105,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </svg>
         </div>
         <div>
-          <h5 class="text-center">
+          <h5 class="text-center font-Poppins">
             Bathrooms:
             <strong>
               {detail[0]?.features[1]?.produc_features.value
@@ -134,19 +134,19 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div>
           <div class="grid grid-cols-2 gap-3">
-            <h5 class="text-right">
+            <h5 class="text-right font-Poppins">
               <strong>User:</strong> Pepito Perez
             </h5>
             <img class="h-10 w-10 rounded-full" src={seller} alt="" />
           </div>
-          <button class="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
+          <button class="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded ">
             Check Availability
           </button>
         </div>
       </div>
 
       <hr />
-      <div class="py-8 px-6 mb-6 text-xl font-bold font-Monserrat">
+      <div class="py-8 px-6 mb-6 text-xl font-bold font-Poppins">
         <p class="mb-6">
           {detail[0]?.description ? detail[0]?.description : description}
         </p>
@@ -156,25 +156,25 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div class="mx-32 px-6 mt-12 grid grid-cols-3 gap-6 mb-6">
           <div>
-            <h5 class="text-center">
+            <h5 class="text-center font-Poppins">
               City: <strong>{detail[0]?.city}</strong>
             </h5>
-            <h5 class="text-center">
+            <h5 class="text-center font-Poppins">
               Country: <strong>{detail[0]?.country}</strong>
             </h5>
           </div>
           <div>
-            <h5 class="text-center">
+            <h5 class="text-center font-Poppins">
               Cost: <strong>{detail[0]?.cost}</strong>
             </h5>
-            <h5 class="text-center">
+            <h5 class="text-center font-Poppins">
               State: <strong>{detail[0]?.state}</strong>
             </h5>
           </div>
         </div>
         <hr />
         <div>
-          <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
+          <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
             You will live here I
           </h3>
           <div className="relative bg-black w-full h-64">
