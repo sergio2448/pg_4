@@ -34,14 +34,13 @@ export const Profile = () => {
     }, [user])
 
 
-    const userSubmit = async (e) => {
+    const userSubmit = async () => {
         let newUser = await axios.post(`http://localhost:3001/optionUser`, {
             "firstName": user.given_name,
             "lastName": user.family_name,
             "nickName": user.nickname,
             "email": user.email,
             "image":user.picture,
-            "role": e.target.name
         })
         let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
         dispatch(loadUser(userExist.data))
@@ -59,37 +58,22 @@ export const Profile = () => {
                 
 
                 {
-                    userLoged.result === "Sin Registros" ? <Modal size="sm" active={showModal}>
-                        <ModalHeader toggler={() => setShowModal(false)} >
-                            What do you want to do?
+                    userLoged.result === "Sin Registros" ? <Modal size="sm" active={showModal} toggler={() => {
+                        userSubmit()
+                        setShowModal(false)
+                        }} >
+                        <ModalHeader toggler={() => {
+                            userSubmit()
+                            setShowModal(false)
+                        }} >
+                            Welcome
                         </ModalHeader>
                         <ModalBody>
                             <p className="text-base leading-relaxed text-gray-600 font-normal">
-                            Select what you want to do on our site. If you want to change it, you can do it later from the my profile tab.
+                            Welcome! Keep in mind that you start as a buyer, if you want to change roles, go to...Welcome! Keep in mind that you start as a buyer, if you want to change roles, go to...
                             </p>
                         </ModalBody>
-                            <ModalFooter>
-                                <div className="flex justify-around w-full">
-                                    <Button 
-                                        color="lightBlue"
-                                        name="seller"
-                                        buttonType="filled"
-                                        onClick={(e) => userSubmit(e)}
-                                        ripple="dark"
-                                    >
-                                        Sell
-                                    </Button>
-            
-                                    <Button
-                                        color="lightBlue"
-                                        name="buyer"
-                                        onClick={(e) => userSubmit(e)}
-                                        ripple="light"
-                                    >
-                                        Buy
-                                    </Button>
-                                </div>
-                            </ModalFooter>
+                            
                     </Modal>
                  : ""
                 }
