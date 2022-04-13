@@ -124,8 +124,8 @@ Sales.belongsTo(Properties);
 
 //Uno a muchos, 1:N
 //Una porpiedad puede puede ser agendada una o varias veces, un cita le petenece a una propiedad
-Properties.hasMany(Calendar);
-Calendar.belongsTo(Properties);
+Properties.hasMany(Calendar ,{ foreignKey: { allowNull: true }});
+Calendar.belongsTo(Properties, { foreignKey: { allowNull: true }});
 
 //Uno a muchos, 1:N
 //Un usurio puede agendada una o varias veces, un cita le petenece a una un usuario
