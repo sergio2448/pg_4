@@ -133,8 +133,8 @@ Users.hasMany(Calendar);
 Calendar.belongsTo(Users);
 
 //una cita tiene una sola cita 
-Agenda.hasMany(Calendar);
-Calendar.belongsTo(Agenda);
+// Agenda.hasMany(Calendar);
+// Calendar.belongsTo(Agenda);
 
 //uno a muchos, 1:N
 // una propiedad tiene un estado, un estado lo tiene uno o mas Propiedades

@@ -4,8 +4,8 @@ const router = Router();
 
 router.post('/', async (req, res) => {
     try {
-        const { date,role, propertyId, userId, agendaId} = req.body;
-        const createDate=await postCalendar(date,role, propertyId, userId, agendaId);
+        const { dates,hour,type, propertyId, userId} = req.body;
+        const createDate=await postCalendar(dates,hour,type, propertyId, userId);
         createDate?.dataValues ?
         res.status(200).json(createDate?.dataValues)
         :res.status(404).json({message:"No se pudo crear la cita"});
@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/:idUser', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
         const {userId}= req.params;
         const listCalendar=await getCalendar(userId);

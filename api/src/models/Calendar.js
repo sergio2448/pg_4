@@ -8,11 +8,15 @@ module.exports =  (sequelize) => {
            primaryKey:true,
            allowNull:false,
        },
-       date:{
+       dates:{
            type: DataTypes.JSONB,
            allowNull:false,
        },
-       role:{
+       hour:{
+        type: DataTypes.DATE,
+        allowNull:false,
+       },
+       type:{
         type: DataTypes.STRING,
         allowNull:false
        }
