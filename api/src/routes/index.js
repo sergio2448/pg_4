@@ -12,6 +12,7 @@ const postReview = require('../controller/postReview')
 const postUser = require('../controller/postUserSellers')
 const getAgenda = require('../controller/getAgenda')
 const calendar = require('../controller/Calendar')
+const favorite = require('../controller/Favorite')
 
 
 
@@ -54,6 +55,8 @@ router.use('/typeAgenda', getAgenda)
 
 
 router.use('/calendar', calendar)
+
+router.use('/favorite', favorite)
 
 
 module.exports = router;

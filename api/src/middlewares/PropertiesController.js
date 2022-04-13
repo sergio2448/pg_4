@@ -1,4 +1,4 @@
-const { Properties, Features, Photos,Produc_Features } = require('../db')
+const { Properties, Features, Photos,Produc_Features,Idstatus } = require('../db')
 const { Op, fn, col } = require("sequelize")
 const {
     getById,
@@ -57,7 +57,7 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
             //BUsqueda con todo lo anterior
             respProperties = await Properties.findAll({
                 //logging: console.log,
-                include: [objeModelFeature, { model: Photos }],
+                include: [objeModelFeature, { model: Photos },{ model: Idstatus }],
                 where: filterSearch
             });
 
@@ -88,7 +88,7 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                                         return resultCompare;
                                     })
                     respProperties = await Properties.findAll({
-                        include: [objeModelFeature, { model: Photos }],
+                        include: [objeModelFeature, { model: Photos },{ model: Idstatus }],
                         where: {
                             id: joinSearchFeatures.map(data => data.produc_features)
                         }
@@ -129,7 +129,10 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
 
 const fillProperties = async (req, res) => {
     try {
-        let { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId,latitude,longitude,highlighted } = req.body;
+        const { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId,latitude,longitude,highlighted } = req.body;
+        const resul = await Idstatus.findAll({where:{statusName:"Publicado"}})
+        const idstatusId=resul.map(d => d.dataValues).map(d => d.id);
+        console.log(idstatusId[0]);
         let newProperty = await Properties.create({
             description,
             m2,
@@ -144,7 +147,8 @@ const fillProperties = async (req, res) => {
             sellerId,
             latitude,
             longitude,
-            highlighted
+            highlighted,
+            idstatusId:idstatusId[0]
         });
 
         features.forEach(async element => {
