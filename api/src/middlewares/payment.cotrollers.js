@@ -2,10 +2,10 @@ const axios = require('axios')
 const { getById } = require('../middlewares/usercreate.js')
 const { Properties } = require('../db')
 const userdata = require('../middlewares/emailuserdata.js')
+const authtoken = require('../middlewares/authtoken.js')
+const { PAYPAL_API, PAYPA_API_CLIENT, PAYPAL_API_SECRET } = process.env
 const host = 'http://localhost:3001'
 const hostclient = 'http://localhost:3000'
-
-const { PAYPAL_API, PAYPA_API_CLIENT, PAYPAL_API_SECRET } = process.env
 const createOrder = async (req, res) => {
     const { id } = req.body
     console.log(req.body)
@@ -23,7 +23,7 @@ const createOrder = async (req, res) => {
                         currency_code: 'USD',
                         value: `10.99`
                     },
-                    description: "Veneficios vip del usuario"
+                    description: "Pago por promoción de publicación"
                 }
             ],
             application_context: {
@@ -36,18 +36,11 @@ const createOrder = async (req, res) => {
         }
         //* ------------^^^^^^^^^^^^^^^^^^^^^^------------*//
         //*-------------genera un token de autorización----------------- *//
-        const params = new URLSearchParams()
-        params.append('grant_type', 'client_credentials')
-        const { data: { access_token } } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
-            headers: {
-                "Content-Type": 'application/x-www-form-urlencoded',
-            },
-            auth: {
-                username: PAYPA_API_CLIENT,
-                password: PAYPAL_API_SECRET
-            }
-        })
+
+        const access_token = await authtoken()
+
         //* ------------^^^^^^^^^^^^^^^^^^^^^^------------*//
+
         //* ------------realiza la orden de pago ------------*//
         const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`, order, {
             headers: {
@@ -55,9 +48,7 @@ const createOrder = async (req, res) => {
             }
         })
         console.log(response.data)
-
-
-
+        //* ------------^^^^^^^^^^^^^^^^^^^^^^^^ ------------*//
         res.json(response.data)
     } catch (error) {
         console.log(error)
@@ -65,6 +56,7 @@ const createOrder = async (req, res) => {
     }
 
 }
+
 const captureOrder = async (req, res) => {
     const { token, PayerID, idProperty } = req.query
     console.log(token, PayerID)
@@ -91,7 +83,6 @@ const captureOrder = async (req, res) => {
         const { emailUser } = await userdata(userid)
         await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
         res.redirect(`${hostclient}/pay/${idProperty}`);
-        // res.msg('pagado')
     } catch (error) {
         res.sendStatus(500).json(error)
     }
@@ -99,6 +90,7 @@ const captureOrder = async (req, res) => {
 
 
 }
+
 const cancelOrder = async (req, res) => {
     try {
         const { idProperty } = req.query

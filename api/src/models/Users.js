@@ -28,6 +28,11 @@ module.exports =  (sequelize) => {
        image:{
         type: DataTypes.STRING,
         allowNull:true,
-       }
+       },
+       isPremium: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    }
+
    })
 }

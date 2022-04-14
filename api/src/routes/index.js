@@ -9,7 +9,8 @@ const nodemailer = require('../controller/sendemails.js')
 const payment = require('../controller/paymentroute.js')
 const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
-const postUser = require('../controller/postUserSellers')
+const postUser = require('../controller/postUserSellers');
+const subscription = require('../controller/subscriptionroute.js')
 
 
 const router = Router();
@@ -17,7 +18,7 @@ const router = Router();
 router.use("/Properties", PropertiesRoute);
 
 //todo: crea un usuario
-router.use('/user', userCreate )
+router.use('/user', userCreate)
 
 //todo: obtiene todos los usuarios
 router.use('/users', allusers)
@@ -45,4 +46,7 @@ router.use('/send-email', nodemailer)
 
 //todo: añade el metodo de pago de paypal
 router.use('/pay', payment)
+
+//todo: crea la subscripción a la pagina
+router.use('/sub', subscription)
 module.exports = router;

@@ -118,8 +118,34 @@ router.post('/payment/:emailUser/:idProperty', (req, res, next) => {
                 return res.status(500).send(err.message)
             } else {
                 console.log("email enviado")
-                // return 
-                
+
+                return res.status(200).json(info.response)
+            }
+        })
+    } catch (error) {
+        res.send(500).json(error)
+    }
+})
+
+router.post('/subscribers/:emailUser/', (req, res, next) => {
+    const { emailUser } = req.params
+    try {
+        let mailOptions = {
+            from: '"Inmobiliaria" <casillas588@hotmail.com>',
+            to: emailUser,
+            subject: '¡Gracias por compra¡',
+            template: 'Promotion',
+            context: {
+                content: `Gracias por tu compra`,
+            }
+        }
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+                return res.status(500).send(err.message)
+            } else {
+                console.log("email enviado")
+
                 return res.status(200).json(info.response)
             }
         })
