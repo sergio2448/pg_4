@@ -1,15 +1,16 @@
 import React from 'react'
 import DonateButton from '../components/paypal/paypaldonation.jsx'
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="text-center lg:text-left bg-sky-700 text-white">
+    <footer className="text-center lg:text-left bg-sky-900 text-white">
       <div className="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
-        <div className="mr-12 hidden lg:block">
+        <div className="mr-12 hidden lg:block font-Monserrat">
           <span>Get connected with us on social networks:</span>
         </div>
         <div className="flex justify-center">
-          <a href="#!" className="mr-6 text-gray-600">
+          <a href="https://www.facebook.com/" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f"
               className="w-2.5" role="img" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 320 512">
@@ -18,7 +19,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-gray-600">
+          <a href="https://twitter.com/?lang=es" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter"
               className="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
               <path fill="currentColor"
@@ -26,7 +27,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-gray-600">
+          <a href="https://www.google.com" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
               className="w-3.5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
               <path fill="currentColor"
@@ -34,7 +35,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-gray-600">
+          <a href="https://www.instagram.com" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram"
               className="w-3.5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
               <path fill="currentColor"
@@ -42,7 +43,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-gray-600">
+          <a href="https://www.linkedin.com/feed" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin-in"
               className="w-3.5" role="img" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512">
@@ -51,7 +52,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="#!" className="text-gray-600">
+          <a href="https://github.com/sergio2448/pg_4" className="text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github"
               className="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
               <path fill="currentColor"
@@ -62,12 +63,11 @@ function Footer() {
         </div>
       </div>
       <div className="mx-6 py-10 text-center md:text-left">
-        <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="">
             <h6 className="
             uppercase
-            font-semibold
-            mb-4
+            font-Monserrat
             flex
             items-center
             justify-center
@@ -82,53 +82,44 @@ function Footer() {
               </svg>
               DONATIONS
             </h6>
-            <p>
+            <p className='font-Monserrat text-left'>
               Here if you want to stand out from the rest of estates and be in our featured the would like you can at least donate $10.00
                via Paypal.
             </p>
-            <div className='flex justify-center mt-8'>
+            <div className='flex justify-center mt-8 '>
         <DonateButton />
         </div>
           </div>
           <div className="">
-            <h6 className="uppercase font-semibold mb-4  md:justify-start">
+            <h6 className="uppercase font-Monserrat  md:justify-start">
               Products
             </h6>
             <p className="mb-4">
-              <a href="#!" className="text-white">Apartment</a>
+             <a href="estate">
+              <button href="#!" className="text-white font-Monserrat">Apartment</button>
+              </a>
             </p>
             <p className="mb-4">
-              <a href="#!" className="text-white">Flats</a>
+            <a href="estate">
+              <button href="#!" className="text-white font-Monserrat">Flats</button>
+              </a>
             </p>
             <p className="mb-4">
-              <a href="#!" className="text-white">Duplex</a>
+            <a href="estate">
+              <button href="#!" className="text-white font-Monserrat">Duplex</button>
+              </a>
             </p>
-            <p>
-              <a href="#!" className="text-white">Penthouse</a>
+            <p className='mb-4'>
+            <a href="estate">
+              <button href="#!" className="text-white font-Monserrat">Penthouse</button>
+              </a>
             </p>
           </div>
           <div className="">
-            <h6 className="uppercase font-semibold mb-4 md:justify-start">
-              Useful links
-            </h6>
-            <p className="mb-4">
-              <a href="#!" className="text-white">Pricing</a>
-            </p>
-            <p className="mb-4">
-              <a href="#!" className="text-white">Settings</a>
-            </p>
-            <p className="mb-4">
-              <a href="#!" className="text-white">Orders</a>
-            </p>
-            <p>
-              <a href="#!" className="text-white">Help</a>
-            </p>
-          </div>
-          <div className="">
-            <h6 className="uppercase font-semibold mb-4 flex justify-center md:justify-start">
+            <h6 className="uppercase font-Monserrat flex justify-center md:justify-start">
               Contact
             </h6>
-            <p className="flex items-center justify-center md:justify-start mb-4">
+            <p className="flex items-center justify-center md:justify-start font-Monserrat">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home"
                 className="w-4 mr-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                 <path fill="currentColor"
@@ -137,7 +128,7 @@ function Footer() {
               </svg>
               Buenos Aires , Cabildo 1332, AR
             </p>
-            <p className="flex items-center justify-center md:justify-start mb-4">
+            <p className="flex items-center justify-center md:justify-start font-Monserrat">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope"
                 className="w-4 mr-4" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
@@ -147,7 +138,7 @@ function Footer() {
               </svg>
               inmueblestop@gmail.com
             </p>
-            <p className="flex items-center justify-center md:justify-start mb-4">
+            <p className="flex items-center justify-center md:justify-start font-Monserrat">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="phone"
                 className="w-4 mr-4" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
@@ -157,14 +148,14 @@ function Footer() {
               </svg>
               + 57 234 567 88
             </p>
-            <p className="flex items-center justify-center md:justify-start">
+            <p className="flex items-center justify-center md:justify-start font-Monserrat">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="print"
                 className="w-4 mr-4" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <path fill="currentColor"
                   d="M448 192V77.25c0-8.49-3.37-16.62-9.37-22.63L393.37 9.37c-6-6-14.14-9.37-22.63-9.37H96C78.33 0 64 14.33 64 32v160c-35.35 0-64 28.65-64 64v112c0 8.84 7.16 16 16 16h48v96c0 17.67 14.33 32 32 32h320c17.67 0 32-14.33 32-32v-96h48c8.84 0 16-7.16 16-16V256c0-35.35-28.65-64-64-64zm-64 256H128v-96h256v96zm0-224H128V64h192v48c0 8.84 7.16 16 16 16h48v96zm48 72c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z">
                 </path>
-              </svg>
+              </svg >
               + 54 872 649 21 
 
             </p>
