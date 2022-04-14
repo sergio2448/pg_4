@@ -9,8 +9,13 @@ const nodemailer = require('../controller/sendemails.js')
 const payment = require('../controller/paymentroute.js')
 const getFeatures = require('../controller/getFeatures')
 const postReview = require('../controller/postReview')
-const postUser = require('../controller/postUserSellers');
+const postUser = require('../controller/postUserSellers')
+const getAgenda = require('../controller/getAgenda')
+const calendar = require('../controller/Calendar')
+const favorite = require('../controller/Favorite')
+const status = require('../controller/Status')
 const subscription = require('../controller/subscriptionroute.js')
+
 
 
 const router = Router();
@@ -47,6 +52,17 @@ router.use('/send-email', nodemailer)
 //todo: añade el metodo de pago de paypal
 router.use('/pay', payment)
 
+//todo: lista de typo de agenda
+router.use('/typeAgenda', getAgenda)
+
+router.use('/status', status)
+
+router.use('/calendar', calendar)
+
+router.use('/favorite', favorite)
+
 //todo: crea la subscripción a la pagina
 router.use('/sub', subscription)
+
+
 module.exports = router;

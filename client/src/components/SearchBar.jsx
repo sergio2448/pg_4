@@ -131,10 +131,10 @@ export default function SearchBar (){
                 <div className=' bg-stone-800 text-base text-sky-500 font-Monserrat font-bold px-4 py-1 '>Rent</div>
             </div>)            
             }
-            <form onSubmit={(e) => handleForm(e)} className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-6/12 h-16 bg-stone-800') : ('flex items-center m-auto justify-center z-10 w-9/12 py-6 bg-stone-800')}>
+            <form onSubmit={(e) => handleForm(e)} className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-6/12 h-16 ') : ('flex items-center m-auto justify-center z-10 w-6/12 py-6 bg-stone-800')}>
                 {
                     window.location.pathname !== '/' ? ( <div>
-                        <div className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-full h-16 bg-stone-800') : ('flex items-center m-auto justify-center z-10 mb-6 bg-stone-800')}><select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 bg-sky-300 hover:bg-sky-200 text-stone-800 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
+                        <div className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-full h-16  bg-stone-800') : ('flex items-center m-auto justify-center z-10 mb-6 bg-stone-800')}><select onChange={(e)=>handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 bg-sky-300 hover:bg-sky-200 text-stone-800 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
                   <option value='address' >Address</option>
                   <option value='city' >City</option>
                   <option value='state' >State</option>

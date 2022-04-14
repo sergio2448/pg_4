@@ -29,16 +29,12 @@ router.post('/', async (req, res) => {
         const userexistente = await getbyEmail(email)
         let seller;
         if(userexistente===null){
-            const idRol=await Roles.findAll({where:{rolName:role} })
+            const idRol=await Roles.findAll({where:{rolName:"seller"} })
             console.log(idRol[0]?.dataValues?.id);
             const newUser=await insert(nickName, email, image, idRol[0]?.dataValues?.id);
-            let createReview
-            if(role===ROL_SELLER){
-                createReview =await postSeller(firstName,lastName,phoneNumber,dateBirth,email);
-            }
-            if(role===ROL_BUYER){
+            let createReview =await postSeller(firstName,lastName,phoneNumber,dateBirth,email);
                 createReview = await postBuyer(firstName,lastName,phoneNumber,dateBirth,email)
-            }
+            
             
             if(createReview?.dataValues ){
                 seller=createReview?.dataValues;
