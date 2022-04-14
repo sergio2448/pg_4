@@ -132,7 +132,6 @@ const fillProperties = async (req, res) => {
         const { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId,latitude,longitude,highlighted } = req.body;
         const resul = await Idstatus.findAll({where:{statusName:"Publicado"}})
         const idstatusId=resul.map(d => d.dataValues).map(d => d.id);
-        console.log(idstatusId[0]);
         let newProperty = await Properties.create({
             description,
             m2,

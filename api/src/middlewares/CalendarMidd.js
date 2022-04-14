@@ -1,4 +1,4 @@
-const { Calendar,Agenda,Properties,Sellers,User } = require('../db')
+const { Calendar,Agenda,Properties,Sellers,Users } = require('../db')
 
 const getAgenda = async () =>{
     try {
@@ -17,8 +17,9 @@ const postCalendar = async (dates,hour,type, propertyId, userId) =>{
             resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
         }else{
             resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
-            const agendaSeller=await Properties.findAll({include:[{model:Sellers,inlcude:{model:User}}],where:{id:propertyId}})
-            console.log(agendaSeller); 
+            const agendaSeller=await Properties.findAll({include:[{model:Sellers,include:{model:Users}}],where:{id:propertyId}})
+            const idUserSeller=await agendaSeller.map(d => d.dataValues.seller.user.dataValues.id)[0]
+            await Calendar.create({dates,hour,type, propertyId, userId:idUserSeller});
             
         }
         
