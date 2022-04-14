@@ -1,4 +1,4 @@
-const { Calendar,Agenda } = require('../db')
+const { Calendar,Agenda,Properties,Sellers,User } = require('../db')
 
 const getAgenda = async () =>{
     try {
@@ -12,7 +12,16 @@ const getAgenda = async () =>{
 
 const postCalendar = async (dates,hour,type, propertyId, userId) =>{
     try {
-        const resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
+        let resultCreate;
+        if(type==="inabil"){
+            resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
+        }else{
+            resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
+            const agendaSeller=await Properties.findAll({include:[{model:Sellers,inlcude:{model:User}}],where:{id:propertyId}})
+            console.log(agendaSeller); 
+            
+        }
+        
             return resultCreate;
     } catch (error) {
         console.log("Ocurrio un error en ReviewMidd/ postCalendar :"+error);
