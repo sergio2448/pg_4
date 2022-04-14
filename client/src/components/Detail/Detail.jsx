@@ -203,7 +203,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
             )}
           </div>
         </div>
-        <div className="mt-6">
+        <div className="mt-6 font-normal text-base font-Monserrat">
           <Footer />
         </div>
       </div>
