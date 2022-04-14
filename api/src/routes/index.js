@@ -12,6 +12,8 @@ const postReview = require('../controller/postReview')
 const postUser = require('../controller/postUserSellers')
 const getAgenda = require('../controller/getAgenda')
 const calendar = require('../controller/Calendar')
+const favorite = require('../controller/Favorite')
+const status = require('../controller/Status')
 
 
 
@@ -52,8 +54,13 @@ router.use('/pay', payment)
 //todo: lista de typo de agenda
 router.use('/typeAgenda', getAgenda)
 
+router.use('/status', status)
 
 router.use('/calendar', calendar)
+
+router.use('/favorite', favorite)
+
+
 
 
 module.exports = router;

@@ -38,7 +38,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Roles, Users, BanckCards, Sellers, Properties, Features, Photos, Buyers, Sales ,Reviews, Address, Calendar, Agenda} =
+const { Roles, Users, BanckCards, Sellers, Properties, Features, Photos, Buyers, Sales ,Reviews, Address, Calendar, Agenda, Idstatus, Favorite} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -124,8 +124,8 @@ Sales.belongsTo(Properties);
 
 //Uno a muchos, 1:N
 //Una porpiedad puede puede ser agendada una o varias veces, un cita le petenece a una propiedad
-Properties.hasMany(Calendar);
-Calendar.belongsTo(Properties);
+Properties.hasMany(Calendar ,{ foreignKey: { allowNull: true }});
+Calendar.belongsTo(Properties, { foreignKey: { allowNull: true }});
 
 //Uno a muchos, 1:N
 //Un usurio puede agendada una o varias veces, un cita le petenece a una un usuario
@@ -133,8 +133,22 @@ Users.hasMany(Calendar);
 Calendar.belongsTo(Users);
 
 //una cita tiene una sola cita 
-Agenda.hasMany(Calendar);
-Calendar.belongsTo(Agenda);
+// Agenda.hasMany(Calendar);
+// Calendar.belongsTo(Agenda);
+
+//uno a muchos, 1:N
+// una propiedad tiene un estado, un estado lo tiene uno o mas Propiedades
+Idstatus.hasMany(Properties);
+Properties.belongsTo(Idstatus);
+
+
+Buyers.hasMany(Favorite)
+Favorite.belongsTo(Buyers)
+
+Properties.hasMany(Favorite);
+Favorite.belongsTo(Properties);
+
+
 
 
 module.exports = {

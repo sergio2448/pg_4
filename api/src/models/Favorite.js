@@ -1,24 +1,17 @@
 const { DataTypes} = require('sequelize');
 
 module.exports =  (sequelize) => {
-   sequelize.define('calendar',{
+   sequelize.define('favorite',{
        id:{
            type: DataTypes.UUID,
            defaultValue: DataTypes.UUIDV4,
            primaryKey:true,
            allowNull:false,
        },
-       dates:{
-           type: DataTypes.JSONB,
+       favorite:{
+           type: DataTypes.BOOLEAN,
            allowNull:false,
-       },
-       hour:{
-        type: DataTypes.DATE,
-        allowNull:true,
-       },
-       type:{
-        type: DataTypes.STRING,
-        allowNull:false
+           defaultValue: true
        }
    },{
     timestamps: false,
