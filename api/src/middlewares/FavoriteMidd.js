@@ -22,6 +22,16 @@ const getFavorites = async (userId) =>{
     }
 }
 
+const deleteFavorites = async (userId,propertiId) =>{
+    try {
+        const listdata= await Buyers.destroy({
+            where:{userId}});
+            return listdata;
+    } catch (error) {
+        console.log("Ocurrio un error en FavoriteMidd/ getFavorites :"+error);
+    }
+}
+
 module.exports={
     postFavorite,
     getFavorites
