@@ -154,6 +154,9 @@ Favorite.belongsTo(Properties);
 Users.hasOne(Subscription);
 Subscription.belongsTo(Users)
 
+Calendar.hasMany(Calendar ,{ foreignKey: { allowNull: true }});
+Calendar.belongsTo(Calendar ,{ foreignKey: { allowNull: true }});
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
