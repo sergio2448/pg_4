@@ -5,8 +5,9 @@ import {ImLocation2} from "react-icons/im"
 const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
 import witch from "../../styles/images/house-back.jpg"
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate }) {
+export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate, submit }) {
 
     const [viewport, setViewport ] = React.useState({
         latitude: 37.8,
@@ -52,8 +53,8 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
                     
                     onMove={(newViewport) => {
                         setViewport({
-                            latitude: newViewport.viewState.latitude,
                             longitude: newViewport.viewState.longitude,
+                            latitude: newViewport.viewState.latitude,
                             zoom: newViewport.viewState.zoom
                         })
                     }}
@@ -75,8 +76,8 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
                                 })
                                 setNewEstate({
                                     ...newEstate,
-                                    latitude: newUrl.lngLat.lat,
-                                    longitude: newUrl.lngLat.lng
+                                    longitude: newUrl.lngLat.lat,
+                                    latitude: newUrl.lngLat.lng
                                 })
                             }}
                             >
@@ -106,8 +107,9 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
             <div>
                 <div className="px-4 py-3 text-center sm:px-6">
                     <button
-                        type="submit"
+                        onClick={(e) => submit(e)}
                         className="inline-flex justify-center ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-4 py-2 rounded"
+                        to="/"
                     >
                         Upload property
                     </button>

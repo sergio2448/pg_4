@@ -9,6 +9,7 @@ import Settings from './components/DropdownProfile/Settings';
 import "@material-tailwind/react/tailwind.css";
 import PaypalButton from './components/paypal/paypalbutton.jsx';          
 import Payment from './components/paypal/payment';          
+import ListProperties from './components/Seller/ListProperties';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                     <Route path='/logged' element={<Settings/>} />
                     <Route path='/pay/:id' element={<PaypalButton/>}/>
                     <Route path='/payment' element={<Payment/>}/>
+                    <Route path='/listProperties' element={<ListProperties />} />
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
+import { loadUser } from '../../redux/actions';
 import axios from 'axios'
 import { useAuth0 } from "@auth0/auth0-react"
 import Nav from '../Nav'
@@ -10,7 +11,7 @@ import Page3 from './Page3'
 import Page4 from './Page4'
 import houseBackground from "../../styles/images/house-back.jpg"
 import { validate } from '../../validators/createValidator';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 let apiKey = ""
 
 
@@ -53,7 +54,8 @@ export default function Create() {
         features: [],
         propertyType: ''
     });
-
+    const dispatch = useDispatch()
+   
     React.useEffect(async () => {
         try {
             let resultKeyApi = await axios.get(`https://www.universal-tutorial.com/api/getaccesstoken`, {
@@ -75,26 +77,30 @@ export default function Create() {
         }
     }, []);
 
-    const onSubmit = async (event) => {
+    const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
         if(Object.values(errors).length === 0) {
             try {
                 let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
+                console.log(estateCreated)
                 idEstateCreated = estateCreated.data.id
                 const f = new FormData()
                 for (let i = 0; i < images.length; i++) {
                     f.append("files", images[i])
                 }
                 const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
-                /* navigate("/") */
+                let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                dispatch(loadUser(userExist.data))
+                navigate("/")
             } catch (error) {
                 console.log(error)
             }
         } else {
             console.log("ERROR")
         }
-        
+
+        navigate("/")
     };
 
     const handleSubmit = (event) => {
@@ -158,7 +164,7 @@ export default function Create() {
                         </div>
                         <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
                             <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
-                            <form action="" method="POST" onSubmit={onSubmit}>
+                            <form>
                                 <div className="shadow overflow-hidden sm:rounded-xl">
                                     {
                                         pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
@@ -170,7 +176,7 @@ export default function Create() {
                                         pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} /> : ""
                                     }
                                     {
-                                        pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
+                                        pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
                                     }
                                 </div>
                             </form>
