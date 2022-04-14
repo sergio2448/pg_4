@@ -6,7 +6,15 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 let sequelize =
   process.env.NODE_ENV === "production"
-    ? new Sequelize({
+    ? new Sequelize(process.env.DATABASE_URL, {
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false,
+          },
+        },
+      })
+    : /* new Sequelize({
         database: DB_NAME,
         dialect: "postgres",
         host: DB_HOST,
@@ -27,8 +35,8 @@ let sequelize =
           keepAlive: true,
         },
         ssl: true,
-      })
-    : new Sequelize(
+      }) */
+      new Sequelize(
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/inmueblesDB`,
         { logging: false, native: false }
       );
