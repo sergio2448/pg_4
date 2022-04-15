@@ -3,10 +3,10 @@ import ReactMapGL, {Marker, GeolocateControl, NavigationControl} from 'react-map
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {ImLocation2} from "react-icons/im"
 const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
-import witch from "../../styles/images/house-back.jpg"
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate }) {
+export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate, submit }) {
 
     const [viewport, setViewport ] = React.useState({
         latitude: 37.8,
@@ -22,23 +22,38 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
     })
 
     React.useEffect(() => {
-        axios.get(`https://restcountries.com/v3.1/name/${newEstate.country}`)
-            .then(result => {
-                if(newEstate.country) {
-                    setViewport({
-                        latitude: result.data[0].latlng[0],
-                        longitude: result.data[0].latlng[1],
-                        zoom: 2
-                    })
-                    setMarker({
-                        lngLat: {
-                            lat: result.data[0].latlng[0],
-                            lng: result.data[0].latlng[1]
-                        }
-                    })
+        console.log(newEstate)
+        if(newEstate.longitude) {
+            setViewport({
+                latitude: newEstate.longitude,
+                longitude: newEstate.latitude,
+                zoom: 9
+            })
+            setMarker({
+                lngLat: {
+                    lat: newEstate.longitude,
+                    lng: newEstate.latitude
                 }
             })
-            .catch(error => console.log(error.message))
+        } else {
+            axios.get(`https://restcountries.com/v3.1/name/${newEstate.country}`)
+                .then(result => {
+                    if(newEstate.country) {
+                        setViewport({
+                            latitude: result.data[0].latlng[0],
+                            longitude: result.data[0].latlng[1],
+                            zoom: 2
+                        })
+                        setMarker({
+                            lngLat: {
+                                lat: result.data[0].latlng[0],
+                                lng: result.data[0].latlng[1]
+                            }
+                        })
+                    }
+                })
+                .catch(error => console.log(error.message))
+        }
     },[])
 
 
@@ -52,8 +67,8 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
                     
                     onMove={(newViewport) => {
                         setViewport({
-                            latitude: newViewport.viewState.latitude,
                             longitude: newViewport.viewState.longitude,
+                            latitude: newViewport.viewState.latitude,
                             zoom: newViewport.viewState.zoom
                         })
                     }}
@@ -75,8 +90,8 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
                                 })
                                 setNewEstate({
                                     ...newEstate,
-                                    latitude: newUrl.lngLat.lat,
-                                    longitude: newUrl.lngLat.lng
+                                    longitude: newUrl.lngLat.lat,
+                                    latitude: newUrl.lngLat.lng
                                 })
                             }}
                             >
@@ -106,8 +121,9 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
             <div>
                 <div className="px-4 py-3 text-center sm:px-6">
                     <button
-                        type="submit"
+                        onClick={(e) => submit(e)}
                         className="inline-flex justify-center ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-4 py-2 rounded"
+                        to="/"
                     >
                         Upload property
                     </button>

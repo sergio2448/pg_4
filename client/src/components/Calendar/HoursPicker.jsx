@@ -7,7 +7,7 @@ let date = new Date()
 let date2 = new Date()
 
 export default function HoursPicker() {
-    const [startDate, setStartDate] = React.useState(date2.setHours(9, date2.setMinutes(new Date(), 30)));
+    const [startDate, setStartDate] = React.useState(date2);
 
     return (
         <DatePicker

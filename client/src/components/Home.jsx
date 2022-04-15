@@ -60,7 +60,7 @@ function Home() {
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Featured Properties</h2>        
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
-            homeCards.length ? homeCards.slice(0,3).map(c => {
+            homeCards.length ? homeCards.map(c => {
               return(             
         <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
           <Link to={'/estate/' + c.id}>

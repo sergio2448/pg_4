@@ -29,10 +29,10 @@ const rootReducer = (state = initialState, action) => {
                 searchBar: action.payload
             }
         case 'GET_HOMECARDS':
-            let newHomeCards = action.payload.sort((a,b) => {
-                if(a.order < b.order){
+            let newHomeCards = action.payload.sort((a) => {
+                if(!a.statusPromotion == "false"){
                     return -1
-                }else if(a.order > b.order){
+                }else if(a.statusPromotion){
                     return 1
                 }else{
                     return 0

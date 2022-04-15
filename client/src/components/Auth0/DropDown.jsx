@@ -49,7 +49,9 @@ export default function DropDown() {
                 >
                     Favorites
                 </DropdownLink>
-                <DropdownItem color="lightBlue" ripple="light" size="lg">
+                <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                    navigate("/listProperties")
+                }}>
                     Publications
                 </DropdownItem>
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {

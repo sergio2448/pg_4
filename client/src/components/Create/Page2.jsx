@@ -20,8 +20,7 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages, 
                     id="features"
                     name="features"
                     autoComplete="feature"
-                    className="bg-[#f8fafc95] mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    
+                    className="bg-[#f8fafc95] mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"     
                 >
                     <option hidden>~</option>
                     {
@@ -47,7 +46,9 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages, 
                 {
                     newEstate.features.map ? newEstate.features.map(elem => <div key={elem.name} className="m-4 text-white flex capitalize"> 
                         <p className='text-bold mr-4'>{elem.name}</p>
-                        <p>{elem.value}</p>
+                        {
+                            elem.value ? <p>{elem.value}</p> : <p>{elem.produc_features.value}</p>
+                        }
                     </div>)
                     : ""
                 }

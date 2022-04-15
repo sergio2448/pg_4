@@ -1,8 +1,16 @@
 import React from 'react'
 
-export default function Page3({ setImages, setPages, pages, setCurrentStep, errors, handleSubmit }) {
+export default function Page3({ setImages, images, setPages, pages, setCurrentStep, errors, handleSubmit, newEstate }) {
+
     return (
         <div className="px-4 py-5 sm:p-6 bg-[#00000099]">
+            <div id='prevImages' className='flex '>
+                {
+                    newEstate.photos ? newEstate.photos.map((photo) => {
+                        return <img src={'http://localhost:3001/Properties/images/' + photo.photos} className="w-48 h-48 m-4"></img>
+                    }) : ""
+                }
+            </div>
             <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                 <label htmlFor="img1" className="block text-white text-sm font-medium">                  
                     Upload the images of your property
