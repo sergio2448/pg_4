@@ -7,6 +7,7 @@ import ModalFooter from "@material-tailwind/react/ModalFooter";
 import Button from "@material-tailwind/react/Button";
 import Slideshow2 from "./Slideshow2";
 import Pagination1 from "./Pagination1";
+import axios from "axios";
 
 const Gallery = ({ photos }) => {
   const [showModal, setShowModal] = useState(false);
