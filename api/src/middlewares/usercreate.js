@@ -80,11 +80,17 @@ async function addfeatures(features, newProperty) {
     })
 }
 async function setfeatures(features, newProperty) {
-    features.forEach(async ({ name, value }) => {
+    features.forEach(async ({ name, value ,produc_features}) => {
+        console.log(value);
         const propFeature = await Features.findAll({
             where: { name },
         });
-        newProperty.addFeatures(propFeature, { through: { value } });
+        if(produc_features !==undefined){
+            value=produc_features.value
+            newProperty.addFeatures(propFeature, { through: { value:value } });
+        }else{
+            newProperty.addFeatures(propFeature, { through: { value:value } });
+        }
     })
 }
 

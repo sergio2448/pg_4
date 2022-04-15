@@ -211,6 +211,8 @@ const removeFeature = async(id) =>{
 
 const setassociations = async (features, id) => {
     const propUpdate = await getById(id)
+    console.log(features);
+    console.log(">>>>>>>>>>>>>");
     if (features.length > 0) {
         await setfeatures(features, propUpdate)
     }
