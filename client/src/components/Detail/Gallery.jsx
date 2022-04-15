@@ -52,7 +52,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 1
-                      ? "http://localhost:3001/Properties/images/" + photos[0]
+                      ? "/Properties/images/" + photos[0]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -66,7 +66,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 2
-                      ? "http://localhost:3001/Properties/images/" + photos[1]
+                      ? "/Properties/images/" + photos[1]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -78,7 +78,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 3
-                      ? "http://localhost:3001/Properties/images/" + photos[2]
+                      ? "/Properties/images/" + photos[2]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -90,7 +90,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 4
-                      ? "http://localhost:3001/Properties/images/" + photos[3]
+                      ? "/Properties/images/" + photos[3]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -102,7 +102,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 5
-                      ? "http://localhost:3001/Properties/images/" + photos[4]
+                      ? "/Properties/images/" + photos[4]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -114,7 +114,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 6
-                      ? "http://localhost:3001/Properties/images/" + photos[5]
+                      ? "/Properties/images/" + photos[5]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -126,7 +126,7 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 7
-                      ? "http://localhost:3001/Properties/images/" + photos[6]
+                      ? "/Properties/images/" + photos[6]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
