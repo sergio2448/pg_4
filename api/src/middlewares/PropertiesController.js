@@ -1,4 +1,4 @@
-const { Properties, Features, Photos,Produc_Features,Idstatus,Sellers,Users } = require('../db')
+const { Properties, Features, Photos,Produc_Features,Idstatus,Sellers,Users,Reviews,Buyers } = require('../db')
 const { Op, fn, col } = require("sequelize")
 const {
     getById,
@@ -57,7 +57,11 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
             //BUsqueda con todo lo anterior
             respProperties = await Properties.findAll({
                 //logging: console.log,
-                include: [objeModelFeature, { model: Photos },{ model: Idstatus },{model:Sellers,include:{model:Users}}],
+                include: [objeModelFeature,
+                         { model: Photos },
+                         { model: Idstatus },
+                         {model:Sellers,include:{model:Users}},
+                         { model: Reviews,include:{model:Buyers} }],
                 where: filterSearch
             });
 
@@ -88,7 +92,11 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                                         return resultCompare;
                                     })
                     respProperties = await Properties.findAll({
-                        include: [objeModelFeature, { model: Photos },{ model: Idstatus },{model:Sellers,include:{model:Users}}],
+                        include: [objeModelFeature,
+                                    { model: Photos },
+                                    { model: Idstatus },
+                                    {model:Sellers,include:{model:Users}},
+                                    { model: Reviews,include:{model:Buyers}  }],
                         where: {
                             id: joinSearchFeatures.map(data => data.produc_features)
                         }
@@ -116,7 +124,11 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                 }
             }
         } else {
-            respProperties = await Properties.findAll({ include: [{ model: Features }, { model: Photos },{ model: Idstatus },{model:Sellers,include:{model:Users}}] })
+            respProperties = await Properties.findAll({ include: [{ model: Features },
+                                                                 { model: Photos },
+                                                                 { model: Idstatus },
+                                                                 {model:Sellers,include:{model:Users}},
+                                                                 { model: Reviews,include:{model:Buyers}  }] })
         }
         return respProperties;
 

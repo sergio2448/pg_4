@@ -16,10 +16,12 @@ const postCalendar = async (dates,hour,type, propertyId, userId) =>{
         if(type==="inabil"){
             resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
         }else{
+            //cita para el comptador
             resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
+            //Cita para el vendedor
             const agendaSeller=await Properties.findAll({include:[{model:Sellers,include:{model:Users}}],where:{id:propertyId}})
             const idUserSeller=await agendaSeller.map(d => d.dataValues.seller.user.dataValues.id)[0]
-            await Calendar.create({dates,hour,type, propertyId, userId:idUserSeller});
+            await Calendar.create({dates,hour,type, propertyId, userId:idUserSeller,calendarId:resultCreate.dataValues.id});
             
         }
         
@@ -40,9 +42,46 @@ const getCalendar = async (userId) =>{
 }
 
 
+const deleteCalendar = async(id) =>{// ID de la Calendario
+    try {
+        const cita= await Calendar.findAll({where:{id}});
+        let resDelete;
+        if(cita.map(d => d.dataValues.calendarId)[0]===null){// el cliente cancela
+            //Se elimina del vendedor primero por la llave foranea
+            resDelete = await Calendar.destroy({ 
+                where:{
+                    calendarId :id
+                }
+            })
 
+            // se elimina del cliente
+            resDelete = await Calendar.destroy({ 
+                where:{
+                    id :id
+                }
+            })
+        }else{ // el vendedor cancela
+            //Se elimina la cita del vendedor
+            resDelete = await Calendar.destroy({ 
+                where:{
+                    id :id
+                }
+            })
+           // se elimina del cliente
+           resDelete = await Calendar.destroy({ 
+            where:{
+                id :cita.map(d => d.dataValues.calendarId)[0]
+            }
+             })
+        }
+        return resDelete
+    } catch (error) {
+        console.log("Ocurrio un error en CalendarMidd/ deleteCalendar:"+error);
+    }
+}
 module.exports={
     getAgenda,
     postCalendar,
-    getCalendar
+    getCalendar,
+    deleteCalendar
 }

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postCalendar,getCalendar } = require('../middlewares/CalendarMidd')
+const { postCalendar,getCalendar,deleteCalendar } = require('../middlewares/CalendarMidd')
 const router = Router();
 
 router.post('/', async (req, res) => {
@@ -25,10 +25,22 @@ router.get('/:userId', async (req, res) => {
     } catch (error) {
         console.log(error.message);
         res.status(500).send({message:error.message});
-    }
-   
-   
+    } 
 })
 
+router.delete('/:id',async(req,res) =>{
+    const {id} = req.params;
+    try {
+        const resDelete =await deleteCalendar(id);
+        if(resDelete>0){
+            res.status(204).send("Se eleiminó exitosamente el id: "+id);
+        }else{
+            res.status(500).send("No se encontro el recuros");
+        }
+        
+    } catch (error) {
+        console.log("Ocurrio un error en BdPokemonConstroller/ Pokemon /deletePokemon:"+error);
+    }
+})
 
 module.exports = router;

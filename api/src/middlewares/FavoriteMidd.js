@@ -22,10 +22,20 @@ const getFavorites = async (userId) =>{
     }
 }
 
-const deleteFavorites = async (userId,propertiId) =>{
+const deleteFavorites = async (id,userId,propertyId) =>{
     try {
-        const listdata= await Buyers.destroy({
-            where:{userId}});
+        let listdata
+        if(id){
+            listdata= await Favorite.destroy({ where:{id}});
+        }else{
+            const dataBuyer= await Buyers.findAll({where:{userId}})
+            const buyerId=dataBuyer.map(d => d.dataValues.id);
+            console.log(buyerId);
+            listdata= await Favorite.destroy({
+                where:{buyerId,propertyId}
+            });
+        }
+         
             return listdata;
     } catch (error) {
         console.log("Ocurrio un error en FavoriteMidd/ getFavorites :"+error);
@@ -34,5 +44,6 @@ const deleteFavorites = async (userId,propertiId) =>{
 
 module.exports={
     postFavorite,
-    getFavorites
+    getFavorites,
+    deleteFavorites
 }

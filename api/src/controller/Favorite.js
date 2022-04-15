@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postFavorite,getFavorites } = require('../middlewares/FavoriteMidd')
+const { postFavorite,getFavorites,deleteFavorites } = require('../middlewares/FavoriteMidd')
 const router = Router();
 
 
@@ -29,6 +29,26 @@ router.get('/:userId', async (req, res) => {
         res.status(500).send({message:error.message});
     } 
 })
+
+router.delete('/',async(req,res) =>{
+    const {
+        id,
+        userId,
+        propertyId
+      } = req.query;
+    try {
+        const resDelete =await deleteFavorites(id,userId,propertyId);
+        if(resDelete>0){
+            res.status(204).send("Se eliminó exitosamente el id: "+id);
+        }else{
+            res.status(500).send("No se encontro el recuros");
+        }
+        
+    } catch (error) {
+        console.log("Ocurrio un error en Review/ delete :"+error);
+    }
+})
+
 
 
 module.exports = router;
