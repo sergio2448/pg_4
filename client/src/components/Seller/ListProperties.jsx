@@ -13,7 +13,6 @@ export default function ListProperties() {
 
     const navigate = useNavigate()
     const userDB = useSelector((state) => state.user);
-    console.log(userDB)
     return (
         <div>
             <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
@@ -29,10 +28,9 @@ export default function ListProperties() {
 
                 <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {
-                        userDB.user.sellers[0].properties.map((property) => (
-                            <div>
-
-                                <div key="1" className="group relative">
+                        userDB.user.sellers[0].properties.map(property => (
+                            <div key={property.id}>
+                                <div className="group relative">
                                     <div className="w-full border-solid border-2 border-black min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                         <img
                                             src={'http://localhost:3001/Properties/images/' + property.photos[0].photos}
@@ -86,6 +84,9 @@ export default function ListProperties() {
                                             iconOnly={false}
                                             ripple="light"
                                             className="relative mx-1 bg-stone-800"
+                                            onClick={() => {
+                                                navigate(`/estate/edit/${property.id}`)
+                                            }}
                                         >
                                             Edit Property
                                         </Button>

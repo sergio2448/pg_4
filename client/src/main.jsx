@@ -4,21 +4,21 @@ import './index.css'
 import App from './App'
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import {  BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider 
-    domain="dev-dbk-z8uv.us.auth0.com"
-    clientId="PrTXQ0RjWD1L3KKgdfxAhJMTO5YjYLEC"
-    redirectUri={window.location.origin}
+    <Auth0Provider
+      domain="dev-dbk-z8uv.us.auth0.com"
+      clientId="PrTXQ0RjWD1L3KKgdfxAhJMTO5YjYLEC"
+      redirectUri={window.location.origin}
     >
-    <Provider store={store} >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+      <Provider store={store} >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -3,7 +3,6 @@ import ReactMapGL, {Marker, GeolocateControl, NavigationControl} from 'react-map
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {ImLocation2} from "react-icons/im"
 const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
-import witch from "../../styles/images/house-back.jpg"
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -23,23 +22,38 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
     })
 
     React.useEffect(() => {
-        axios.get(`https://restcountries.com/v3.1/name/${newEstate.country}`)
-            .then(result => {
-                if(newEstate.country) {
-                    setViewport({
-                        latitude: result.data[0].latlng[0],
-                        longitude: result.data[0].latlng[1],
-                        zoom: 2
-                    })
-                    setMarker({
-                        lngLat: {
-                            lat: result.data[0].latlng[0],
-                            lng: result.data[0].latlng[1]
-                        }
-                    })
+        console.log(newEstate)
+        if(newEstate.longitude) {
+            setViewport({
+                latitude: newEstate.longitude,
+                longitude: newEstate.latitude,
+                zoom: 9
+            })
+            setMarker({
+                lngLat: {
+                    lat: newEstate.longitude,
+                    lng: newEstate.latitude
                 }
             })
-            .catch(error => console.log(error.message))
+        } else {
+            axios.get(`https://restcountries.com/v3.1/name/${newEstate.country}`)
+                .then(result => {
+                    if(newEstate.country) {
+                        setViewport({
+                            latitude: result.data[0].latlng[0],
+                            longitude: result.data[0].latlng[1],
+                            zoom: 2
+                        })
+                        setMarker({
+                            lngLat: {
+                                lat: result.data[0].latlng[0],
+                                lng: result.data[0].latlng[1]
+                            }
+                        })
+                    }
+                })
+                .catch(error => console.log(error.message))
+        }
     },[])
 
 

@@ -1,4 +1,4 @@
-const { Roles, Users, BanckCards, Properties, Features, Photos ,Sellers,Buyers,Sales} = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos ,Sellers,Buyers,Sales,Idstatus, Subscription} = require('../db')
 async function insert(name, email, image, roleid) {
     try {
         const newUser = await Users.create(
@@ -21,9 +21,10 @@ async function getbyEmail(pEmail) {
         // include:[{ model: Roles }],
         include:[{model:Roles}
             ,{model:Sellers,
-                include:{model:Properties,include:[{model:Photos},{model:Features} ]}}
+                include:{model:Properties,include:[{model:Photos},{model:Features},{model:Idstatus} ]}}
             ,{model:BanckCards}
             ,{model:Buyers,include:{model:Sales}}
+            ,{model:Subscription}
         ],
         where: {
             email: pEmail
