@@ -20,7 +20,7 @@ module.exports =  (sequelize) => {
        },
        rating: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       enabled: {
         type: DataTypes.BOOLEAN,

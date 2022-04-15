@@ -46,7 +46,7 @@ const deleteCalendar = async(id) =>{// ID de la Calendario
     try {
         const cita= await Calendar.findAll({where:{id}});
         let resDelete;
-        if(cita.map(d => d.dataValues.calendarId)[0]===null){
+        if(cita.map(d => d.dataValues.calendarId)[0]===null){// el cliente cancela
             //Se elimina del vendedor primero por la llave foranea
             resDelete = await Calendar.destroy({ 
                 where:{
@@ -60,7 +60,7 @@ const deleteCalendar = async(id) =>{// ID de la Calendario
                     id :id
                 }
             })
-        }else{
+        }else{ // el vendedor cancela
             //Se elimina la cita del vendedor
             resDelete = await Calendar.destroy({ 
                 where:{
@@ -72,9 +72,8 @@ const deleteCalendar = async(id) =>{// ID de la Calendario
             where:{
                 id :cita.map(d => d.dataValues.calendarId)[0]
             }
-        })
+             })
         }
-       
         return resDelete
     } catch (error) {
         console.log("Ocurrio un error en CalendarMidd/ deleteCalendar:"+error);

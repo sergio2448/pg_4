@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { postReview } = require('../middlewares/ReviewMidd')
+const { postReview,deleteReview } = require('../middlewares/ReviewMidd')
 const router = Router();
 
 
@@ -14,8 +14,22 @@ router.post('/', async (req, res) => {
         console.log(error.message);
         res.status(500).send({message:error.message});
     }
-    
-   
 })
+
+router.delete('/:id',async(req,res) =>{
+    const {id} = req.params;
+    try {
+        const resDelete =await deleteReview(id);
+        if(resDelete>0){
+            res.status(204).send("Se eliminó exitosamente el id: "+id);
+        }else{
+            res.status(500).send("No se encontro el recuros");
+        }
+        
+    } catch (error) {
+        console.log("Ocurrio un error en Review/ delete :"+error);
+    }
+})
+
 
 module.exports = router;
