@@ -53,7 +53,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 1
-                      ? "/Properties/images/" + photos[0]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[0]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -67,7 +68,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 2
-                      ? "/Properties/images/" + photos[1]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[1]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -79,7 +81,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 3
-                      ? "/Properties/images/" + photos[2]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[2]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -91,7 +94,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 4
-                      ? "/Properties/images/" + photos[3]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[3]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -103,7 +107,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 5
-                      ? "/Properties/images/" + photos[4]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[4]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -115,7 +120,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 6
-                      ? "/Properties/images/" + photos[5]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[5]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
@@ -127,7 +133,8 @@ const Gallery = ({ photos }) => {
                   class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
                   src={
                     photos.length >= 7
-                      ? "/Properties/images/" + photos[6]
+                      ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        photos[6]
                       : hardcodeHouse
                   }
                   onClick={(e) => setShowModal(true)}
