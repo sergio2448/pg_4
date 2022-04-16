@@ -68,7 +68,10 @@ function Home() {
                 >
                   <Link to={"/estate/" + c.id}>
                     <Card
-                      image={"/Properties/images/" + c.photos[0].photos}
+                      image={
+                        "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        c.photos[0].photos
+                      }
                       featured={true}
                       isMap={false}
                       lease={c.lease}
@@ -100,7 +103,10 @@ function Home() {
                 >
                   <Link to={"/estate/" + c.id}>
                     <Card
-                      image={"/Properties/images/" + c.photos[0].photos}
+                      image={
+                        "https://app-inmuebles.herokuapp.com/Properties/images/" +
+                        c.photos[0].photos
+                      }
                       featured={false}
                       isMap={false}
                       lease={c.lease}
