@@ -121,3 +121,14 @@ export function addFavourites(data) {
     })
     .catch((err) => console.error(err));
   }
+
+  
+  export function updateTypeUser(typeUser) {
+    return async (dispatch) => {
+        return dispatch({
+            type: 'UPDATE_TYPE_USER',
+            payload: typeUser
+        })
+    }
+}
+
