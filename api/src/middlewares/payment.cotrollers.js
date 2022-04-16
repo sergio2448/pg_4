@@ -42,7 +42,7 @@ const createOrder = async (req, res) => {
         //* ------------^^^^^^^^^^^^^^^^^^^^^^------------*//
 
         //* ------------realiza la orden de pago ------------*//
-        const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`, order, {
+        const response = await axios.post(`${PAYPAL_API}v2/checkout/orders`, order, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -61,7 +61,7 @@ const captureOrder = async (req, res) => {
     const { token, PayerID, idProperty } = req.query
     console.log(token, PayerID)
     try {
-        const { data } = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {}, {
+        const { data } = await axios.post(`${PAYPAL_API}v2/checkout/orders/${token}/capture`, {}, {
             auth: {
                 username: PAYPA_API_CLIENT,
                 password: PAYPAL_API_SECRET
