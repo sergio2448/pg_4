@@ -1,11 +1,12 @@
 const axios = require('axios')
-const { getById, getbyEmail } = require('../middlewares/usercreate.js')
-const userdata = require('../middlewares/emailuserdata.js')
+const { getbyEmail } = require('../middlewares/usercreate.js')
 const authtoken = require('../middlewares/authtoken.js')
-const { newsub, UpdateSub, getIdUser, getIdSub, Declinesub } = require('./AddSubscription.js')
-const { PAYPAL_API, PAYPA_API_CLIENT, PAYPAL_API_SECRET } = process.env
+const { newsub, UpdateSub, getIdUser, getIdSub, Declinesub, datetoISO } = require('./AddSubscription.js')
+const { PAYPAL_API } = process.env
 const host = 'http://localhost:3001'
 const hostclient = 'http://localhost:3000'
+const hostip = "http://192.168.1.66:3001"
+
 const createProduct = async (req, res) => {
     try {
         const product = {
@@ -128,8 +129,8 @@ const generateSubscription = async (req, res) => {
                 brand_name: 'Inmobiliaria.com',
                 shipping_preference: "NO_SHIPPING",
                 user_action: "CONTINUE",
-                return_url: `http://192.168.1.66:3001/sub/capture-sub?emailUser=${emailUser}`,
-                cancel_url: `http://192.168.1.66:3001/sub/cancel-sub?emailUser=${emailUser}`,
+                return_url: `${hostip}/sub/capture-sub?emailUser=${emailUser}`,
+                cancel_url: `${hostip}/sub/cancel-sub?emailUser=${emailUser}`,
             }
         }
 
@@ -145,9 +146,6 @@ const generateSubscription = async (req, res) => {
         console.log(error.response.data)
         res.status(500).json(error)
     }
-
-
-
 }
 
 const captureSub = async (req, res) => {
@@ -157,19 +155,23 @@ const captureSub = async (req, res) => {
 
         const access_token = await authtoken()
 
+
+        const response = await newsub(subscription_id)
+        const usermatched = await getbyEmail(emailUser)
+        if (usermatched === null) return res.status(404).json({ msg: "Usuario no encontrado, no se activará la subscripción" })
+
+        await usermatched.setSubscription(response)
+
         await axios.post(`${PAYPAL_API}/v1/billing/subscriptions/${subscription_id}/activate`, reason, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
         })
 
-        const response = await newsub(subscription_id)
-        const usermatched = await getbyEmail(emailUser)
-        await usermatched.setSubscription(response)
         const userid = await getIdUser(usermatched)
         await UpdateSub(userid)
 
-        await axios.post(`${host}/send-email/subscribers/${emailUser}/`);
+        // await axios.post(`${host}/send-email/subscribers/${emailUser}/`);
 
         res.status(200).json({ active: "activada" })
     } catch (error) {
@@ -198,6 +200,7 @@ const suspendSub = async (req, res) => {
         }
 
         const usermatched = await getbyEmail(emailUser)
+        if (usermatched === null) return res.status(404).json({ msg: "Usuario no encontrado, no se activará la subscripción" })
         const userid = await getIdUser(usermatched)
         const sub = await usermatched.getSubscription()
         const id = await getIdSub(sub)
@@ -224,6 +227,7 @@ const reactiveSub = async (req, res) => {
     const reason = { reason: " Active subscription " }
     try {
         const usermatched = await getbyEmail(emailUser)
+        if (usermatched === null) return res.status(404).json({ msg: "Usuario no encontrado, no se activará la subscripción" })
         const userid = await getIdUser(usermatched)
         const sub = await usermatched.getSubscription()
         const id = await getIdSub(sub)
