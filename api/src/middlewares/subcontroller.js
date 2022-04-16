@@ -21,7 +21,7 @@ const createProduct = async (req, res) => {
 
         const result = data.find(({ name }) => name === product.name)
         if (!result) {
-            const { data } = await axios.post(`${PAYPAL_API}/v1/catalogs/products`, product, {
+            const { data } = await axios.post(`${PAYPAL_API}v1/catalogs/products`, product, {
                 headers: {
                     Authorization: `Bearer ${access_token}`
                 }
@@ -90,7 +90,7 @@ const createPlan = async (req, res) => {
         console.log(result)
 
         if (!result) {
-            const { data } = await axios.post(`${PAYPAL_API}/v1/billing/plans`, plan, {
+            const { data } = await axios.post(`${PAYPAL_API}v1/billing/plans`, plan, {
                 headers: {
                     Authorization: `Bearer ${access_token}`
                 }
@@ -135,7 +135,7 @@ const generateSubscription = async (req, res) => {
 
         const access_token = await authtoken()
 
-        const { data } = await axios.post(`${PAYPAL_API}/v1/billing/subscriptions`, subscription, {
+        const { data } = await axios.post(`${PAYPAL_API}v1/billing/subscriptions`, subscription, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -157,7 +157,7 @@ const captureSub = async (req, res) => {
 
         const access_token = await authtoken()
 
-        await axios.post(`${PAYPAL_API}/v1/billing/subscriptions/${subscription_id}/activate`, reason, {
+        await axios.post(`${PAYPAL_API}v1/billing/subscriptions/${subscription_id}/activate`, reason, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -204,7 +204,7 @@ const suspendSub = async (req, res) => {
         console.log(id)
         const access_token = await authtoken()
 
-        await axios.post(`${PAYPAL_API}/v1/billing/subscriptions/${id}/suspend`, reason, {
+        await axios.post(`${PAYPAL_API}v1/billing/subscriptions/${id}/suspend`, reason, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -230,7 +230,7 @@ const reactiveSub = async (req, res) => {
         console.log(id)
         const access_token = await authtoken()
 
-        await axios.post(`${PAYPAL_API}/v1/billing/subscriptions/${id}/activate`, reason, {
+        await axios.post(`${PAYPAL_API}v1/billing/subscriptions/${id}/activate`, reason, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -248,7 +248,7 @@ const reactiveSub = async (req, res) => {
 const productlist = async (req, res) => {
     try {
         const access_token = await authtoken()
-        const { data: { products } } = await axios.get(`${PAYPAL_API}/v1/catalogs/products/`, {
+        const { data: { products } } = await axios.get(`${PAYPAL_API}v1/catalogs/products/`, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
@@ -264,7 +264,7 @@ const productlist = async (req, res) => {
 const planslist = async (req, res) => {
     try {
         const access_token = await authtoken()
-        const { data: { plans } } = await axios.get(`${PAYPAL_API}/v1/billing/plans/`, {
+        const { data: { plans } } = await axios.get(`${PAYPAL_API}v1/billing/plans/`, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
