@@ -242,7 +242,17 @@ const getPhotos= async(id) =>{
     } catch (error) {
         console.log("Ocurrio un error en PropertiesControllrt/ getPhotos:"+error.message);
     }
-   
+}
+
+const deletePropeties = async(propertiId) =>{
+    try {
+        const listdata= await Properties.destroy({
+                where:{id:propertiId}
+            });
+            return listdata;
+    } catch (error) {
+        console.log("Ocurrio un error en FavoriteMidd/ deletePropeties :"+error);
+    }
 }
 
 module.exports = {
@@ -254,5 +264,6 @@ module.exports = {
   fillPhotos,
   deletePhotos,
   removeFeature,
-  getPhotos
+  getPhotos,
+  deletePropeties
 };
