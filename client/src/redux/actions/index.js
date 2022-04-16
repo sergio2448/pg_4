@@ -1,14 +1,5 @@
 import axios from 'axios';
 
-export const createEstate = (estateToCreate) => dispatch => {
-    return axios.post(`http://localhost:3001/Properties/pro`, estateToCreate)
-        .then(data => data.data)
-        .then(data => dispatch({
-            type: CREATE_ESTATE,
-            payload: data
-        }))
-};
-
 export function getSearchbar(input, body){
     return (dispatch) => {
         axios.get('http://localhost:3001/Properties?' + input, body).then((response) => {

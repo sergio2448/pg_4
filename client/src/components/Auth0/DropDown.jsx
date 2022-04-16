@@ -2,14 +2,14 @@ import React from "react";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import DropdownLink from "@material-tailwind/react/DropdownLink"
-import  { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from "react-router-dom";
 
 export default function DropDown() {
 
-    const {user, isAuthenticated, isLoading, logout} =  useAuth0()
+    const { user, isAuthenticated, isLoading, logout } = useAuth0()
     const navigate = useNavigate()
-    
+
 
     return (
         <div className="relative">
@@ -30,15 +30,25 @@ export default function DropDown() {
                 block={false}
                 ripple="light"
                 img={user.picture}
-                
-                >
-                    
+
+            >
+                <DropdownLink>
+                    <div className="flex justify-center">
+                        <div className="form-check form-switch">
+                            <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-black bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                            <label className="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                        </div>
+                    </div>
+                </DropdownLink>
+
                 <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                     navigate("/logged/myprofile")
                     console.log("Action")
                 }}>
                     My profile
                 </DropdownItem>
+
+
                 <DropdownLink
                     color="lightBlue"
                     ripple="light"
@@ -55,7 +65,7 @@ export default function DropDown() {
                     Publications
                 </DropdownItem>
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
-                    logout({returnTo: window.location.origin})
+                    logout({ returnTo: window.location.origin })
                 }}>
                     LogOut
                 </DropdownLink>

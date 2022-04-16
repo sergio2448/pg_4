@@ -142,13 +142,11 @@ router.put('/:id', async (req, res) => {
     const { override } = req.query
     const { id } = req.params
     const { features } = req.body
-    //console.log(features);
     try {
         let values = {};
         for (let key in req.body) {
             if (key !== 'features') {
-              //console.log(req.body[key]);
-                (req.body[key]) && (values[key] = req.body[key])
+                (req.body[key].length > 0) && (values[key] = req.body[key])
             }
         }
         await updateProperties(values, id)
