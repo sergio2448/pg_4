@@ -119,5 +119,6 @@ module.exports = {
     getUserById,
     getEmailUser,
     getUserName,
-    getByIdInFeature
+    getByIdInFeature,
+    getRolebyId
 }

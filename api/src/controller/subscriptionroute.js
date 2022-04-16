@@ -8,7 +8,8 @@ const {
     planslist,
     cancelSub,
     suspendSub,
-    reactiveSub
+    reactiveSub,
+    transactions
 } = require('../middlewares/subcontroller.js')
 const router = Router();
 
@@ -31,10 +32,13 @@ router.get('/show-product', productlist)
 router.get('/show-plan', planslist)
 
 router.get('/active-sub', reactiveSub)
+
+// router.get('/transactions-details', transactions)
 /*
-    *faltantes: ruta para cancelar o suspender subscription,
-    *ruta para ver las transacciones: (admin)
-    *ruta para que el usuario consulte sus subscripciones
+    !faltantes:
     *ruta que evalua el estado de la subscription
-    *Definit veneficios para el usuario vip 
+    *ruta para cancelar subscription,
+    *ruta para ver las transacciones: (admin) // incluir tipos y paginado
+    *ruta para que el usuario consulte sus subscripciones
+    *Definir veneficios para el usuario vip 
 */

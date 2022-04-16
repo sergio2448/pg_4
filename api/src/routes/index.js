@@ -15,6 +15,7 @@ const calendar = require('../controller/Calendar')
 const favorite = require('../controller/Favorite')
 const status = require('../controller/Status')
 const subscription = require('../controller/subscriptionroute.js')
+const superusuario = require('../controller/superusuario.js')
 
 
 
@@ -64,5 +65,5 @@ router.use('/favorite', favorite)
 //todo: crea la subscripción a la pagina
 router.use('/sub', subscription)
 
-
+router.use('/admin',superusuario )
 module.exports = router;
