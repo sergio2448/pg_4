@@ -55,7 +55,7 @@ export default function DropDown() {
                     Publications
                 </DropdownItem>
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
-                    logout({returnTo: window.location.origin})
+                    logout({returnTo: "https://app-inmuebles.herokuapp.com"})
                 }}>
                     LogOut
                 </DropdownLink>

@@ -5,6 +5,14 @@ export const LogoutButton = () =>{
 
     const { logout } = useAuth0();
 
-    return <button onClick={()=> logout({returnTo: window.location.origin})}>Logout</button>
+    return (
+      <button
+        onClick={() =>
+          logout({ returnTo: "https://app-inmuebles.herokuapp.com" })
+        }
+      >
+        Logout
+      </button>
+    );
 
 };
