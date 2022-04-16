@@ -68,7 +68,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Roles, Users, BanckCards, Sellers, Properties, Features, Photos, Buyers, Sales ,Reviews, Address, Calendar, Agenda, Idstatus, Favorite} =
+const { Roles, Users, BanckCards, Sellers, Properties, Features, Photos, Buyers, Sales ,Reviews, Address, Calendar, Agenda, Idstatus, Favorite, Subscription} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -178,7 +178,14 @@ Favorite.belongsTo(Buyers)
 Properties.hasMany(Favorite);
 Favorite.belongsTo(Properties);
 
+//Muchos a muchos 1:1
+//Un Usuario puede tener un Id de subscripción, un Id de subscripción solo puede ser adquirida por un usuario
 
+Users.hasOne(Subscription);
+Subscription.belongsTo(Users)
+
+Calendar.hasMany(Calendar ,{ foreignKey: { allowNull: true }});
+Calendar.belongsTo(Calendar ,{ foreignKey: { allowNull: true }});
 
 
 module.exports = {

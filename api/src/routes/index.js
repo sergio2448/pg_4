@@ -14,6 +14,7 @@ const getAgenda = require('../controller/getAgenda')
 const calendar = require('../controller/Calendar')
 const favorite = require('../controller/Favorite')
 const status = require('../controller/Status')
+const subscription = require('../controller/subscriptionroute.js')
 
 
 
@@ -22,7 +23,7 @@ const router = Router();
 router.use("/Properties", PropertiesRoute);
 
 //todo: crea un usuario
-router.use('/user', userCreate )
+router.use('/user', userCreate)
 
 //todo: obtiene todos los usuarios
 router.use('/users', allusers)
@@ -60,7 +61,8 @@ router.use('/calendar', calendar)
 
 router.use('/favorite', favorite)
 
-
+//todo: crea la subscripción a la pagina
+router.use('/sub', subscription)
 
 
 module.exports = router;

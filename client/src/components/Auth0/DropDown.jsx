@@ -34,7 +34,7 @@ export default function DropDown() {
                 >
                     
                 <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
-                    navigate("/logged")
+                    navigate("/logged/myprofile")
                     console.log("Action")
                 }}>
                     My profile
@@ -44,12 +44,14 @@ export default function DropDown() {
                     ripple="light"
                     size="lg"
                     onClick={(e) => {
-                        navigate("/Favorites")
+                        navigate("/logged/Favorites")
                     }}
                 >
                     Favorites
                 </DropdownLink>
-                <DropdownItem color="lightBlue" ripple="light" size="lg">
+                <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                    navigate("/listProperties")
+                }}>
                     Publications
                 </DropdownItem>
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {

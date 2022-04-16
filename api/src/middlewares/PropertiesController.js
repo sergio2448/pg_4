@@ -1,4 +1,4 @@
-const { Properties, Features, Photos,Produc_Features,Idstatus } = require('../db')
+const { Properties, Features, Photos,Produc_Features,Idstatus,Sellers,Users,Reviews,Buyers } = require('../db')
 const { Op, fn, col } = require("sequelize")
 const {
     getById,
@@ -57,7 +57,11 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
             //BUsqueda con todo lo anterior
             respProperties = await Properties.findAll({
                 //logging: console.log,
-                include: [objeModelFeature, { model: Photos },{ model: Idstatus }],
+                include: [objeModelFeature,
+                         { model: Photos },
+                         { model: Idstatus },
+                         {model:Sellers,include:{model:Users}},
+                         { model: Reviews,include:{model:Buyers} }],
                 where: filterSearch
             });
 
@@ -88,7 +92,11 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                                         return resultCompare;
                                     })
                     respProperties = await Properties.findAll({
-                        include: [objeModelFeature, { model: Photos },{ model: Idstatus }],
+                        include: [objeModelFeature,
+                                    { model: Photos },
+                                    { model: Idstatus },
+                                    {model:Sellers,include:{model:Users}},
+                                    { model: Reviews,include:{model:Buyers}  }],
                         where: {
                             id: joinSearchFeatures.map(data => data.produc_features)
                         }
@@ -116,7 +124,11 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                 }
             }
         } else {
-            respProperties = await Properties.findAll({ include: [{ model: Features }, { model: Photos }] })
+            respProperties = await Properties.findAll({ include: [{ model: Features },
+                                                                 { model: Photos },
+                                                                 { model: Idstatus },
+                                                                 {model:Sellers,include:{model:Users}},
+                                                                 { model: Reviews,include:{model:Buyers}  }] })
         }
         return respProperties;
 
@@ -132,7 +144,6 @@ const fillProperties = async (req, res) => {
         const { description, features, m2, address, city, state , country, cost, cp,lease,propertyType,sellerId,latitude,longitude,highlighted } = req.body;
         const resul = await Idstatus.findAll({where:{statusName:"Publicado"}})
         const idstatusId=resul.map(d => d.dataValues).map(d => d.id);
-        console.log(idstatusId[0]);
         let newProperty = await Properties.create({
             description,
             m2,
@@ -212,6 +223,8 @@ const removeFeature = async(id) =>{
 
 const setassociations = async (features, id) => {
     const propUpdate = await getById(id)
+    console.log(features);
+    console.log(">>>>>>>>>>>>>");
     if (features.length > 0) {
         await setfeatures(features, propUpdate)
     }
@@ -229,7 +242,17 @@ const getPhotos= async(id) =>{
     } catch (error) {
         console.log("Ocurrio un error en PropertiesControllrt/ getPhotos:"+error.message);
     }
-   
+}
+
+const deletePropeties = async(propertiId) =>{
+    try {
+        const listdata= await Properties.destroy({
+                where:{id:propertiId}
+            });
+            return listdata;
+    } catch (error) {
+        console.log("Ocurrio un error en FavoriteMidd/ deletePropeties :"+error);
+    }
 }
 
 module.exports = {
@@ -241,5 +264,6 @@ module.exports = {
   fillPhotos,
   deletePhotos,
   removeFeature,
-  getPhotos
+  getPhotos,
+  deletePropeties
 };
