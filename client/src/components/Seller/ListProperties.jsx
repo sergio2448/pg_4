@@ -1,18 +1,31 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import houseBackground from '../../styles/images/house-back.jpg';
 import Nav from "../Nav";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "@material-tailwind/react/Button";
-import HoursPicker from '../Calendar/HoursPicker';
+import Modal from "@material-tailwind/react/Modal";
+import ModalHeader from "@material-tailwind/react/ModalHeader";
+import ModalBody from "@material-tailwind/react/ModalBody";
+import ModalFooter from "@material-tailwind/react/ModalFooter";
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import DropdownLink from "@material-tailwind/react/DropdownLink"
+import { useAuth0 } from '@auth0/auth0-react';
+import { loadUser } from '../../redux/actions';
+import axios from 'axios';
+import Paypalbutton from '../paypal/paypalbutton';
 
 export default function ListProperties() {
 
     const navigate = useNavigate()
     const userDB = useSelector((state) => state.user);
+    const dispatch = useDispatch()
+    const [showModal, setShowModal] = React.useState(false);
+    const { user } =  useAuth0()
+
+
+
     return (
         <div>
             <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
@@ -46,11 +59,12 @@ export default function ListProperties() {
                                     </div>
                                     <div className="mt-4 flex justify-between">
                                         <div>
-                                            <h3 className="text-lg text-white italic">
+                                            <h3 className="text-lg text-white italic uppercase mb-2">
                                                 <Link to={`/estate/${property.id}`}>
                                                     <span aria-hidden="true" className="absolute inset-0" />
-                                                    "ESTADO ACTUAL"
+                                                    {property.idstatus.statusName}
                                                 </Link>
+                                                <p className="mt-1 text-lg text-white">{property.lease}</p>
                                             </h3>
 
                                             <p className="mt-1 text-sm text-white">Country: {property.country}</p>
@@ -58,22 +72,13 @@ export default function ListProperties() {
                                             <p className="mt-1 text-sm text-white">City: {property.city}</p>
                                             <p className="mt-1 text-sm text-white">Property Type: {property.propertyType}</p>
                                         </div>
-                                        <p className="text-sm font-medium text-white italic">Cost: ${property.cost}</p>
+                                        <p className="text-lg font-medium text-white italic">Cost: ${property.cost}</p>
                                     </div>
                                 </div>
                                 <div className='flex justify-around flex-col my-4'>
-                                    <Button
-                                        color="cyan"
-                                        buttonType="filled"
-                                        size="regular"
-                                        rounded={true}
-                                        block={false}
-                                        iconOnly={false}
-                                        ripple="light"
-                                        className="relative mx-1"
-                                    >
-                                        Promote
-                                    </Button>
+                                    <Paypalbutton id={property.id}/>
+                                    
+                                    
                                     <div className='flex flex-row justify-around my-4'>
                                         <Button
                                             color="bg-stone-800"
@@ -84,7 +89,8 @@ export default function ListProperties() {
                                             iconOnly={false}
                                             ripple="light"
                                             className="relative mx-1 bg-stone-800"
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                                e.preventDefault()
                                                 navigate(`/estate/edit/${property.id}`)
                                             }}
                                         >
@@ -99,9 +105,47 @@ export default function ListProperties() {
                                             iconOnly={false}
                                             ripple="light"
                                             className="relative mx-1"
+                                            onClick={(e) => setShowModal(true)}
                                         >
                                             DELETE PROPERTY
                                         </Button>
+                                        <Modal size="sm" active={showModal} className="relative" >
+                                            <ModalHeader toggler={() => {
+                                                setShowModal(false)
+                                            }} >
+                                                Warning!
+                                            </ModalHeader>
+                                            <ModalBody>
+                                                <p className="text-base leading-relaxed text-gray-600 font-normal">
+                                                Are you sure you want to delete this property? If so, click the Delete button.
+                                                </p>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                <Button
+                                                    color="red"
+                                                    buttonType="filled"
+                                                    size="sm"
+                                                    rounded={false}
+                                                    block={false}
+                                                    iconOnly={false}
+                                                    ripple="light"
+                                                    className="relative mx-1"
+                                                    onClick={async (e) => {
+                                                        e.preventDefault()
+                                                        try {
+                                                            await axios(`http://localhost:3001/Properties/${property.id}`)
+                                                            let userExist = await axios.delete(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                            dispatch(loadUser(userExist.data))
+                                                            setShowModal(false)
+                                                        } catch (error) {
+                                                            console.log(error)
+                                                        }
+                                                    }}
+                                                >
+                                                    CONFIRM DELETE
+                                                </Button>
+                                            </ModalFooter>
+                                        </Modal>
                                     </div>
                                     <div className='flex justify-center'>
                                     <Dropdown
@@ -115,18 +159,56 @@ export default function ListProperties() {
                                         ripple="light"
                                         className="relative text-center bg-stone-800"
                                     >
-                                        <DropdownItem color="lightBlue" ripple="light">
+                                        <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
+                                            e.preventDefault()
+                                            try {
+                                                let state = await axios("http://localhost:3001/status")
+                                                await axios.put(`http://localhost:3001/Properties/${property.id}`, {
+                                                    idstatusId: state.data[0].id
+                                                })
+                                                let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                dispatch(loadUser(userExist.data))
+                                            } catch (error) {
+                                                console.log(error)
+                                            }
+                                        }}>
                                             Enable
                                         </DropdownItem>
                                         <DropdownLink
                                             href="#"
                                             color="lightBlue"
                                             ripple="light"
-                                            onClick={(e) => e.preventDefault()}
+                                            onClick={async (e) =>{ 
+                                                e.preventDefault()
+                                                try {
+                                                    let state = await axios("http://localhost:3001/status")
+                                                    await axios.put(`http://localhost:3001/Properties/${property.id}`, {
+                                                        idstatusId: state.data[1].id
+                                                    })
+                                                    let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                    dispatch(loadUser(userExist.data))
+                                                } catch (error) {
+                                                    console.log(error)
+                                                }
+                                            }}
                                         >
                                             Pause
                                         </DropdownLink>
-                                        <DropdownItem color="lightBlue" ripple="light">
+                                        <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
+                                            e.preventDefault()
+                                            try {
+                                                let state = await axios("http://localhost:3001/status")
+                                                console.log(state.data[2].id)
+                                                await axios.put(`http://localhost:3001/Properties/${property.id}`, {
+                                                    idstatusId: state.data[2].id
+                                                })
+                                                console.log(userDB)
+                                                let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                dispatch(loadUser(userExist.data))
+                                            } catch (error) {
+                                                console.log(error)
+                                            }
+                                        }}>
                                             Close
                                         </DropdownItem>
                                     </Dropdown>

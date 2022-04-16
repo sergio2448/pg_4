@@ -36,6 +36,7 @@ export default function Create() {
     const [errors, setErrors] = React.useState({});
     const [citys, setCitys] = React.useState([])
     const [images, setImages] = React.useState(null)
+    const [imagesDeleted, setImagesDeleted] = React.useState([])
     const [pages, setPages] = React.useState({
         page1: true,
         page2: false,
@@ -64,7 +65,6 @@ export default function Create() {
         axios.get('http://localhost:3001/Properties?id=' + id)
         .then((result) => result.data)
         .then(propertyEdit => {
-            console.log(propertyEdit)
             setNewEstate({
                 sellerId: userDB.user.sellers[0] ? userDB.user.sellers[0].id : 0,
                 lease: propertyEdit[0].lease,
@@ -84,7 +84,7 @@ export default function Create() {
             })
             setImages(propertyEdit[0].photos)
             changeCitys(propertyEdit[0].country, setCitys)
-            
+            setImagesDeleted(propertyEdit[0].photos.map(elem => elem.photos))
         })
         .catch((error) => {
             console.log(error)
@@ -112,6 +112,9 @@ export default function Create() {
         }
     }, []);
 
+    /* console.log(images[0].photos)
+    console.log(imagesDeleted) */
+
     const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
@@ -120,17 +123,28 @@ export default function Create() {
                 console.log("ENTRE EN PUT, NO POST")
                 try {
                     let estateCreated = await axios.put(`http://localhost:3001/Properties/${id}?override=true`, newEstate)
-                    //CARGA O ELIMINACION DE IMAGENES AQUI
                     console.log(estateCreated)
-                    return 
+                    if(imagesDeleted) {
+                        console.log(imagesDeleted)
+                        await axios.put(`http://localhost:3001/Properties/images/${id}`, {
+                            "listImage": imagesDeleted
+                        })
+                    }
+                    if(!images[0].photos) {
+                        const f = new FormData()
+                        for (let i = 0; i < images.length; i++) {
+                            f.append("files", images[i])
+                        }
+                        const result = await axios.post(`http://localhost:3001/Properties/img/${id}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                    }
+                    let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                    dispatch(loadUser(userExist.data))
                 } catch (error) {
                     console.log(error.message)
                 }
             } else {
-                console.log("ENTRE EN POST, NO PUT")
                 try {
                     let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
-                    console.log(estateCreated)
                     idEstateCreated = estateCreated.data.id
                     const f = new FormData()
                     for (let i = 0; i < images.length; i++) {
@@ -184,6 +198,8 @@ export default function Create() {
                 ...newEstate
             }))
         }
+        document.querySelector("#quantity").value = ""
+        document.querySelector("#features").value = "~"
     }
 
 
@@ -219,7 +235,7 @@ export default function Create() {
                                         pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit} /> : ""
                                     }
                                     {
-                                        pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images}/> : ""
+                                        pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} imagesDeleted={imagesDeleted} setImagesDeleted={setImagesDeleted} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images}/> : ""
                                     }
                                     {
                                         pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
