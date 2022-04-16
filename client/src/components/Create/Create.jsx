@@ -80,13 +80,20 @@ export default function Create() {
         let idEstateCreated
         if(Object.values(errors).length === 0) {
             try {
-                let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
+                let estateCreated = await axios.post(
+                  `https://app-inmuebles.herokuapp.com/Properties/pro`,
+                  newEstate
+                );
                 idEstateCreated = estateCreated.data.id
                 const f = new FormData()
                 for (let i = 0; i < images.length; i++) {
                     f.append("files", images[i])
                 }
-                const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                const result = await axios.post(
+                  `https://app-inmuebles.herokuapp.com/Properties/img/${idEstateCreated}`,
+                  f,
+                  { headers: { "Content-Type": "multipart/form-data" } }
+                );
                 /* navigate("/") */
             } catch (error) {
                 console.log(error)

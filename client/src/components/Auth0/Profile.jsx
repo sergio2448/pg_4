@@ -23,7 +23,9 @@ export const Profile = () => {
 
     React.useEffect(async () => {
         try {
-            let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+            let userExist = await axios(
+              `https://app-inmuebles.herokuapp.com/optionUser/${user.email}`
+            );
             setUserLoged(userExist.data)
             if(userExist.data.result === "Existente") {
                 dispatch(loadUser(userExist.data))
@@ -35,20 +37,28 @@ export const Profile = () => {
 
 
     const userSubmit = async () => {
-        let newUser = await axios.post(`http://localhost:3001/optionUser`, {
-            "firstName": user.given_name,
-            "lastName": user.family_name,
-            "nickName": user.nickname,
-            "email": user.email,
-            "image":user.picture,
-        })
-        let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+        let newUser = await axios.post(
+          `https://app-inmuebles.herokuapp.com/optionUser`,
+          {
+            firstName: user.given_name,
+            lastName: user.family_name,
+            nickName: user.nickname,
+            email: user.email,
+            image: user.picture,
+          }
+        );
+        let userExist = await axios(
+          `https://app-inmuebles.herokuapp.com/optionUser/${user.email}`
+        );
         dispatch(loadUser(userExist.data))
         setShowModal(false)
         const notificationUser={
             userid:userExist.data.user.id
         }
-        await axios.post(`http://localhost:3001/send-email/welcome`,notificationUser)
+        await axios.post(
+          `https://app-inmuebles.herokuapp.com/send-email/welcome`,
+          notificationUser
+        );
     }
    
     return (
