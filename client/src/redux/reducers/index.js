@@ -12,6 +12,8 @@ const initialState = {
     apikey: {},
     user: {},
     maplist: [],
+    dropdown:[],
+    favourites:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -82,11 +84,25 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 maplist: state.maplist.concat([action.payload])
             }
+        case 'DROPDOWN':
+            return {
+                ...state,
+                dropdown:action.payload
+            }    
+        case 'GET_FAVOURITES':
+            return {
+                ...state,
+                favourites: action.payload,
+                
+                
+                
+            }
         default:
             return ({
                 ...state
             });
     }
 };
+
 
 export default rootReducer;
