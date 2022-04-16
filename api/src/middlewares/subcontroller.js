@@ -115,23 +115,23 @@ const generateSubscription = async (req, res) => {
         const plan_id = await axios.post(`${host}/sub/create-plan`, {})
 
         const subscription = {
-            plan_id: plan_id.data,
-            quatity: 1,
-            subscriber: {
-                name: {
-                    given_name: "nombrePrueba",
-                    surname: "apellidoPrueba"
-                },
-                email_address: "email@example.com"
+          plan_id: plan_id.data,
+          quatity: 1,
+          subscriber: {
+            name: {
+              given_name: "nombrePrueba",
+              surname: "apellidoPrueba",
             },
-            application_context: {
-                brand_name: 'Inmobiliaria.com',
-                shipping_preference: "NO_SHIPPING",
-                user_action: "CONTINUE",
-                return_url: `http://192.168.1.66:3001/sub/capture-sub?emailUser=${emailUser}`,
-                cancel_url: `http://192.168.1.66:3001/sub/cancel-sub?emailUser=${emailUser}`,
-            }
-        }
+            email_address: "email@example.com",
+          },
+          application_context: {
+            brand_name: "Inmobiliaria.com",
+            shipping_preference: "NO_SHIPPING",
+            user_action: "CONTINUE",
+            return_url: `http://192.168.1.66:3001/sub/capture-sub?emailUser=${emailUser}`, //direccion ip y el puerto
+            cancel_url: `http://192.168.1.66:3001/sub/cancel-sub?emailUser=${emailUser}`,
+          },
+        };
 
         const access_token = await authtoken()
 
