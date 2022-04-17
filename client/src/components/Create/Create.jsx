@@ -161,7 +161,7 @@ export default function Create() {
         } else {
             console.log("ERROR")
         }
-        /* navigate("/") */
+        navigate("/")
     };
 
     const handleSubmit = (event) => {

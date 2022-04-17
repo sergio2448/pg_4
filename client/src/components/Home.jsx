@@ -84,7 +84,7 @@ function Home() {
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
             homeCards.length ? homeCards.reverse().slice(0, 3).map(c => {
-              if (c.photos) {
+              if (c.photos && c.idstatusid === "publicado") {
                 return (
                   <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
                     <Link to={'/estate/' + c.id}>
