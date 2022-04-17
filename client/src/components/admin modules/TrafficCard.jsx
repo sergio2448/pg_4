@@ -53,57 +53,6 @@ export default function TrafficCard() {
                   <Progress color="blue" value="60" />
                 </td>
               </tr>
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  {
-                    item.transaction_details[0].transaction_info
-                      .transaction_initiation_date
-                  }
-                </th>
-                <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  {
-                    item.transaction_details[0].transaction_info
-                      .transaction_updated_date
-                  }
-                </td>
-                <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <Progress color="red" value="80" />
-                </td>
-              </tr>
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  {
-                    item.transaction_details[0].transaction_info
-                      .transaction_initiation_date
-                  }
-                </th>
-                <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  {
-                    item.transaction_details[0].transaction_info
-                      .transaction_updated_date
-                  }
-                </td>
-                <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <Progress color="indigo" value="75" />
-                </td>
-              </tr>
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  {
-                    item.transaction_details[0].transaction_info
-                      .transaction_initiation_date
-                  }
-                </th>
-                <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  {
-                    item.transaction_details[0].transaction_info
-                      .transaction_updated_date
-                  }
-                </td>
-                <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <Progress color="lightBlue" value="90" />
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
