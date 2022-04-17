@@ -20,11 +20,6 @@ function Nav() {
         <NavLink className={({ isActive }) =>
           (isActive ? "bg-sky-500 px-3 py-2 rounded" : "text-center text-lg transition ease-in-out duration-200 hover:bg-sky-500 px-3 py-2 rounded")
         } end to='/estate'>Properties</NavLink>
-        {
-          isAuthenticated && <NavLink className={({ isActive }) =>
-            (isActive ? "bg-sky-500 px-3 py-2 rounded" : "text-center text-lg transition ease-in-out duration-200 hover:bg-sky-500 px-3 py-2 rounded")
-          } to='/estate/create'>Create</NavLink>
-        }
       </div>
       <div className='text-right'>
         {isAuthenticated ? <Profile />
