@@ -173,7 +173,7 @@ const captureSub = async (req, res) => {
 
         // await axios.post(`${host}/send-email/subscribers/${emailUser}/`);
 
-        res.status(200).json({ active: "activada" })
+        res.redirect(`${hostclient}`);
     } catch (error) {
         res.status(500).json(error)
     }
@@ -183,7 +183,7 @@ const captureSub = async (req, res) => {
 const cancelSub = async (req, res) => {
     try {
         const { subscription_id, emailUser } = req.query
-        res.status(200).send("cancelado");
+        res.redirect(`${hostclient}`);
     } catch (error) {
         console.log(error)
         res.status(500).json(error)

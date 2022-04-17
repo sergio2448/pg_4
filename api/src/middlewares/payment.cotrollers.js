@@ -83,7 +83,7 @@ const captureOrder = async (req, res) => {
         const userid = seller.getDataValue('userId')
         const { emailUser } = await userdata(userid)
         await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
-        res.redirect(`${hostclient}/pay/${idProperty}`);
+        res.redirect(`${hostclient}`);
     } catch (error) {
         res.sendStatus(500).json(error)
     }
@@ -95,7 +95,7 @@ const captureOrder = async (req, res) => {
 const cancelOrder = async (req, res) => {
     try {
         const { idProperty } = req.query
-        res.redirect(`${hostclient}/pay/${idProperty}`);
+        res.redirect(`${hostclient}`);
     } catch (error) {
         res.sendStatus(500).json(error)
     }
