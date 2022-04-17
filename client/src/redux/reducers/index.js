@@ -14,6 +14,7 @@ const initialState = {
     maplist: [],
     dropdown:[],
     favourites:[],
+    typeUser: "buyer"
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -96,6 +97,11 @@ const rootReducer = (state = initialState, action) => {
                 
                 
                 
+            }
+        case 'UPDATE_TYPE_USER':
+            return {
+                ...state,
+                typeUser: action.payload
             }
         default:
             return ({

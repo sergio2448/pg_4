@@ -22,24 +22,24 @@ function App() {
     return (
       <div>
         <div>
-          <div>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/estate" element={<List />} />
-              <Route path="/estate/:id" element={<Detail />} />
-              <Route path="/estate/create" element={<Create />} />
-              <Route path="/estate/edit/:id" element={<Create />} />
-              <Route path="/logged/Favorites" element={<StripedTable />} />
-              <Route path="/logged/myprofile" element={<UserInfo />} />
-              <Route path="/logged/UpdateInfo" element={<FormInfo />} />
-              <Route path="/pay/:id" element={<PaypalButton />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/listProperties" element={<ListProperties />} />
-              <Route path="/sub" element={<PaypalButtonSub />} />
-              {/* <Route path='*' element={<PageNotFound />} /> */}
-              <Route path="/cardad" element={<Dashadmin />} />
-            </Routes>
-          </div>
+            <div>
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/estate' element={<List />} />
+                    <Route path='/estate/:id' element={<Detail />}/>
+                    <Route path='/estate/create' element={<Create />} />
+                    <Route path='/estate/edit/:id' element={<Create />} />
+                    <Route path='/logged/Favorites' element={<StripedTable/>} />
+                    <Route path='/logged/myprofile' element={<UserInfo/>} />
+                    <Route path='/logged/UpdateInfo' element={<FormInfo/>} />          
+                    <Route path='/pay/:id' element={<PaypalButton/>}/>
+                    <Route path='/payment' element={<Payment/>}/>
+                    <Route path='/listProperties' element={<ListProperties />} />
+                    <Route path='/sub' element={<PaypalButtonSub/>}/>
+                    <Route path="/cardad" element={<Dashadmin />} />
+                    {/* <Route path='*' element={<PageNotFound />} /> */}
+                </Routes>
+            </div>
         </div>
       </div>
     );
