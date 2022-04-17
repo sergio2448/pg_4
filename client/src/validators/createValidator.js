@@ -22,7 +22,7 @@ export function validate(input) {
     };
     if (!input.state) {
         errors.state = 'The state/province is required'
-    } else if (!/^[a-zA-Z0-9-\sñáéíóúüª!:?'¡].{5,100}$/.test(input.state)) {
+    } else if (!/^[a-zA-Z0-9-\sñáéíóúüª!:?'¡].{2,100}$/.test(input.state)) {
         errors.state = 'The state/province is invalid'
     };
     if (!input.address) {
