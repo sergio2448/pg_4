@@ -13,6 +13,8 @@ export default function DropDown() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const typeUser = useSelector(state => state.typeUser)
+    const userDB = useSelector(state => state.user)
+    console.log(userDB)
 
     return (
         <div className="relative">
@@ -34,37 +36,47 @@ export default function DropDown() {
                 ripple="light"
                 img={user.picture}
             >
-                <DropdownItem>
-                    <div className="flex justify-between w-32">
-                        <span className="select-none">Buyer</span>
-                        <div className="flex justify-center form-check form-switch pl-0">
-                            {
-                                typeUser === "seller" ?
-                                <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
-                                    if(typeUser === "buyer") {
-                                        dispatch(updateTypeUser("seller"))
+                {
+                    userDB.user?.role.rolName === "admin" ?
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/cardad")
+                        }}>
+                            Statistics
+                        </DropdownItem>
+                        : <DropdownItem>
+
+                            <div className="flex justify-between w-32">
+                                <span className="select-none">Buyer</span>
+                                <div className="flex justify-center form-check form-switch pl-0">
+
+                                    {
+                                        typeUser === "seller" ?
+                                            <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
+                                                if (typeUser === "buyer") {
+                                                    dispatch(updateTypeUser("seller"))
+                                                }
+                                                if (typeUser === "seller") {
+                                                    dispatch(updateTypeUser("buyer"))
+                                                }
+                                            }}
+                                                checked
+                                            />
+                                            : <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
+                                                if (typeUser === "buyer") {
+                                                    dispatch(updateTypeUser("seller"))
+                                                }
+                                                if (typeUser === "seller") {
+                                                    dispatch(updateTypeUser("buyer"))
+                                                }
+                                            }}
+                                            />
                                     }
-                                    if(typeUser === "seller") {
-                                        dispatch(updateTypeUser("buyer"))
-                                    }
-                                }}
-                                checked
-                                /> 
-                                : <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
-                                    if(typeUser === "buyer") {
-                                        dispatch(updateTypeUser("seller"))
-                                    }
-                                    if(typeUser === "seller") {
-                                        dispatch(updateTypeUser("buyer"))
-                                    }
-                                }}
-                                /> 
-                            }
-                            
-                        </div>
-                        <span className="select-none">Seller</span>
-                    </div>
-                </DropdownItem>
+
+                                </div>
+                                <span className="select-none">Seller</span>
+                            </div>
+                        </DropdownItem>
+                }
 
                 <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                     navigate("/logged/myprofile")
@@ -74,7 +86,7 @@ export default function DropDown() {
                 </DropdownItem>
 
                 {
-                    typeUser === "buyer" ? 
+                    typeUser === "buyer" ?
                         <DropdownItem
                             color="lightBlue"
                             ripple="light"
@@ -85,27 +97,27 @@ export default function DropDown() {
                         >
                             Favorites
                         </DropdownItem>
-                    : ""
+                        : ""
                 }
                 {
-                    typeUser === "seller" ? 
+                    typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/listProperties")
                         }}>
                             Publications
                         </DropdownItem>
-                    : ""
+                        : ""
                 }
                 {
-                    typeUser === "seller" ? 
+                    typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/estate/create")
                         }}>
                             Create
                         </DropdownItem>
-                    : ""
+                        : ""
                 }
-                
+
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
                     logout({ returnTo: window.location.origin })
                 }}>

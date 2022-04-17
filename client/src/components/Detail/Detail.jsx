@@ -11,7 +11,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
 import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from 'react'
-import DirectChatPage from "../chatbox/DirectChatPage";
+/* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -236,7 +236,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           <Footer />
         </div>
       </div>
-      <DirectChatPage seller={detail[0]}/>
+      {/* <DirectChatPage seller={detail[0]}/> */}
     </div>
   );
 };

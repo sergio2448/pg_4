@@ -50,7 +50,7 @@ const DirectChatPage = ({seller}) => {
 			userName='adam'
 			userSecret='123'
 			projectID='114d76a3-2f1a-4735-8dd1-bb4bfc8854d7'
-            renderNewChatForm={() => getOrCreateChat(
+            renderNewChatForm={(e) => getOrCreateChat(
                 e,
                 { is_direct_chat: true, usernames: seller },
                 () => setUsername('')
