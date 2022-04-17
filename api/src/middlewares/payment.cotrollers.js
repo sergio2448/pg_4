@@ -77,6 +77,7 @@ const captureOrder = async (req, res) => {
                 }
             })
         }
+        /** crear una tabla para asociar la compra al usuario */
         const property = await getById(idProperty)
         const seller = await property.getSeller()
         const userid = seller.getDataValue('userId')
