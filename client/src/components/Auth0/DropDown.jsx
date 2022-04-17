@@ -36,18 +36,33 @@ export default function DropDown() {
             >
                 <DropdownItem>
                     <div className="flex justify-between w-32">
-                        <span>Buyer</span>
+                        <span className="select-none">Buyer</span>
                         <div className="flex justify-center form-check form-switch pl-0">
-                            <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
-                                if(typeUser === "buyer") {
-                                    dispatch(updateTypeUser("seller"))
-                                }
-                                if(typeUser === "seller") {
-                                    dispatch(updateTypeUser("buyer"))
-                                }
-                            }} />
+                            {
+                                typeUser === "seller" ?
+                                <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
+                                    if(typeUser === "buyer") {
+                                        dispatch(updateTypeUser("seller"))
+                                    }
+                                    if(typeUser === "seller") {
+                                        dispatch(updateTypeUser("buyer"))
+                                    }
+                                }}
+                                checked
+                                /> 
+                                : <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
+                                    if(typeUser === "buyer") {
+                                        dispatch(updateTypeUser("seller"))
+                                    }
+                                    if(typeUser === "seller") {
+                                        dispatch(updateTypeUser("buyer"))
+                                    }
+                                }}
+                                /> 
+                            }
+                            
                         </div>
-                        <span>Seller</span>
+                        <span className="select-none">Seller</span>
                     </div>
                 </DropdownItem>
 

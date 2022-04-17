@@ -14,6 +14,7 @@ import ListProperties from './components/Seller/ListProperties';
 import StripedTable from './components/DropdownProfile/StripedTable';
 import UserInfo from './components/DropdownProfile/UserInfo';
 import FormInfo from './components/DropdownProfile/FormInfo';
+import DirectChatPage from './components/chatbox/DirectChatPage';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                     <Route path='/payment' element={<Payment/>}/>
                     <Route path='/listProperties' element={<ListProperties />} />
                     <Route path='/sub' element={<PaypalButtonSub/>}/>
+                    <Route path='/chatbox' element={<DirectChatPage />}/>
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>
