@@ -77,12 +77,13 @@ const captureOrder = async (req, res) => {
                 }
             })
         }
+        /** crear una tabla para asociar la compra al usuario */
         const property = await getById(idProperty)
         const seller = await property.getSeller()
         const userid = seller.getDataValue('userId')
         const { emailUser } = await userdata(userid)
         await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
-        res.redirect(`${hostclient}/pay/${idProperty}`);
+        res.redirect(`${hostclient}`);
     } catch (error) {
         res.sendStatus(500).json(error)
     }
@@ -94,7 +95,7 @@ const captureOrder = async (req, res) => {
 const cancelOrder = async (req, res) => {
     try {
         const { idProperty } = req.query
-        res.redirect(`${hostclient}/pay/${idProperty}`);
+        res.redirect(`${hostclient}`);
     } catch (error) {
         res.sendStatus(500).json(error)
     }
