@@ -4,6 +4,8 @@ import houseBackground from '../../styles/images/house-back.jpg';
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Calendar, utils } from "react-modern-calendar-datepicker";
 import Button from "@material-tailwind/react/Button";
+import axios from "axios"
+import { useSelector } from "react-redux";
 
 const App = () => {
 
@@ -12,7 +14,8 @@ const App = () => {
         to: null
     });
 
-    console.log(selectedDayRange);
+    const userDB = useSelector((state) => state.user);
+
     return (
         <>
             <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
@@ -69,28 +72,18 @@ const App = () => {
                     iconOnly={false}
                     ripple="light"
                     className="relative mx-1 bg-stone-800"
-                    onClick={(e) => {
+                    onClick={async (e) => {
                         e.preventDefault()
-                        navigate(`/estate/edit/${property.id}`)
-                        /* Post./calendar, {
-                            {
-                                "dates":{
-                            "from": {
-                                "year": 2022,
-                                "month": 4,
-                                "day": 6
-                            },
-                            "to": {
-                                "year": 2022,
-                                "month": 4,
-                                "day": 13
-                            }
-                            },
+                        try {
+                            let newRange = await axios.post('http://localhost:3001/calendar', {
+                                "dates": selectedDayRange,
                                 "type":"seller",
-                                "propertyId":"cf7bc5c5-734b-4779-a280-c204305e9fb1",
-                                "userId":"cf7bc5c5-734b-4779-a280-c204305e9f30"
-                            }
-                        } */
+                                "userId": userDB.user.id
+                            })
+                            console.log(newRange)
+                        } catch (error) {
+                            console.log(error)
+                        }
                     }}
                 >
                     Cargar 
