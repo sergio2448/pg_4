@@ -34,6 +34,7 @@ export const Profile = () => {
     }, [user])
 
 
+
     const userSubmit = async () => {
         let newUser = await axios.post(`http://localhost:3001/optionUser`, {
             "firstName": user.given_name,
@@ -42,7 +43,9 @@ export const Profile = () => {
             "email": user.email,
             "image":user.picture,
         })
+        console.log(newUser)
         let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+        console.log(userExist)
         dispatch(loadUser(userExist.data))
         setShowModal(false)
         const notificationUser={

@@ -15,6 +15,7 @@ import StripedTable from './components/DropdownProfile/StripedTable';
 import UserInfo from './components/DropdownProfile/UserInfo';
 import FormInfo from './components/DropdownProfile/FormInfo';
 import Dashadmin from "./components/admin modules/Dashadmin";
+import UsersAdmin from "./components/admin modules/Users/UsersAdmin"
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
                     <Route path='/listProperties' element={<ListProperties />} />
                     <Route path='/sub' element={<PaypalButtonSub/>}/>
                     <Route path="/cardad" element={<Dashadmin />} />
+                    <Route path='/admin/users' element={<UsersAdmin />} />
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>

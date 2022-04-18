@@ -15,6 +15,7 @@ function Home() {
   const homeCards = useSelector((state) => state.homeCards);
   const mapasList = useSelector((state) => state.maplist);
   let count = 0
+  let count2 = 0
 
   const places = ['Gregoire', 'Villa', 'Cholula']
   useEffect(() => {
@@ -62,7 +63,7 @@ function Home() {
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
             homeCards.length ? homeCards.map(c => {
-              if (c.statuspromotion == "true" && count !== 3) {
+              if (c.statuspromotion == "true" && count !== 3 && c.idstatus.statusName === "Publicado") {
                 count++
                 return (
                   <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
@@ -83,18 +84,17 @@ function Home() {
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale/Rent</h2>
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
-            homeCards.length ? homeCards.reverse().slice(0, 3).map(c => {
-              if (c.photos && c.idstatusid === "publicado") {
+            homeCards.length ? homeCards.reverse().map(c => {
+              if (c.photos && count2 !== 3 && c.idstatus.statusName === "Publicado") {
+                count2++
                 return (
                   <div key={c.id} className=' bg-white transition ease-in-out duration-200 hover:shadow-stone-400 hover:shadow-xl '>
                     <Link to={'/estate/' + c.id}>
                       <Card image={'http://localhost:3001/Properties/images/' + c.photos[0].photos} featured={false} isMap={false} lease={c.lease} name={c.address} city={c.city} country={c.country} cost={c.cost} measure={c.m2} />
                     </Link>
                   </div>)
-              } else {
-                return (<div>loading..</div>)
               }
-            }) : ""
+            }) : <div>loading..</div>
           }
         </div>
 

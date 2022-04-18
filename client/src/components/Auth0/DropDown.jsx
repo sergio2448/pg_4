@@ -78,12 +78,21 @@ export default function DropDown() {
                         </DropdownItem>
                 }
 
-                <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
-                    navigate("/logged/myprofile")
-                    console.log("Action")
-                }}>
-                    My profile
-                </DropdownItem>
+                {
+                   userDB.user?.role.rolName === "admin" ? 
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/admin/users")
+                        }}>
+                            Users
+                        </DropdownItem>
+                    : <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                        navigate("/logged/myprofile")
+                    }}>
+                        My profile
+                    </DropdownItem>
+                }
+
+                
 
                 {
                     typeUser === "buyer" ?
