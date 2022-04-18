@@ -2,7 +2,7 @@ const {
     getbyEmail,
     getRolebyId
 } = require('../middlewares/usercreate')
-const { Features, Properties, Roles } = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription } = require('../db')
 const { PAYPAL_API } = process.env
 
 const isAdmin = async (userEmail) => {
@@ -63,6 +63,21 @@ const getRoleByName = async (name) => {
     return roleId
 }
 
+const allUserDB = async () => {
+    const users = await Users.findAll({
+        include: [{ model: Roles }
+            , {
+            model: Sellers,
+            include: { model: Properties, include: [{ model: Photos }, { model: Features }, { model: Idstatus }] }
+        }
+            , { model: BanckCards }
+            , { model: Buyers, include: { model: Sales } }
+            , { model: Subscription }
+        ],
+    });
+    return users
+}
+
 module.exports = {
     isAdmin,
     transactionsURL,
@@ -70,5 +85,6 @@ module.exports = {
     deletefeature,
     statusPromotion,
     getUserByEmail,
-    getRoleByName
+    getRoleByName,
+    allUserDB
 }
