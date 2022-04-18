@@ -27,7 +27,7 @@ const Paypalbutton = ({id}) => {
             return alert(data)
         }
         else {
-            window.location.href = data.links[1].href
+            window.location.replace(data.links[1].href)
         }
     }
     const handleCheck = (e) => {

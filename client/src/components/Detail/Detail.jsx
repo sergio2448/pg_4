@@ -9,6 +9,13 @@ import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
+import CalendarOneDay from "../Calendar/CalendarOneDay";
+import HoursPicker from "../Calendar/HoursPicker";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from 'react'
 import DirectChatPage from "../chatbox/DirectChatPage";
@@ -40,6 +47,41 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     detail[0]?.photos?.length > 0
     ? detail[0].photos.map((photo) => photo.photos)
     : null;
+    console.log(detail[0]);
+
+    // Calendar
+  
+    const defaultValue = {
+      year: 2019,
+      month: 3,
+      day: 12,
+    };
+  
+   const disabledDays = [
+      {
+        year: 2019,
+        month: 3,
+        day: 20,
+      },
+      {
+        year: 2019,
+        month: 3,
+        day: 21,
+      },
+      {
+        year: 2019,
+        month: 3,
+        day: 7,
+      }
+    ];
+  
+    const [selectedDay, setSelectedDay] = useState(defaultValue);
+  
+    const handleDisabledSelect = disabledDay => {
+      console.log('Tried selecting a disabled day', disabledDay);
+    };
+  
+  
     
     //AÑADIR A FAVORITOS
     
@@ -204,32 +246,48 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         <hr />
         <div>
           <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
-            You will live here I
+          Book an appointment
           </h3>
-          <div className="relative bg-black w-full h-64">
-            {apiKey ? (detail.length ? 
-              <ReactMapGL
-                initialViewState={{
-                  latitude: detail[0].longitude,
-                  longitude: detail[0].latitude,
-                  zoom: 5,
-                }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
-                mapboxAccessToken={apiKey}
-              >
-                {
-                  <Marker
-                    latitude={detail[0].longitude}
-                    longitude={detail[0].latitude}
-                    draggable={false}
-                  >
-                    <ImLocation2 className="h-8 w-8 text-teal-600" />
-                  </Marker>
-                }
-              </ReactMapGL>
-            : "loading..") : (
-              "Loading.."
-            )}
+          <div className="flex justify-center">
+            <div className="ml-5 rounded border border-stone-400/75">
+            <CalendarOneDay className=''/>
+            </div>
+            <div className="ml-5 pt-16 ">
+            <HoursPicker className='' />
+            </div>
+          </div>
+          <button className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
+        </div>
+        <div className="">
+          <div className="w-full">
+            <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
+              You will live here I
+            </h3>
+            <div className="relative bg-black w-full h-64">
+              {apiKey ? (detail.length ? 
+                <ReactMapGL
+                  initialViewState={{
+                    latitude: detail[0].longitude,
+                    longitude: detail[0].latitude,
+                    zoom: 5,
+                  }}
+                  mapStyle="mapbox://styles/mapbox/streets-v9"
+                  mapboxAccessToken={apiKey}
+                >
+                  {
+                    <Marker
+                      latitude={detail[0].longitude}
+                      longitude={detail[0].latitude}
+                      draggable={false}
+                    >
+                      <ImLocation2 className="h-8 w-8 text-teal-600" />
+                    </Marker>
+                  }
+                </ReactMapGL>
+              : "loading..") : (
+                "Loading.."
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-6 font-normal text-base font-Monserrat">

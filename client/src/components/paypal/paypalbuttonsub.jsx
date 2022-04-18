@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 const backhost = 'http://localhost:3001'
-const Paypalbutton = () => {
+const Paypalbutton = ({emailUser}) => {
 
-    const emailUser = 'ramirezmendozajoaquinrodrigo@gmail.com'
+    
     //* acceder al email del usuario que está en sesión
 
     const createsub = async () => {

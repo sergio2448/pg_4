@@ -11,24 +11,45 @@ const getAgenda = async () =>{
 
 
 const postCalendar = async (dates,hour,type, propertyId, userId) =>{
-    try {
-        let resultCreate;
-        if(type==="inabil"){
-            resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
-        }else{
-            //cita para el comptador
-            resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
-            //Cita para el vendedor
-            const agendaSeller=await Properties.findAll({include:[{model:Sellers,include:{model:Users}}],where:{id:propertyId}})
-            const idUserSeller=await agendaSeller.map(d => d.dataValues.seller.user.dataValues.id)[0]
-            await Calendar.create({dates,hour,type, propertyId, userId:idUserSeller,calendarId:resultCreate.dataValues.id});
-            
-        }
-        
+    try{
+        const user = await Calendar.findOne({ where: { userId: userId } });
+    
+        if (!user) {
+            resultCreate = await Calendar.create({dates,hour,type, propertyId, userId});
             return resultCreate;
-    } catch (error) {
-        console.log("Ocurrio un error en ReviewMidd/ postCalendar :"+error);
-    }
+
+        } else {
+            user.dates = dates;
+            user.hour = hour;
+      
+            await user.save();
+            let resultUpdate = {dataValues: 'Calendar Updated'}
+            return resultUpdate
+        }
+    }catch (error) {
+            console.log("Ocurrio un error en ReviewMidd/ postCalendar :"+error);
+        }
+    
+    
+    
+    // try {
+    //     let resultCreate;
+    //     if(type==="inabil"){
+    //         resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
+    //     }else{
+    //         //cita para el comptador
+    //         resultCreate= await Calendar.create({dates,hour,type, propertyId, userId});
+    //         //Cita para el vendedor
+    //         const agendaSeller=await Properties.findAll({include:[{model:Sellers,include:{model:Users}}],where:{id:propertyId}})
+    //         const idUserSeller=await agendaSeller.map(d => d.dataValues.seller.user.dataValues.id)[0]
+    //         await Calendar.create({dates,hour,type, propertyId, userId:idUserSeller,calendarId:resultCreate.dataValues.id});
+            
+    //     }
+        
+    //         return resultCreate;
+    // } catch (error) {
+    //     console.log("Ocurrio un error en ReviewMidd/ postCalendar :"+error);
+    // }
 }
 
 const getCalendar = async (userId) =>{

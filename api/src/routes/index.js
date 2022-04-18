@@ -65,5 +65,6 @@ router.use('/favorite', favorite)
 //todo: crea la subscripción a la pagina
 router.use('/sub', subscription)
 
+//todo: rutas del usuario admin
 router.use('/admin',superusuario )
 module.exports = router;
