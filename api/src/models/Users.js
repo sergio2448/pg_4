@@ -10,7 +10,7 @@ module.exports =  (sequelize) => {
        },
        name:{
            type: DataTypes.STRING,
-           allowNull:false,
+           allowNull:true,
            validate: {
             notNull: {
                 msg: "El campo no puede ser nulo"
