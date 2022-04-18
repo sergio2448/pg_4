@@ -294,7 +294,12 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           <Footer />
         </div>
       </div>
-      {/* <DirectChatPage seller={detail[0]}/> */}
+
+      
+      {/* {
+        detail.length? <DirectChatPage seller={detail[0].seller.user}/> : ""
+      } */}
+      
     </div>
   );
 };

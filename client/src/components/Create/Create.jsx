@@ -161,7 +161,7 @@ export default function Create() {
         } else {
             console.log("ERROR")
         }
-        /* navigate("/") */
+        navigate("/logged/SellerCalendar")
     };
 
     const handleSubmit = (event) => {
