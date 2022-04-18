@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
         const createDate=await postCalendar(dates,hour,type, propertyId, userId);
         createDate?.dataValues ?
         res.status(200).json(createDate?.dataValues)
-        :res.status(404).json({message:"No se pudo crear la cita"});
+        :res.status(404).json({message:"No se pudo crear la cita."});
     } catch (error) {
         console.log(error.message);
         res.status(500).send({message:error.message});

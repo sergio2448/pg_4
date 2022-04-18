@@ -88,7 +88,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     const userObject = useSelector((state)=>state.user)
     console.log(userObject)
     const [values, setValues] = useState({
-      buyerId: userObject.user.id,
+      buyerId: userObject.user?.id,
       propertyId: detail[0]?.id,
       
     })
