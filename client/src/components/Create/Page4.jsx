@@ -22,7 +22,6 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
     })
 
     React.useEffect(() => {
-        console.log(newEstate)
         if(newEstate.longitude) {
             setViewport({
                 latitude: newEstate.longitude,
@@ -81,7 +80,6 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
                             draggable={true}
                             
                             onDragEnd={(newUrl) => {
-                                console.log(newUrl)
                                 setMarker({
                                     lngLat: {
                                         lat: newUrl.lngLat.lat,

@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function Page1({ setCitys, handleSubmit, countries, citys, setCurrentStep, setPages, pages, errors, newEstate }) {
     
-    console.log(newEstate)
     return (
         <div className="px-4 py-5 sm:p-6 bg-[#00000099]">
             <div className="grid grid-cols-6 gap-6">

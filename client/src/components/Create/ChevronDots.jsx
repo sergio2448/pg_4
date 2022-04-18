@@ -2,7 +2,7 @@ import React from "react"
 
 function ChevronDots({
   className = "",
-  steps = [],
+  steps,
   currentStep = 1,
   onStepClick = null,
   ...newProps
@@ -18,7 +18,7 @@ function ChevronDots({
       <div
         key={step}
         style={{ left: `${(index / (steps.length - 1)) * 100}%` }}
-        className="absolute"
+        className="absolute z-10"
       >
         <span
           className={stepClass}

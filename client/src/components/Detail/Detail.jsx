@@ -18,11 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from 'react'
-
-
-
-
-
+/* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -298,6 +294,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           <Footer />
         </div>
       </div>
+      {/* <DirectChatPage seller={detail[0]}/> */}
     </div>
   );
 };
