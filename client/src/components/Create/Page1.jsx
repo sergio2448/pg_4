@@ -1,6 +1,8 @@
 import React from 'react'
 
-export default function Page1({ handleSubmit, countries, citys, setCurrentStep, setPages, pages, errors, newEstate }) {
+export default function Page1({ setCitys, handleSubmit, countries, citys, setCurrentStep, setPages, pages, errors, newEstate }) {
+    
+    console.log(newEstate)
     return (
         <div className="px-4 py-5 sm:p-6 bg-[#00000099]">
             <div className="grid grid-cols-6 gap-6">
@@ -74,7 +76,12 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                         <option hidden>~</option>
                         {
                             countries.map(elem => {
-                                return (<option key={elem.country_name}>{elem.country_name}</option>)
+                                if(newEstate.country === elem.country_name) {
+
+                                    return (<option key={elem.country_name} selected>{elem.country_name}</option>)
+                                } else {
+                                    return (<option key={elem.country_name} >{elem.country_name}</option>)
+                                }
                             })
                         }
                     </select>
@@ -97,9 +104,14 @@ export default function Page1({ handleSubmit, countries, citys, setCurrentStep, 
                     >
                         {
                             citys.map(elem => {
-                                return (<option key={elem.state_name}>{elem.state_name}</option>)
+                                if(newEstate.state === elem.state_name) {
+                                    return (<option key={elem.state_name} selected >{elem.state_name}</option>)
+                                } else {
+                                    return (<option key={elem.state_name} >{elem.state_name}</option>)
+                                }
                             })
                         }
+
                     </select>
                     {
                         errors.state && (<p className="text-red-700">{errors.state}</p>)

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { updateInfo } from '../../redux/actions';
+import Nav from '../Nav';
+import houseBackground from '../../styles/images/house-back.jpg'
 
 
 function FormInfo() {
@@ -51,7 +53,13 @@ function FormInfo() {
 
 
   return (
-    <div class="flex justify-center  h-1/2  ">
+    <div>
+    <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
+      <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
+    </div>
+    <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>
+    <Nav />
+    <div class="flex justify-center  h-1/2 absolute">
     <div class="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
         <h1 class="block w-full text-center text-gray-800 text-2xl font-bold mb-6">User Info</h1>
         <form action="/" method="post" onSubmit={handleSubmit}>
@@ -120,7 +128,7 @@ function FormInfo() {
             
         </form>
         </div>
-        </div>
+        </div></div>
   )
 }
 

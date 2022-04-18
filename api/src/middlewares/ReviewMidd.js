@@ -1,4 +1,4 @@
-const { Reviews } = require('../db')
+const { Reviews,Properties } = require('../db')
 
 const postReview = async (comment,rating, buyerId, propertyId) =>{
    
@@ -10,6 +10,22 @@ const postReview = async (comment,rating, buyerId, propertyId) =>{
     }
 }
 
+const deleteReview = async(id) =>{
+    try {
+            const resDelete = await Reviews.destroy({ 
+                where:{
+                    id
+                }
+            })
+            return resDelete
+    } catch (error) {
+        console.log("Ocurrio un error en ReviewMidd/ deleteReview:"+error);
+    }
+}
+
+
+
 module.exports={
+    deleteReview,
     postReview
 }

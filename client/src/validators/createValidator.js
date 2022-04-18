@@ -53,7 +53,7 @@ export function validate(input) {
     if(input.features.length === 0) {
       errors.features = 'Minimun 1 feature is required'
     }
-    if(!input.img) {
+    if(!input.img && !input.photos) {
         errors.img = 'Minimun 1 image';
     }
     return errors

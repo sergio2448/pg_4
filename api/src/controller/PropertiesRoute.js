@@ -8,7 +8,8 @@ const {
     fillPhotos,
     deletePhotos,
     removeFeature,
-    getPhotos
+    getPhotos,
+    deletePropeties
 } = require('../middlewares/PropertiesController')
 const multer = require("multer");
 const router = express.Router();
@@ -141,11 +142,13 @@ router.put('/:id', async (req, res) => {
     const { override } = req.query
     const { id } = req.params
     const { features } = req.body
+    //console.log(features);
     try {
         let values = {};
         for (let key in req.body) {
             if (key !== 'features') {
-                (req.body[key].length > 0) && (values[key] = req.body[key])
+              //console.log(req.body[key]);
+                (req.body[key]) && (values[key] = req.body[key])
             }
         }
         await updateProperties(values, id)
@@ -158,6 +161,21 @@ router.put('/:id', async (req, res) => {
         return res.json({ status: 'update' })
     } catch (error) {
         return res.status(404).json(error)
+    }
+})
+
+router.delete('/:propertiId',async(req,res) =>{
+  const {propertiId}= req.params;
+    try {
+        const resDelete =await deletePropeties(propertiId);
+        if(resDelete>0){
+            res.status(204).send("Se eliminó exitosamente el id: "+propertiId);
+        }else{
+            res.status(500).send("No se encontro el recuros");
+        }
+        
+    } catch (error) {
+        console.log("Ocurrio un error en PropertiRout/ delete :"+error);
     }
 })
 module.exports = router;

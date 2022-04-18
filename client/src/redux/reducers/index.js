@@ -12,6 +12,8 @@ const initialState = {
     apikey: {},
     user: {},
     maplist: [],
+    dropdown:[],
+    favourites:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -29,10 +31,10 @@ const rootReducer = (state = initialState, action) => {
                 searchBar: action.payload
             }
         case 'GET_HOMECARDS':
-            let newHomeCards = action.payload.sort((a,b) => {
-                if(a.order < b.order){
+            let newHomeCards = action.payload.sort((a) => {
+                if(!a.statusPromotion == "false"){
                     return -1
-                }else if(a.order > b.order){
+                }else if(a.statusPromotion){
                     return 1
                 }else{
                     return 0
@@ -82,11 +84,25 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 maplist: state.maplist.concat([action.payload])
             }
+        case 'DROPDOWN':
+            return {
+                ...state,
+                dropdown:action.payload
+            }    
+        case 'GET_FAVOURITES':
+            return {
+                ...state,
+                favourites: action.payload,
+                
+                
+                
+            }
         default:
             return ({
                 ...state
             });
     }
 };
+
 
 export default rootReducer;

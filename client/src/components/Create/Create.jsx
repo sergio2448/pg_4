@@ -1,5 +1,6 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { loadUser } from '../../redux/actions';
 import axios from 'axios'
 import { useAuth0 } from "@auth0/auth0-react"
 import Nav from '../Nav'
@@ -10,22 +11,26 @@ import Page3 from './Page3'
 import Page4 from './Page4'
 import houseBackground from "../../styles/images/house-back.jpg"
 import { validate } from '../../validators/createValidator';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 let apiKey = ""
-
-
 const changeCitys = async (country, set) => {
-
-    let allCityes = await axios.get(`https://www.universal-tutorial.com/api/states/${country}`, {
-        headers: {
-            Authorization: 'Bearer ' + apiKey
-        }
-    })
-    set(allCityes.data)
+    try {
+        let allCityes = await axios.get(`https://www.universal-tutorial.com/api/states/${country}`, {
+            headers: {
+                Authorization: 'Bearer ' + apiKey
+            }
+        })
+        set(allCityes.data)
+    } catch (error) {
+        console.log(error)
+    }
 }
+
+
 
 export default function Create() {
 
+    let { id } = useParams();
     let navigate = useNavigate();
     const userDB = useSelector((state) => state.user);
     const [errors, setErrors] = React.useState({});
@@ -40,6 +45,7 @@ export default function Create() {
     const [countries, setCountries] = React.useState([]);
     const [currentStep, setCurrentStep] = React.useState(1)
     const { isAuthenticated, loginWithRedirect, user } = useAuth0()
+    const dispatch = useDispatch()
     const [newEstate, setNewEstate] = React.useState({
         sellerId: userDB.user.sellers[0] ? userDB.user.sellers[0].id : 0,
         lease: '',
@@ -53,6 +59,37 @@ export default function Create() {
         features: [],
         propertyType: ''
     });
+
+    React.useEffect(async () => {
+        axios.get('http://localhost:3001/Properties?id=' + id)
+        .then((result) => result.data)
+        .then(propertyEdit => {
+            console.log(propertyEdit)
+            setNewEstate({
+                sellerId: userDB.user.sellers[0] ? userDB.user.sellers[0].id : 0,
+                lease: propertyEdit[0].lease,
+                cost: propertyEdit[0].cost,
+                m2: propertyEdit[0].m2,
+                country: propertyEdit[0].country,
+                state: propertyEdit[0].state,
+                city: propertyEdit[0].city,
+                photos: propertyEdit[0].photos,
+                address: propertyEdit[0].address,
+                cp: propertyEdit[0].cp,
+                features: propertyEdit[0].features,
+                propertyType: propertyEdit[0].propertyType,
+                description: propertyEdit[0].description,
+                longitude: propertyEdit[0].longitude,
+                latitude: propertyEdit[0].latitude
+            })
+            setImages(propertyEdit[0].photos)
+            changeCitys(propertyEdit[0].country, setCitys)
+            
+        })
+        .catch((error) => {
+            console.log(error)
+        }) 
+    }, [id])
 
     React.useEffect(async () => {
         try {
@@ -75,26 +112,41 @@ export default function Create() {
         }
     }, []);
 
-    const onSubmit = async (event) => {
+    const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
         if(Object.values(errors).length === 0) {
-            try {
-                let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
-                idEstateCreated = estateCreated.data.id
-                const f = new FormData()
-                for (let i = 0; i < images.length; i++) {
-                    f.append("files", images[i])
+            if(id) {
+                console.log("ENTRE EN PUT, NO POST")
+                try {
+                    let estateCreated = await axios.put(`http://localhost:3001/Properties/${id}?override=true`, newEstate)
+                    //CARGA O ELIMINACION DE IMAGENES AQUI
+                    console.log(estateCreated)
+                    return 
+                } catch (error) {
+                    console.log(error.message)
                 }
-                const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
-                /* navigate("/") */
-            } catch (error) {
-                console.log(error)
+            } else {
+                console.log("ENTRE EN POST, NO PUT")
+                try {
+                    let estateCreated = await axios.post(`http://localhost:3001/Properties/pro`, newEstate)
+                    console.log(estateCreated)
+                    idEstateCreated = estateCreated.data.id
+                    const f = new FormData()
+                    for (let i = 0; i < images.length; i++) {
+                        f.append("files", images[i])
+                    }
+                    const result = await axios.post(`http://localhost:3001/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                    let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                    dispatch(loadUser(userExist.data))
+                } catch (error) {
+                    console.log(error)
+                }
             }
         } else {
             console.log("ERROR")
         }
-        
+        /* navigate("/") */
     };
 
     const handleSubmit = (event) => {
@@ -158,19 +210,19 @@ export default function Create() {
                         </div>
                         <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
                             <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
-                            <form action="" method="POST" onSubmit={onSubmit}>
+                            <form>
                                 <div className="shadow overflow-hidden sm:rounded-xl">
                                     {
-                                        pages.page1 ? <Page1 handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
+                                        pages.page1 ? <Page1 setCitys={setCitys} handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
                                     }
                                     {
                                         pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit} /> : ""
                                     }
                                     {
-                                        pages.page3 ? <Page3 setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} /> : ""
+                                        pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images}/> : ""
                                     }
                                     {
-                                        pages.page4 ? <Page4 setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
+                                        pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
                                     }
                                 </div>
                             </form>
