@@ -16,6 +16,7 @@ import UserInfo from './components/DropdownProfile/UserInfo';
 import FormInfo from './components/DropdownProfile/FormInfo';
 import Dashadmin from "./components/admin modules/Dashadmin";
 import UsersAdmin from "./components/admin modules/Users/UsersAdmin"
+import SellerCalendar from "./components/Seller/SellerCalendar"
 
 
 function App() {
@@ -32,7 +33,8 @@ function App() {
                     <Route path='/estate/edit/:id' element={<Create />} />
                     <Route path='/logged/Favorites' element={<StripedTable/>} />
                     <Route path='/logged/myprofile' element={<UserInfo/>} />
-                    <Route path='/logged/UpdateInfo' element={<FormInfo/>} />          
+                    <Route path='/logged/UpdateInfo' element={<FormInfo/>} />  
+                    <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />  
                     <Route path='/pay/:id' element={<PaypalButton/>}/>
                     <Route path='/payment' element={<Payment/>}/>
                     <Route path='/listProperties' element={<ListProperties />} />

@@ -127,6 +127,17 @@ export default function DropDown() {
                         : ""
                 }
 
+                {
+                    typeUser === "seller" ?
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/logged/SellerCalendar")
+                        }}>
+                            Select your days
+                        </DropdownItem>
+                        : ""
+                }
+
+
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
                     logout({ returnTo: window.location.origin })
                 }}>

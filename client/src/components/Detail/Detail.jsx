@@ -295,7 +295,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
       </div>
 
-      //NO GUARDA BUYER Y SELLER CUANDO ES UN USUARIO SIN GOOGLE
+      
       {
         detail.length? <DirectChatPage seller={detail[0].seller.user}/> : ""
       }
