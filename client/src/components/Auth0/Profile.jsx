@@ -31,21 +31,19 @@ export const Profile = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [user])
+    }, [user, isAuthenticated])
 
 
 
     const userSubmit = async () => {
         let newUser = await axios.post(`http://localhost:3001/optionUser`, {
-            "firstName": user.given_name,
-            "lastName": user.family_name,
+            "firstName": user.given_name ? user.given_name : user.name,
+            "lastName": user.family_name ? user.family_name : user.name,
             "nickName": user.nickname,
             "email": user.email,
             "image":user.picture,
         })
-        console.log(newUser)
         let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
-        console.log(userExist)
         dispatch(loadUser(userExist.data))
         setShowModal(false)
         const notificationUser={

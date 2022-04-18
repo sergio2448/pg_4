@@ -5,7 +5,11 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Calendar, utils } from "react-modern-calendar-datepicker";
 import Button from "@material-tailwind/react/Button";
 import axios from "axios"
+import Modal from "@material-tailwind/react/Modal";
+import ModalHeader from "@material-tailwind/react/ModalHeader";
+import ModalBody from "@material-tailwind/react/ModalBody";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
 
@@ -13,9 +17,11 @@ const App = () => {
         from: null,
         to: null
     });
-
+    const [showModal, setShowModal] = React.useState(false);
     const userDB = useSelector((state) => state.user);
+    const navigate = useNavigate()
 
+    console.log(selectedDayRange)
     return (
         <>
             <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
@@ -26,7 +32,7 @@ const App = () => {
                     <Nav />
                 </div>
             </div>
-            <div className="mt-20 flex justify-center">
+            <div className="mt-16 flex justify-center">
                 <Calendar
                     value={selectedDayRange}
                     onChange={setSelectedDayRange}
@@ -59,8 +65,15 @@ const App = () => {
                     )}
                 />
             </div>
-            <div>
-                <p>From {}</p>
+            <div className="text-white flex wrap justify-center my-4">
+                {
+                    selectedDayRange.from ? <p className="relative">From the {selectedDayRange.from.day}th day of the {selectedDayRange.from.month}th month</p> : ""
+                }
+            </div>
+            <div className="text-white flex wrap justify-center my-4">
+                {
+                    selectedDayRange.to ? <p className="relative">From the {selectedDayRange.to.day}th day of the {selectedDayRange.to.month}th month</p> : ""
+                }
             </div>
             <div className="relative mt-12 flex justify-center">
                 <Button
@@ -75,12 +88,16 @@ const App = () => {
                     onClick={async (e) => {
                         e.preventDefault()
                         try {
-                            let newRange = await axios.post('http://localhost:3001/calendar', {
-                                "dates": selectedDayRange,
-                                "type":"seller",
-                                "userId": userDB.user.id
-                            })
-                            console.log(newRange)
+                            if(selectedDayRange.from && selectedDayRange.to) {
+                                let newRange = await axios.post('http://localhost:3001/calendar', {
+                                    "dates": selectedDayRange,
+                                    "type":"seller",
+                                    "userId": userDB.user.id
+                                })
+                                navigate("/logged/myprofile")
+                            } else {
+                                setShowModal(true)
+                            }
                         } catch (error) {
                             console.log(error)
                         }
@@ -88,6 +105,20 @@ const App = () => {
                 >
                     Cargar 
                 </Button>
+                <Modal size="sm" active={showModal} toggler={() => {
+                                    setShowModal(false)
+                                    }} >
+                                    <ModalHeader toggler={() => {
+                                        setShowModal(false)
+                                    }} >
+                                        Select your available days
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <p className="text-base leading-relaxed text-gray-600 font-normal italic">
+                                        Uuups! Select your available days, otherwise a buyer will book an appointment any day of the year
+                                        </p>
+                                    </ModalBody> 
+                                </Modal>
             </div>
         </>
     );
