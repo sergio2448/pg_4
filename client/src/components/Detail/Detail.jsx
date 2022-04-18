@@ -1,5 +1,4 @@
 import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
-import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,67 +9,64 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
 import { addFavourites } from "../../redux/actions/index";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 /* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
-    city = "Hardcode City";
-    country = "Hardcode Country";
-    cost = "$4000 usd";
-    measure = "300 sq m";
-    rooms = 5;
-    description =
+  city = "Hardcode City";
+  country = "Hardcode Country";
+  cost = "$4000 usd";
+  measure = "300 sq m";
+  rooms = 5;
+  description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
-    
-    let { id } = useParams();
-    const dispatch = useDispatch();
-    const detail = useSelector((state) => state.homeDetail);
-    const apiKey =
+
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  const detail = useSelector((state) => state.homeDetail);
+  const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
-    
-    useEffect(() => {
-      dispatch(getHomeDetail(id));
-      return () => {
-        dispatch(getHomeDetail([]));
-      };
-    }, [id]);
-    
-    const photos =
+
+  useEffect(() => {
+    dispatch(getHomeDetail(id));
+    return () => {
+      dispatch(getHomeDetail([]));
+    };
+  }, [id]);
+
+  const photos =
     detail[0]?.photos?.length > 0
-    ? detail[0].photos.map((photo) => photo.photos)
-    : null;
-    
-    //AÑADIR A FAVORITOS
-    
-    const userObject = useSelector((state)=>state.user)
-    console.log(userObject)
-    const [values, setValues] = useState({
-      buyerId: userObject.user.id,
-      propertyId: detail[0]?.id,
-      
-    })
-    
-    async function handleSubmit(e) {
-      e.preventDefault();
-      try {
-      console.log(values)
-         await dispatch(addFavourites(values))
-      
-          alert('Favourite added successfully!');
-          
-        } catch (err) {
-          console.log(err.message)
-          alert('We could not add your favourite. Please try again.');
-          
-        }
-        
-        
-      }
-    return (
-      <div class=" text-center  ">
+      ? detail[0].photos.map((photo) => photo.photos)
+      : null;
+
+  //AÑADIR A FAVORITOS
+
+  const userObject = useSelector((state) => state.user);
+  console.log("object", userObject);
+  const [values, setValues] = useState({
+    buyerId: userObject.user.id,
+    propertyId: detail[0]?.id,
+  });
+
+  console.log("detail", detail[0]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      console.log(values);
+      await dispatch(addFavourites(values));
+
+      alert("Favourite added successfully!");
+    } catch (err) {
+      console.log(err.message);
+      alert("We could not add your favourite. Please try again.");
+    }
+  }
+  return (
+    <div class=" text-center  ">
       <div class="bg-[#075985]">
-        <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">  
+        <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
           <Nav />
         </div>
       </div>
@@ -80,7 +76,12 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </strong>
       </h2>
       <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
-        {photos ? <Gallery photos={photos} /> : null}
+        {photos ? (
+          <Gallery
+            photos={photos}
+            lease={detail[0]?.lease ? detail[0]?.lease : Sale}
+          />
+        ) : null}
       </div>
 
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
@@ -161,16 +162,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div>
           <div class="grid grid-cols-2 gap-3">
-            <h5 class="text-right font-Poppins">
-              <strong>User:</strong> Pepito Perez
-            </h5>
-
             <button onClick={handleSubmit}>Favourite</button>
-            <img class="h-10 w-10 rounded-full" src={seller} alt="" />
           </div>
-          <button class="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded ">
-            Check Availability
-          </button>
         </div>
       </div>
 
@@ -207,27 +200,31 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
             You will live here I
           </h3>
           <div className="relative bg-black w-full h-64">
-            {apiKey ? (detail.length ? 
-              <ReactMapGL
-                initialViewState={{
-                  latitude: detail[0].longitude,
-                  longitude: detail[0].latitude,
-                  zoom: 5,
-                }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
-                mapboxAccessToken={apiKey}
-              >
-                {
-                  <Marker
-                    latitude={detail[0].longitude}
-                    longitude={detail[0].latitude}
-                    draggable={false}
-                  >
-                    <ImLocation2 className="h-8 w-8 text-teal-600" />
-                  </Marker>
-                }
-              </ReactMapGL>
-            : "loading..") : (
+            {apiKey ? (
+              detail.length ? (
+                <ReactMapGL
+                  initialViewState={{
+                    latitude: detail[0].longitude,
+                    longitude: detail[0].latitude,
+                    zoom: 5,
+                  }}
+                  mapStyle="mapbox://styles/mapbox/streets-v9"
+                  mapboxAccessToken={apiKey}
+                >
+                  {
+                    <Marker
+                      latitude={detail[0].longitude}
+                      longitude={detail[0].latitude}
+                      draggable={false}
+                    >
+                      <ImLocation2 className="h-8 w-8 text-teal-600" />
+                    </Marker>
+                  }
+                </ReactMapGL>
+              ) : (
+                "loading.."
+              )
+            ) : (
               "Loading.."
             )}
           </div>

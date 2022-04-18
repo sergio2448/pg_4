@@ -6,20 +6,17 @@ import ModalBody from "@material-tailwind/react/ModalBody";
 import ModalFooter from "@material-tailwind/react/ModalFooter";
 import Button from "@material-tailwind/react/Button";
 import Slideshow2 from "./Slideshow2";
-import Pagination1 from "./Pagination1";
 
-const Gallery = ({ photos }) => {
+const Gallery = ({ photos, lease }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div>
       <>
         <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
-          <ModalHeader toggler={() => setShowModal(false)}>Sale</ModalHeader>
+          <ModalHeader toggler={() => setShowModal(false)}>{lease}</ModalHeader>
           <ModalBody>
             <div className="">
               <Slideshow2 photos={photos} />
-
-              <Pagination1 />
             </div>
           </ModalBody>
           <ModalFooter>
