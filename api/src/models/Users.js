@@ -11,15 +11,6 @@ module.exports =  (sequelize) => {
        name:{
            type: DataTypes.STRING,
            allowNull:true,
-           validate: {
-            notNull: {
-                msg: "El campo no puede ser nulo"
-            },
-            len: {
-                args: [3, 255],
-                msg: "El nombre tiene que ser entre 3 y 255 caracteres"
-            }
-        },
        },
        email:{
         type: DataTypes.STRING,
