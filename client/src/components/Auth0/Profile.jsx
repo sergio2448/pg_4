@@ -85,7 +85,7 @@ export const Profile = () => {
                                     setShowModal(false)
                                     e.preventDefault()
                                     try {
-                                        let phone = await axios.put("http://localhost:3001/optionUser/phoneNumber", {
+                                        let phone = await axios.post("http://localhost:3001/optionUser/phoneNumber", {
                                             phoneNumber: phoneNumber,
                                             email: user.email
                                         })

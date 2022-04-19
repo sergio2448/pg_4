@@ -2,16 +2,19 @@ import React from 'react'
 import Nav from "../../Nav"
 import houseBackground from '../../../styles/images/house-back.jpg';
 import axios from "axios"
+import Modal from "@material-tailwind/react/Modal";
+import ModalHeader from "@material-tailwind/react/ModalHeader";
+import ModalBody from "@material-tailwind/react/ModalBody";
+import ModalFooter from '@material-tailwind/react/ModalFooter';
 import { useSelector } from 'react-redux';
 import Button from "@material-tailwind/react/Button";
-
-let colors = ["border-b bg-blue-100 border-blue-200",
-    "border-b bg-purple-100 border-purple-200", "border-b bg-green-100 border-green-200"]
 
 export default function UsersAdmin() {
 
     const [allUsers, setAllUsers] = React.useState([])
     const userDB = useSelector((state) => state.user)
+    const [showModal, setShowModal] = React.useState(false)
+    const [render, setRender] = React.useState(1)
 
     React.useEffect(async () => {
         try {
@@ -20,10 +23,7 @@ export default function UsersAdmin() {
         } catch (error) {
             console.log(error)
         }
-    }, [])
-
-    console.log(allUsers)
-    console.log(new Date())
+    }, [render])
 
     return (
         <div className='bg-sky-900'>
@@ -35,8 +35,6 @@ export default function UsersAdmin() {
                     <Nav />
                 </div>
             </div>
-
-
             <div className="flex flex-col relative">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center">
                     <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8">
@@ -89,25 +87,52 @@ export default function UsersAdmin() {
                                                         ripple="light"
                                                         onClick={async (e) => {
                                                             e.preventDefault()
-                                                            try {
-                                                                if (selectedDayRange.from && selectedDayRange.to) {
-                                                                    let newRange = await axios.post('http://localhost:3001/calendar', {
-                                                                        "dates": selectedDayRange,
-                                                                        "type": "seller",
-                                                                        "userId": userDB.user.id
-                                                                    })
-                                                                    navigate("/logged/myprofile")
-                                                                } else {
-                                                                    setShowModal(true)
-                                                                }
-                                                            } catch (error) {
-                                                                console.log(error)
-                                                            }
+                                                            setShowModal(true)
                                                         }}
                                                     >
                                                         Eliminar
                                                     </Button>
                                                 </td>
+                                                <Modal size="md" active={showModal} toggler={() => {
+                                                    setShowModal(false)
+                                                }} >
+                                                    <ModalHeader className="text-red" toggler={() => {
+                                                        setShowModal(false)
+                                                    }} >
+                                                        Warning!
+                                                    </ModalHeader>
+                                                    <ModalBody>
+                                                        <p className="text-base text-gray-600 font-normal">
+                                                            Warning! Keep in mind that you start as a buyer. If you want to change roles, go to your profile on the top right.
+                                                        </p>
+                                                    </ModalBody>
+                                                    <ModalFooter>
+                                                        <Button
+                                                            color="red"
+                                                            buttonType="filled"
+                                                            size="lg"
+                                                            className="mt-8"
+                                                            rounded={true}
+                                                            block={false}
+                                                            iconOnly={false}
+                                                            ripple="light"
+                                                            onClick={async (e) => {
+                                                                setShowModal(false)
+                                                                e.preventDefault()
+                                                                try {
+                                                                    let userDelete = await axios.delete(`http://localhost:3001/admin/deleteUser?adminEmail=${userDB.user.email}&userId=${user.id}`)
+                                                                    setRender(render + 1)
+                                                                    console.log(userDelete)
+                                                                } catch (error) {
+                                                                    console.log(error)
+                                                                }
+                                                            }}
+                                                        >
+                                                            DELETE/BAN USER
+                                                        </Button>
+                                                    </ModalFooter>
+
+                                                </Modal>
                                             </tr>
 
                                         )

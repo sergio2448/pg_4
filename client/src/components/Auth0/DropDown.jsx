@@ -137,6 +137,15 @@ export default function DropDown() {
                         : ""
                 }
 
+                {
+                    typeUser !== "admin" ? 
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/logged/Quotes")
+                        }}>
+                            Quotes
+                        </DropdownItem>
+                        : ""
+                }
 
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
                     logout({ returnTo: window.location.origin })

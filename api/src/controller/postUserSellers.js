@@ -82,6 +82,12 @@ router.post('/phoneNumber', async (req, res) => {
         userexistente.phoneNumber = phoneNumber
         await userexistente.save()
         res.send(userexistente)
+        /* if(userexistente){
+            userexistente.sellers[0].phoneNumber = phoneNumber
+            await userexistente.save()
+            const user = await getbyEmail(email)
+            res.send(user)
+        } */
     } catch (error) {
         res.send(error.message)
     }
