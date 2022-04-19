@@ -10,7 +10,8 @@ import { getHomeCards, getFeatureList, getMapList, getSearchbar } from '../redux
 import Footer from './Footer';
 
 function Home() {
-
+  const user = useSelector((state)=>state.user)
+  console.log(user)
   const dispatch = useDispatch();
   const homeCards = useSelector((state) => state.homeCards);
   const mapasList = useSelector((state) => state.maplist);

@@ -35,7 +35,7 @@ function App() {
                     <Route path='/estate/edit/:id' element={<Create />} />
                     <Route path='/logged/Favorites' element={<StripedTable/>} />
                     <Route path='/logged/myprofile' element={<UserInfo/>} />
-                    <Route path='/logged/UpdateInfo' element={<FormInfo/>} />  
+                    <Route path='/logged/Updatedata' element={<FormInfo/>} />  
                     <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />  
                     <Route path='/logged/Publishing' element={<AdminProperties />} />
                     <Route path='/pay/:id' element={<PaypalButton/>}/>
