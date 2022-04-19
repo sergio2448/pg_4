@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { postSeller } = require('../middlewares/SellerMidd')
 const { postBuyer } = require('../middlewares/BuyerMidd')
 const { insert } = require('../middlewares/usercreate')
-const { getbyEmail } = require('../middlewares/usercreate')
+const { getbyEmail, getUserBanedbyEmail } = require('../middlewares/usercreate')
 const { Roles } = require('../db');
 const Sellers = require('../models/Sellers');
 const router = Router();
@@ -25,6 +25,10 @@ router.get('/:email',async (req, res)=>{
 router.post('/', async (req, res) => {
     try {
         const { firstName,lastName,nickName,email,image,phoneNumber,role,dateBirth} = req.body;
+        
+        const userbaned = await getUserBanedbyEmail(email)
+        console.log(userbaned)
+        if(userbaned) return res.status(404).send("Este usuario está baneado")
         
         const userexistente = await getbyEmail(email)
         let seller;

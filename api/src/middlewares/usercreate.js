@@ -1,4 +1,4 @@
-const { Roles, Users, BanckCards, Properties, Features, Photos ,Sellers,Buyers,Sales,Idstatus, Subscription} = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription, BannedUsers } = require('../db')
 async function insert(name, email, image, roleid) {
     try {
         const newUser = await Users.create(
@@ -19,12 +19,14 @@ async function insert(name, email, image, roleid) {
 async function getbyEmail(pEmail) {
     const matched = await Users.findOne({
         // include:[{ model: Roles }],
-        include:[{model:Roles}
-            ,{model:Sellers,
-                include:{model:Properties,include:[{model:Photos},{model:Features},{model:Idstatus} ]}}
-            ,{model:BanckCards}
-            ,{model:Buyers,include:{model:Sales}}
-            ,{model:Subscription}
+        include: [{ model: Roles }
+            , {
+            model: Sellers,
+            include: { model: Properties, include: [{ model: Photos }, { model: Features }, { model: Idstatus }] }
+        }
+            , { model: BanckCards }
+            , { model: Buyers, include: { model: Sales } }
+            , { model: Subscription }
         ],
         where: {
             email: pEmail
@@ -72,7 +74,7 @@ async function addphoto(photo) {
 
 async function addfeatures(features, newProperty) {
 
-    features.forEach(async ({name, value}) => {
+    features.forEach(async ({ name, value }) => {
         const propFeature = await Features.findAll({
             where: { name },
         });
@@ -80,31 +82,46 @@ async function addfeatures(features, newProperty) {
     })
 }
 async function setfeatures(features, newProperty) {
-    features.forEach(async ({ name, value ,produc_features}) => {
+    features.forEach(async ({ name, value, produc_features }) => {
         console.log(value);
         const propFeature = await Features.findAll({
             where: { name },
         });
-        if(produc_features !==undefined){
-            value=produc_features.value
-            newProperty.addFeatures(propFeature, { through: { value:value } });
-        }else{
-            newProperty.addFeatures(propFeature, { through: { value:value } });
+        if (produc_features !== undefined) {
+            value = produc_features.value
+            newProperty.addFeatures(propFeature, { through: { value: value } });
+        } else {
+            newProperty.addFeatures(propFeature, { through: { value: value } });
         }
     })
 }
 
-async function getUserById(id){
-    const user = await Users.findByPk(id)
+async function getUserById(id) {
+    const user = await Users.findByPk(id, {
+        include: [{ model: Roles }
+            , {
+            model: Sellers,
+            include: { model: Properties, include: [{ model: Photos }, { model: Features }, { model: Idstatus }] }
+        }
+            , { model: BanckCards }
+            , { model: Buyers, include: { model: Sales } }
+            , { model: Subscription }
+        ]
+    })
     return user
 }
 
-function getEmailUser(user){
+const getUserBanedbyEmail = async (email) => {
+    const userbaned = await BannedUsers.findOne({ where: { email } })
+    return userbaned ? true : false
+}
+
+function getEmailUser(user) {
     const email = user.getDataValue('email')
     return email
 }
 
-function getUserName(user){
+function getUserName(user) {
     const name = user.getDataValue('name')
     return name
 }
@@ -120,5 +137,6 @@ module.exports = {
     getEmailUser,
     getUserName,
     getByIdInFeature,
-    getRolebyId
+    getRolebyId,
+    getUserBanedbyEmail
 }
