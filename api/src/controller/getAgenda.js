@@ -3,7 +3,7 @@ const { getAgenda, postAgenda } = require('../middlewares/CalendarMidd')
 const router = Router();
 
 
-router.post('/', async (req, res) => {
+router.put('/', async (req, res) => {
     try {
         const { idSeller, idBuyer } = req.body;
         console.log(idSeller, idBuyer);

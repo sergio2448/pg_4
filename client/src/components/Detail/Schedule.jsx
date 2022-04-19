@@ -16,7 +16,7 @@ export default function Schedule() {
     console.log(userDB.user.buyers[0].id)
     React.useEffect(async () => {
         try {
-            let quot = await axios.post(`http://localhost:3001/agenda`, {
+            let quot = await axios.put(`http://localhost:3001/agenda`, {
                 idSeller: userDB.user.sellers[0].id,
                 idBuyer: userDB.user.buyers[0].id
             })

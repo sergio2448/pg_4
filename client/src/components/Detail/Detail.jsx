@@ -2,8 +2,8 @@ import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
 import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getDetailCalendar, getHomeDetail, addAgenda } from "../../redux/actions/index";
+import { useNavigate, useParams } from "react-router-dom";
+import { getDetailCalendar, getHomeDetail } from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
@@ -12,6 +12,7 @@ import { ImLocation2 } from "react-icons/im";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import CalendarOneDay from "../Calendar/CalendarOneDay";
 import HoursPicker from "../Calendar/HoursPicker";
+import axios from "axios";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
@@ -28,6 +29,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
     
+    const navigate = useNavigate();
     
     const user = useSelector((state) => state.user)
     
@@ -60,9 +62,21 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     const [selectedDay, setSelectedDay] = useState();
     const [selectedDate, setSelectedDate] = useState({hours: '', minutes: ''});
 
+
+    const addAgenda = (data) => {
+      axios.post('http://localhost:3001/agenda', data)
+      .then(() => {
+        alert('Cita agendada con exito!');
+      })
+      .catch(() => {
+        alert('Ya existe una cita con este propietario!');
+      })
+    }
+
     const handleButton = () => {
       if(!calendarInfo.length){
         dispatch(getDetailCalendar(userId))
+        return null;
       }else{
         let agendaObj = {
           place: detail[0].address + ', ' + detail[0].city,
@@ -71,9 +85,10 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           sellerId: sellId,
           buyerId: user.user.buyers[0].id
          }
-         dispatch(addAgenda(agendaObj));
-      }
-
+         addAgenda(agendaObj);
+         navigate('/logged/Quotes');
+      }      
+      
     }
   
     
@@ -91,13 +106,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     async function handleSubmit(e) {
       e.preventDefault();
       try {
-      console.log(values)
          await dispatch(addFavourites(values))
       
           alert('Favourite added successfully!');
           
         } catch (err) {
-          console.log(err.message)
           alert('We could not add your favourite. Please try again.');
           
         }
@@ -238,7 +251,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
             </h5>
           </div>
         </div>
-        <hr />
+        <hr />{ 
+        user.user.sellers[0].id !== sellId ? ( 
         <div>
           <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
           Book an appointment
@@ -252,7 +266,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
             </div>
           </div>}
           <button onClick={() => handleButton() } className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
-        </div>
+        </div>) : (<div></div>)
+        }
         <div className="">
           <div className="w-full">
             <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
