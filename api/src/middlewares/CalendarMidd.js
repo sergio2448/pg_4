@@ -1,9 +1,9 @@
 const { Calendar,Agenda,Properties,Sellers,Users } = require('../db')
 const Op = require('Sequelize').Op;
 
-const getAgenda = async (userId) =>{
+const getAgenda = async (idSeller, idBuyer) =>{
     try {
-        const listAgenda= await Agenda.findAll({ where: { [Op.or]: [{sellerId: userId}, {buyerId: userId} ]} });
+        const listAgenda= await Agenda.findAll({ where: { [Op.or]: [{sellerId: idSeller}, {buyerId: idBuyer} ]} });
             return listAgenda;
     } catch (error) {
         console.log("Ocurrio un error en CalendarMidd/ getAgenda :"+error);
