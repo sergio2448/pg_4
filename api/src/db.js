@@ -135,6 +135,10 @@ Calendar.belongsTo(Users);
 //una cita tiene una sola cita 
 // Agenda.hasMany(Calendar);
 // Calendar.belongsTo(Agenda);
+Sellers.hasMany(Agenda);
+Agenda.belongsTo(Sellers);
+Buyers.hasMany(Agenda);
+Agenda.belongsTo(Buyers);
 
 //uno a muchos, 1:N
 // una propiedad tiene un estado, un estado lo tiene uno o mas Propiedades

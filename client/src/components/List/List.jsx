@@ -55,7 +55,7 @@ function List() {
                       
                         {
                             currentProperties?.map(c => {
-                              if(c.idstatus.statusName === "Publicado") {
+                              if(c.idstatus.statusName) {
                                 return (
                                   <div
                                     key={c.id}

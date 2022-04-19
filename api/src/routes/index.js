@@ -23,6 +23,8 @@ const router = Router();
 
 router.use("/Properties", PropertiesRoute);
 
+router.use('/agenda', getAgenda);
+
 //todo: crea un usuario
 router.use('/user', userCreate)
 
