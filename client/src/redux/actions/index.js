@@ -61,6 +61,14 @@ export function getDetailCalendar(input) {
     }
 }
 
+export function addAgenda(data){
+    return axios.post('http://localhost:3001/agenda', data)
+    .then((res) => {
+        console.log(res);
+    }).catch((err) => console.error(err))
+
+}
+
 export function getFeatureList() {
     return async (dispatch) => {
         let json = await axios.get('http://localhost:3001/feature');
