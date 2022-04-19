@@ -8,7 +8,8 @@ const {
     getUserByEmail,
     getRoleByName,
     allUserDB,
-    banUser
+    banUser,
+    suprProp
 } = require('./authadmin')
 const { changestatus } = require('./StatusMidd')
 const { removeFeature, setassociations, addassociations } = require('./PropertiesController')
@@ -52,9 +53,19 @@ const suspenduser = (req, res) => {
     res.status(200).json("usuario suspendido")
 }
 
-const deleteprop = (req, res) => {
-
-    res.status(200).json("propieda eliminada")
+const deleteprop = async (req, res) => {
+    try {
+        const {id, adminEmail} = req.query
+        const rolename = await isAdmin(adminEmail)
+        if (!rolename) return res.status(403).json('No tiene autorización para acceder a la información')
+        const suprimir = await suprProp(id)
+        console.log(suprimir)
+        res.status(200).json("propieda eliminada")
+    } catch (error) {
+        console.log("error en deleteProp"+error)
+        res.status(500).json(error)
+    }
+   
 }
 
 const setRoleAdmin = async (req, res) => {
