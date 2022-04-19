@@ -14,7 +14,6 @@ export default function DropDown() {
     const dispatch = useDispatch()
     const typeUser = useSelector(state => state.typeUser)
     const userDB = useSelector(state => state.user)
-    console.log(userDB)
 
     return (
         <div className="relative">
@@ -108,6 +107,7 @@ export default function DropDown() {
                         </DropdownItem>
                         : ""
                 }
+               
                 {
                     typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
@@ -137,6 +137,15 @@ export default function DropDown() {
                         : ""
                 }
 
+                {
+                    typeUser !== "admin" ? 
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/logged/Quotes")
+                        }}>
+                            Quotes
+                        </DropdownItem>
+                        : ""
+                }
 
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
                     logout({ returnTo: window.location.origin })
