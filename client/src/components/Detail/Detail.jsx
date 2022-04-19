@@ -69,7 +69,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           sellerId: sellId,
           buyerId: user.user.buyers[0].id
          }
-         console.log('this is ' + agendaObj)
          dispatch(addAgenda(agendaObj));
       }
 
