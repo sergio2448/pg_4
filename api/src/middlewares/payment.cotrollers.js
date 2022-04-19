@@ -4,7 +4,9 @@ const { getById } = require('../middlewares/usercreate.js')
 const { Properties, BanckCards, PromotionDetails } = require('../db')
 const userdata = require('../middlewares/emailuserdata.js')
 const authtoken = require('../middlewares/authtoken.js')
-const { PAYPAL_API} = process.env
+const { isAdmin } = require('./authadmin')
+const { PAYPAL_API } = process.env
+
 const host = 'http://localhost:3001'
 const hostclient = 'http://localhost:3000'
 
@@ -199,6 +201,11 @@ const donationCompleted = (req, res) => {
 
 const checkout = async (req, res) => {
     try {
+
+        const { adminEmail } = req.query
+        const rolename = await isAdmin(adminEmail)
+        if (!rolename) return res.status(403).json('No tiene autorización para acceder a la información')
+
         const findall = await Properties.findAll({
             include: [
                 {
@@ -242,7 +249,7 @@ const checkout = async (req, res) => {
 
         })
 
-        res.status(200).json(findall)
+        res.status(200).json("usuarios actualizados")
     } catch (error) {
         res.status(500).json(error)
     }
