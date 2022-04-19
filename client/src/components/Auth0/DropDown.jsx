@@ -13,7 +13,7 @@ export default function DropDown() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const typeUser = useSelector(state => state.typeUser)
-    const userDB = useSelector((state) => state.user);
+    const userDB = useSelector(state => state.user)
 
     return (
         <div className="relative">
@@ -36,7 +36,7 @@ export default function DropDown() {
                 img={user.picture}
             >
                 {
-                    userDB.user?.role.rolName === "admin" ?
+                    userDB.user?.role?.rolName === "admin" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/cardad")
                         }}>
@@ -78,7 +78,7 @@ export default function DropDown() {
                 }
 
                 {
-                   userDB.user?.role.rolName === "admin" ? 
+                   userDB.user?.role?.rolName === "admin" ? 
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/admin/users")
                         }}>
@@ -107,6 +107,7 @@ export default function DropDown() {
                         </DropdownItem>
                         : ""
                 }
+               
                 {
                     typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
@@ -136,6 +137,15 @@ export default function DropDown() {
                         : ""
                 }
 
+                {
+                    typeUser !== "admin" ? 
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/logged/Quotes")
+                        }}>
+                            Quotes
+                        </DropdownItem>
+                        : ""
+                }
 
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
                     logout({ returnTo: window.location.origin })

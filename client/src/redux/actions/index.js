@@ -101,13 +101,13 @@ export function getMapList(city) {
   };
 }
 export function updateInfo(value) {
-  return async () => {
-    await axios.get("http://localhost:3001/optionUser", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(value),
-    });
-  };
+    return async () => {
+        await axios('http://localhost:3001/optionUser', {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(value),
+        })
+    }
 }
 export function dropPosition(position) {
   return async (dispatch) => {
@@ -130,16 +130,13 @@ export function getFavourites(id) {
   };
 }
 
-export function deleteFavourites(id, userId, propertyId) {
-  return axios
-    .delete(
-      `http://localhost:3001/favorite?${propertyId}&${userId}&${favoriteId}`
-    )
-    .then((response) => {
-      response.json().then((resp) => {
-        console.warn(resp);
-      });
-    });
+export function deleteFavourites(id,userId,propertyId) {
+            return function(){axios.delete(`http://localhost:3001/favorite?${propertyId}&${userId}&${favoriteId}`)}
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err) => console.error(err));
+    
 }
 
 export function addFavourites(data) {

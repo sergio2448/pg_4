@@ -27,13 +27,15 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
     
-    const detail = useSelector((state) => state.homeDetail);
+    
     const user = useSelector((state) => state.user)
-    let { id } = useParams();
+    
+    const { id } = useParams();
     const dispatch = useDispatch();
     const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
-    
+    const detail = useSelector((state)=> (state.homeDetail))
+
     let userId = detail[0]?.seller.userId;
     let sellId = detail[0]?.sellerId;
     useEffect(() => {
@@ -81,6 +83,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     const [values, setValues] = useState({
       buyerId: userObject.user?.id,
       propertyId: detail[0]?.id,
+      
       
     })
     

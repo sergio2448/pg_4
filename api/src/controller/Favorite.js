@@ -1,3 +1,4 @@
+const { Favorite} = require('../db')
 const { Router } = require('express');
 const { postFavorite,getFavorites,deleteFavorites } = require('../middlewares/FavoriteMidd')
 const router = Router();
