@@ -38,7 +38,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Roles, Users, BanckCards, Sellers, Properties, Features, Photos, Buyers, Sales ,Reviews, Address, Calendar, Agenda, Idstatus, Favorite, Subscription} =
+const { Roles, Users, BanckCards, Sellers, Properties, Features, Photos, Buyers, Sales ,Reviews, Address, Calendar, Agenda, Idstatus, Favorite, Subscription, BannedUsers} =
   sequelize.models;
 
 // Aca vendrian las relaciones
@@ -57,12 +57,12 @@ BanckCards.belongsTo(Users);
 
 //Uno a uno, 1:1
 //un usuario le pertenece a un vendedro, un vendedor tiene una cuenta de usuario
-Users.hasMany(Sellers);
+Users.hasMany(Sellers, {onDelete:"CASCADE"});
 Sellers.belongsTo(Users);
 
 //uno a Muchos, 1:N
 //UN vendedor publica una o muchas propiedad, una priedad le pertenece a un vendedor
-Sellers.hasMany(Properties);
+Sellers.hasMany(Properties,{onDelete:"CASCADE"});
 Properties.belongsTo(Sellers);
 
 //una a Muchos, 1:N
@@ -77,7 +77,7 @@ Sales.belongsTo(Buyers);
 
 //Uno a uno, 1:1
 //Un Comprador tiene un usuario, una cuenta de usuario le pertenece a un comprador
-Users.hasMany(Buyers);
+Users.hasMany(Buyers,{onDelete:"CASCADE"});
 Buyers.belongsTo(Users);
 
 
@@ -98,21 +98,21 @@ Features.belongsToMany(Properties, { through: Produc_Features });
 
 //Uno a uno, 1:1
 //Un Cliente puede hacer un solo camentario, un comentario pertenece a un cliente
-Buyers.hasOne(Reviews)
+Buyers.hasOne(Reviews, {onDelete:"CASCADE"})
 Reviews.belongsTo(Buyers)
 
 //Uno a Muchos, 1:N
 //Un comentario pertenece a un departamente, un departamento tiene muchos comentarios
-Properties.hasMany(Reviews);
+Properties.hasMany(Reviews,{onDelete:"CASCADE"});
 Reviews.belongsTo(Properties);
 
 
 
-Buyers.hasOne(Address, { foreignKey: { allowNull: true }})
+Buyers.hasOne(Address, { foreignKey: { allowNull: true },onDelete:"CASCADE"});
 Address.belongsTo(Buyers, { foreignKey: { allowNull: true }})
 
 
-Sellers.hasOne(Address, { foreignKey: { allowNull: true }})
+Sellers.hasOne(Address, { foreignKey: { allowNull: true },onDelete:"CASCADE"});
 Address.belongsTo(Sellers,  { foreignKey: { allowNull: true }})
 
 
@@ -124,12 +124,12 @@ Sales.belongsTo(Properties);
 
 //Uno a muchos, 1:N
 //Una porpiedad puede puede ser agendada una o varias veces, un cita le petenece a una propiedad
-Properties.hasMany(Calendar ,{ foreignKey: { allowNull: true }});
+Properties.hasMany(Calendar ,{ foreignKey: { allowNull: true },onDelete:"CASCADE"});
 Calendar.belongsTo(Properties, { foreignKey: { allowNull: true }});
 
 //Uno a muchos, 1:N
 //Un usurio puede agendada una o varias veces, un cita le petenece a una un usuario
-Users.hasMany(Calendar);
+Users.hasMany(Calendar,{onDelete:"CASCADE"});
 Calendar.belongsTo(Users);
 
 //una cita tiene una sola cita 
@@ -146,10 +146,10 @@ Idstatus.hasMany(Properties);
 Properties.belongsTo(Idstatus);
 
 
-Buyers.hasMany(Favorite)
+Buyers.hasMany(Favorite,{onDelete:"CASCADE"});
 Favorite.belongsTo(Buyers)
 
-Properties.hasMany(Favorite);
+Properties.hasMany(Favorite,{onDelete:"CASCADE"});
 Favorite.belongsTo(Properties);
 
 //Muchos a muchos 1:1
@@ -161,6 +161,10 @@ Subscription.belongsTo(Users)
 Calendar.hasMany(Calendar ,{ foreignKey: { allowNull: true }});
 Calendar.belongsTo(Calendar ,{ foreignKey: { allowNull: true }});
 
+// Uno a uno 1:N:
+// Un Rol puede estar asociado a varios usuario baneado, un usuario baneado tiene un solo rol
+Roles.hasMany(BannedUsers);
+BannedUsers.belongsTo(Roles);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

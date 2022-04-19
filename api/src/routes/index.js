@@ -16,7 +16,7 @@ const favorite = require('../controller/Favorite')
 const status = require('../controller/Status')
 const subscription = require('../controller/subscriptionroute.js')
 const superusuario = require('../controller/superusuario.js')
-
+const { BanckCards } = require('../db')
 
 
 const router = Router();
@@ -68,5 +68,26 @@ router.use('/favorite', favorite)
 router.use('/sub', subscription)
 
 //todo: rutas del usuario admin
-router.use('/admin',superusuario )
+router.use('/admin', superusuario)
+
+router.post('/jsonorder', async (req, res) => {
+    try {
+        const { id, status, purchase_units, payer, links } = req.body
+        
+        console.log(purchase_units[0])
+        const response = await BanckCards.create({
+            id,
+            status,
+            purchase_units: purchase_units[0],
+            payer: payer.name,
+            links: links[0]
+        })
+        console.log(response.__proto__)
+        res.status(200).json(response)
+
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
+})
 module.exports = router;
