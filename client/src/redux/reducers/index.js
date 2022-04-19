@@ -14,7 +14,8 @@ const initialState = {
     maplist: [],
     dropdown:[],
     favourites:[],
-    typeUser: "buyer"
+    typeUser: "buyer",
+    detailCalendar: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -102,6 +103,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 typeUser: action.payload
+            }
+        case 'GET_DETAIL_CALENDAR':
+            return {
+                ...state,
+                detailCalendar: [...action.payload]
             }
         default:
             return ({

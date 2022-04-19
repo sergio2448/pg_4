@@ -1,14 +1,31 @@
 const { Calendar,Agenda,Properties,Sellers,Users } = require('../db')
+const Op = require('Sequelize').Op;
 
-const getAgenda = async () =>{
+const getAgenda = async (userId) =>{
     try {
-        const listAgenda= await Agenda.findAll();
+        const listAgenda= await Agenda.findAll({ where: { [Op.or]: [{sellerId: userId}, {buyerId: userId} ]} });
             return listAgenda;
     } catch (error) {
         console.log("Ocurrio un error en CalendarMidd/ getAgenda :"+error);
     }
 }
 
+
+const postAgenda = async (place, dates, hours, sellerId, buyerId) =>{
+    try{
+        const cita = await Agenda.findOne({ where: { sellerId: sellerId, buyerId: buyerId } });
+    
+        if (!cita) {
+            resultCreate = await Agenda.create({place, dates,hours, sellerId, buyerId});
+            return resultCreate;
+
+        } else {
+            return 'Ya se agendo una cita'
+        }
+    }catch (error) {
+            console.log("Ocurrio un error en ReviewMidd/ postCalendar :"+error);
+        }
+}
 
 const postCalendar = async (dates,hour,type, propertyId, userId) =>{
     try{
@@ -102,6 +119,7 @@ const deleteCalendar = async(id) =>{// ID de la Calendario
 }
 module.exports={
     getAgenda,
+    postAgenda,
     postCalendar,
     getCalendar,
     deleteCalendar

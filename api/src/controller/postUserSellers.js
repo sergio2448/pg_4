@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { postSeller } = require('../middlewares/SellerMidd')
 const { postBuyer } = require('../middlewares/BuyerMidd')
 const { insert } = require('../middlewares/usercreate')
-const { getbyEmail } = require('../middlewares/usercreate')
+const { getbyEmail, getUserBanedbyEmail } = require('../middlewares/usercreate')
 const { Roles, Sellers } = require('../db');
 const sellers = require('../models/Sellers');
 const router = Router();
@@ -25,6 +25,10 @@ router.get('/:email',async (req, res)=>{
 router.post('/', async (req, res) => {
     try {
         const { firstName,lastName,nickName,email,image,phoneNumber,role,dateBirth} = req.body;
+        
+        const userbaned = await getUserBanedbyEmail(email)
+        console.log(userbaned)
+        if(userbaned) return res.status(404).send("Este usuario está baneado")
         
         const userexistente = await getbyEmail(email)
         let seller;
@@ -58,7 +62,7 @@ router.put('/', async (req, res) => {
     const userexistente = await getbyEmail(email)
     if(userexistente){
         if(role===ROL_SELLER){
-            createReview =await Sellers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } });
+            createReview =await sellers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } });
         }
         if(role===ROL_BUYER){
             createReview = await Buyers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } })
@@ -78,12 +82,6 @@ router.post('/phoneNumber', async (req, res) => {
         userexistente.phoneNumber = phoneNumber
         await userexistente.save()
         res.send(userexistente)
-        /* if(userexistente){
-            userexistente.sellers[0].phoneNumber = phoneNumber
-            await userexistente.save()
-            const user = await getbyEmail(email)
-            res.send(user)
-        } */
     } catch (error) {
         res.send(error.message)
     }

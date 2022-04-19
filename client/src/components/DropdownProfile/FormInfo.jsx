@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { updateInfo } from '../../redux/actions';
 import Nav from '../Nav';
 import houseBackground from '../../styles/images/house-back.jpg'
-
+import Footer from '../Footer';
 
 function FormInfo() {
     const user = useSelector((state)=>state.user)
@@ -59,13 +59,14 @@ function FormInfo() {
     </div>
     <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>
     <Nav />
-    <div class="flex justify-center  h-1/2 absolute">
-    <div class="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
-        <h1 class="block w-full text-center text-gray-800 text-2xl font-bold mb-6">User Info</h1>
-        <form action="/" method="post" onSubmit={handleSubmit}>
+    <div class="border-solid     border-4 bg-sky-500/80 my-16 w-1/2 h-1/3  font-Monserrat font-bold	  rounded-md p-4 relative ml-96 h-3/4">
+    
+        <h1 class="block w-full text-center text-4xl font-black mb-16   ">User Info</h1>
+        <form action="/" method="post" onSubmit={handleSubmit} className="flex flex-row justify-evenly   ">
+            <div className='   '>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="first_name">First Name</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800  rounded-md "
                 type="text"
                 name="firstName"
                 id="firstName"
@@ -74,7 +75,7 @@ function FormInfo() {
             </div>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="last_name">Last Name</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800 rounded-md"
                 type="text"
                 name="lastName"
                 id="last_name"
@@ -83,7 +84,7 @@ function FormInfo() {
             </div>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="last_name">NickName</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800 rounded-md"
                 type="text"
                 name="nickName"
                 id="nick_name"
@@ -92,30 +93,32 @@ function FormInfo() {
             </div>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="last_name">Phone Number</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800 rounded-md"
                 type="text"
                 name="phoneNumber"
                 id="phone_number"
                 value={values.phoneNumber}
                 onChange={(e) => handleChange(e)}/>
             </div>
+            </div>
+            <div>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="country">Country</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800 rounded-md"
                 type="country"
                 name="country"
                 id="country"/>
             </div>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="city">City</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800 rounded-md"
                 type="city" 
                 name="city"
                 id="city"/>
             </div>
             <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold text-lg text-gray-900" for="Birthdate">Birthdate</label>
-                <input class="border py-2 px-3 text-grey-800"
+                <input class="border py-2 px-3 text-grey-800 rounded-md"
                 type="Birthdate"
                 name="dateBirth"
                 id="Birthdate" 
@@ -124,11 +127,14 @@ function FormInfo() {
                 onChange={(e) => handleChange(e)}
                 />
             </div>
-            <button class="block bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg mx-auto p-4 rounded" type="submit">Update Info</button>
+            <button class="block bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg mx-auto p-4 rounded mt-12" type="submit">Update Info</button>
+                </div>
             
         </form>
         </div>
-        </div></div>
+
+        <Footer/>
+        </div>
   )
 }
 

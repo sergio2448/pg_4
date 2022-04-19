@@ -7,7 +7,8 @@ const {
     statusPromotion,
     getUserByEmail,
     getRoleByName,
-    allUserDB
+    allUserDB,
+    banUser
 } = require('./authadmin')
 const { changestatus } = require('./StatusMidd')
 const { removeFeature, setassociations, addassociations } = require('./PropertiesController')
@@ -112,6 +113,25 @@ const statusProp = async (req, res) => {
     }
 }
 
+const getAllProps = async (req, res) => {
+    try {
+        const { adminEmail } = req.body
+        const rolename = await isAdmin(adminEmail)
+        if (!rolename) return res.status(403).json('No tiene autorización para acceder a la información')
+        const allProps = await Properties.findAll({
+            include: [{ model: Features },
+            { model: Photos },
+            { model: Idstatus },
+            { model: Sellers, include: { model: Users } },
+            { model: Reviews, include: { model: Buyers } }]
+        })
+        res.status(200).json(allProps)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
+}
+
 const upProp = async (req, res) => {
     try {
         const rolename = await isAdmin(userEmail)
@@ -169,7 +189,17 @@ const getUsers = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-    return response
+    try {
+        const { adminEmail, userId } = req.query
+        const rolename = await isAdmin(adminEmail)
+        if (!rolename) return res.status(403).json('No tiene autorización para realizar la acción')
+        const baned = await banUser(userId)
+        console.log(baned)
+        res.status(200).json({msg: "Usuario baneado exitosamente"})
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
 }
 module.exports = {
     getUser,
@@ -184,5 +214,6 @@ module.exports = {
     updateStatus,
     updateFeatures,
     getUsers,
-    deleteUser
+    deleteUser,
+    getAllProps
 }

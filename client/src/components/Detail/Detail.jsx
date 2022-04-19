@@ -3,7 +3,7 @@ import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getHomeDetail } from "../../redux/actions/index";
+import { getDetailCalendar, getHomeDetail } from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
@@ -32,17 +32,20 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     
     let { id } = useParams();
     const dispatch = useDispatch();
-    const detail = useSelector((state) => state.homeDetail);
     const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
     
+    let userId = detail[0]?.seller.userId;
     useEffect(() => {
-      dispatch(getHomeDetail(id));
+      dispatch(getHomeDetail(id));      
       return () => {
         dispatch(getHomeDetail([]));
       };
-    }, [id]);
+    }, []);
+
     
+    const calendarInfo = useSelector((state) => state.detailCalendar);
+
     const photos =
     detail[0]?.photos?.length > 0
     ? detail[0].photos.map((photo) => photo.photos)
@@ -51,59 +54,33 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
     // Calendar
   
-    const defaultValue = {
-      year: 2019,
-      month: 3,
-      day: 12,
-    };
   
-   const disabledDays = [
-      {
-        year: 2019,
-        month: 3,
-        day: 20,
-      },
-      {
-        year: 2019,
-        month: 3,
-        day: 21,
-      },
-      {
-        year: 2019,
-        month: 3,
-        day: 7,
-      }
-    ];
-  
-    const [selectedDay, setSelectedDay] = useState(defaultValue);
-  
-    const handleDisabledSelect = disabledDay => {
-      console.log('Tried selecting a disabled day', disabledDay);
-    };
-  
+    const [selectedDay, setSelectedDay] = useState();
   
     
     //AÑADIR A FAVORITOS
     
     const userObject = useSelector((state)=>state.user)
-    console.log(userObject)
+    
+    
     const [values, setValues] = useState({
-      buyerId: userObject.user?.id,
-      propertyId: detail[0]?.id,
       
+      buyerId: userObject.user.buyers[0]?.id,
+      propertyId: id,
+        
     })
     
     async function handleSubmit(e) {
       e.preventDefault();
       try {
-      console.log(values)
+      
          await dispatch(addFavourites(values))
       
           alert('Favourite added successfully!');
           
         } catch (err) {
           console.log(err.message)
-          alert('We could not add your favourite. Please try again.');
+          
           
         }
         
@@ -248,15 +225,15 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
           Book an appointment
           </h3>
-          <div className="flex justify-center">
-            <div className="ml-5 rounded border border-stone-400/75">
-            <CalendarOneDay className=''/>
+          {calendarInfo.length !== 0 && <div className="flex justify-center">
+           <div className="ml-5 rounded border border-stone-400/75">
+             <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className=''/>
             </div>
             <div className="ml-5 pt-16 ">
             <HoursPicker className='' />
             </div>
-          </div>
-          <button className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
+          </div>}
+          <button onClick={() => dispatch(getDetailCalendar(userId))} className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
         </div>
         <div className="">
           <div className="w-full">

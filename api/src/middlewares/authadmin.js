@@ -2,7 +2,7 @@ const {
     getbyEmail,
     getRolebyId
 } = require('../middlewares/usercreate')
-const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription } = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription, BannedUsers } = require('../db')
 const { PAYPAL_API } = process.env
 
 const isAdmin = async (userEmail) => {
@@ -78,6 +78,22 @@ const allUserDB = async () => {
     return users
 }
 
+const banUser = async (userId) => {
+    const matched = await Users.findOne({
+        where: { id: userId }
+    });
+    console.log(JSON.stringify(matched, null, 2))
+    const { id, name, email, image, isPremium, roleId } = matched
+    console.log(name)
+    const addBanedtable = await BannedUsers.create({
+        id, name, email, image, isPremium, roleId
+    })
+    console.log(JSON.stringify(addBanedtable, null, 2))
+    const action = await matched.destroy()
+
+    return action
+
+}
 module.exports = {
     isAdmin,
     transactionsURL,
@@ -86,5 +102,6 @@ module.exports = {
     statusPromotion,
     getUserByEmail,
     getRoleByName,
-    allUserDB
+    allUserDB,
+    banUser
 }

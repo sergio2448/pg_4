@@ -8,6 +8,7 @@ let date2 = new Date()
 
 export default function HoursPicker() {
     const [startDate, setStartDate] = React.useState(date2);
+    const [selectedDate, setSelectedDate] = React.useState({hours: '', minutes: ''})
 
     return (
         <DatePicker
@@ -39,9 +40,11 @@ export default function HoursPicker() {
             ]}
             inline
             selected={startDate}
-            onChange={(date) => {
-                console.log(date)
-                setStartDate(date)
+            onChange={(date) => {         
+                setStartDate(date);
+                setSelectedDate({hours: (date.getHours().toString().length == 1 ? '0'+ date.getHours() : date.getHours() + '' ), minutes: (date.getMinutes().toString().length == 1 ? date.getMinutes() + '0' : date.getMinutes() + '')});
+            
+                console.log(selectedDate)       
             }}
             showTimeSelect
             showTimeSelectOnly
