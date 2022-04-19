@@ -3,17 +3,15 @@ import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDetailCalendar, getHomeDetail } from "../../redux/actions/index";
+import { getDetailCalendar, getHomeDetail, addAgenda } from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Calendar } from "react-modern-calendar-datepicker";
 import CalendarOneDay from "../Calendar/CalendarOneDay";
 import HoursPicker from "../Calendar/HoursPicker";
-import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
@@ -30,12 +28,15 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
     
+    const detail = useSelector((state) => state.homeDetail);
+    const user = useSelector((state) => state.user)
     let { id } = useParams();
     const dispatch = useDispatch();
     const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
     
     let userId = detail[0]?.seller.userId;
+    let sellId = detail[0]?.sellerId;
     useEffect(() => {
       dispatch(getHomeDetail(id));      
       return () => {
@@ -50,37 +51,51 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     detail[0]?.photos?.length > 0
     ? detail[0].photos.map((photo) => photo.photos)
     : null;
-    console.log(detail[0]);
 
     // Calendar
   
   
     const [selectedDay, setSelectedDay] = useState();
+    const [selectedDate, setSelectedDate] = useState({hours: '', minutes: ''});
+
+    const handleButton = () => {
+      if(!calendarInfo.length){
+        dispatch(getDetailCalendar(userId))
+      }else{
+        let agendaObj = {
+          place: detail[0].address + ', ' + detail[0].city,
+          dates: selectedDay,
+          hours: selectedDate,
+          sellerId: sellId,
+          buyerId: user.user.buyers[0].id
+         }
+         dispatch(addAgenda(agendaObj));
+      }
+
+    }
   
     
     //AÑADIR A FAVORITOS
     
     const userObject = useSelector((state)=>state.user)
-    
-    
+    console.log(userObject)
     const [values, setValues] = useState({
+      buyerId: userObject.user?.id,
+      propertyId: detail[0]?.id,
       
-      buyerId: userObject.user.buyers[0]?.id,
-      propertyId: id,
-        
     })
     
     async function handleSubmit(e) {
       e.preventDefault();
       try {
-      
+      console.log(values)
          await dispatch(addFavourites(values))
       
           alert('Favourite added successfully!');
           
         } catch (err) {
           console.log(err.message)
-          
+          alert('We could not add your favourite. Please try again.');
           
         }
         
@@ -230,10 +245,10 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
              <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className=''/>
             </div>
             <div className="ml-5 pt-16 ">
-            <HoursPicker className='' />
+            <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />
             </div>
           </div>}
-          <button onClick={() => dispatch(getDetailCalendar(userId))} className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
+          <button onClick={() => handleButton() } className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
         </div>
         <div className="">
           <div className="w-full">
