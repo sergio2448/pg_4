@@ -1,48 +1,53 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (Sequelize) => {
-    Sequelize.define('banckCards',{
-        id:{
-            type:DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey:true,
-            allowNull:false
+    Sequelize.define('banckCards', {
+        id: {
+            type: DataTypes.STRING,
+            // defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+            allowNull: false
         },
-        holderName:{
-            type:DataTypes.STRING,
-            allowNull:false,
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 notNull: {
                     msg: "El campo no puede ser nulo"
                 }
             },
         },
-        cardNumber:{
-            type: DataTypes.BIGINT,
-            allowNull:false,
-            validate: {
-                notNull: {
-                    msg: "El campo no puede ser nulo"
-                }
+        purchase_units: {
+            type: DataTypes.JSON,
+            allowNull: true,
+
+            get() {
+                return JSON.parse(this.getDataValue('purchase_units'))
+            },
+            set(value) {
+                return this.setDataValue("purchase_units", JSON.stringify(value));
             }
         },
-        expirationDate:{
-            type:DataTypes.STRING,
-            allowNull:false,
-            validate: {
-                notNull: {
-                    msg: "El campo no puede ser nulo"
-                }
+        payer: {
+            type: DataTypes.JSON,
+            allowNull: true,
+            get() {
+                return JSON.parse(this.getDataValue('payer'))
+            },
+            set(value) {
+                return this.setDataValue("payer", JSON.stringify(value));
             }
         },
-        cvv:{
-            type:DataTypes.INTEGER,
-            allowNull:false,
-            validate: {
-                notNull: {
-                    msg: "El campo no puede ser nulo"
-                }
+        links: {
+            type: DataTypes.JSON,
+            allowNull: true,
+            get() {
+                return JSON.parse(this.getDataValue('links'))
+            },
+            set(value) {
+                return this.setDataValue("links", JSON.stringify(value));
             }
-        },
+        }
+
     })
 }

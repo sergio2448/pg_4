@@ -42,6 +42,6 @@ router.patch('/updateFeatures/:id', updateFeatures)
 
 router.get('/getUsers', getUsers)
 
-router.delete('/deleteUser',deleteUser)
+router.delete('/deleteUser', deleteUser)
 
 module.exports = router
