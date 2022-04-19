@@ -94,6 +94,13 @@ const banUser = async (userId) => {
     return action
 
 }
+
+const suprProp = async (id) => {
+    const supProp = await Properties.destroy({
+        where: { id }
+    })
+    return supProp
+}
 module.exports = {
     isAdmin,
     transactionsURL,
@@ -103,5 +110,6 @@ module.exports = {
     getUserByEmail,
     getRoleByName,
     allUserDB,
-    banUser
+    banUser,
+    suprProp
 }
