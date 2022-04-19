@@ -102,18 +102,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         typeUser: action.payload,
       };
-      case 'GET_DETAIL_CALENDAR':
-            return {
-                ...state,
-                detailCalendar: [...action.payload]
-            }
+    case "GET_DETAIL_CALENDAR":
+      return {
+        ...state,
+        detailCalendar: [...action.payload],
+      };
     case "GET_TRANSACTIONS":
-      console.log("reducers", action.payload);
       return {
         ...state,
         transactions: action.payload,
       };
-      
+
     default:
       return {
         ...state,

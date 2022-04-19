@@ -13,8 +13,7 @@ export default function DropDown() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const typeUser = useSelector(state => state.typeUser)
-    const userDB = useSelector(state => state.user)
-    console.log(userDB)
+    const userDB = useSelector((state) => state.user);
 
     return (
         <div className="relative">

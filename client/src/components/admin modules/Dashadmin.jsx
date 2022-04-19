@@ -1,9 +1,4 @@
 import StatusCard from "./StatusCard";
-import ChartLine from "./ChartLine";
-import ChartBar from "./ChartBar";
-import PageVisitsCard from "./PageVisitsCard";
-import TrafficCard from "./TrafficCard";
-import Sidebar from "./Sidebar";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
@@ -14,17 +9,13 @@ import CardBody from "@material-tailwind/react/CardBody";
 import Button from "@material-tailwind/react/Button";
 
 export default function Dashadmin() {
-  const adminEmail = "sergio.arbelaezd@udea.edu.co";
+  var adminEmail = "angelguillermomontania@gmail.com";
+  const dispatch = useDispatch();
+  const transactions = useSelector((state) => state.transactions);
 
   useEffect(() => {
     dispatch(getTransactions(adminEmail));
   }, []);
-
-  const dispatch = useDispatch();
-  const transactions = useSelector((state) => state.transactions);
-
-  console.log("first", transactions);
-
   return (
     <>
       <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
@@ -48,7 +39,11 @@ export default function Dashadmin() {
               color="blue"
               icon="trending_up"
               title="Transactions"
-              amount={transactions?.total_items}
+              amount={
+                Object.keys(transactions).length !== 0
+                  ? transactions.total_items
+                  : 0
+              }
               percentage="3.48"
               percentageIcon="arrow_upward"
               percentageColor="green"
@@ -59,7 +54,7 @@ export default function Dashadmin() {
               icon="paid"
               title="Sales"
               amount={
-                transactions
+                Object.keys(transactions).length !== 0
                   ? transactions.transaction_details
                       .map((item) =>
                         parseFloat(
@@ -71,19 +66,43 @@ export default function Dashadmin() {
                   : 0
               }
               percentage="1.10"
-              percentageIcon="arrow_downward"
+              percentageIcon="arrow_upward"
               percentageColor="orange"
-              date="Since yesterday"
+              date="Total sales"
             />
             <StatusCard
               color="blue"
               icon="poll"
-              title="Performance"
-              amount="49,65%"
-              percentage="12"
-              percentageIcon="arrow_upward"
-              percentageColor="green"
-              date="Since last month"
+              title="CREDITCARD"
+              amount={
+                Object.keys(transactions).length !== 0
+                  ? (transactions.transaction_details.filter(
+                      (item) =>
+                        item.transaction_info.instrument_type === "CREDITCARD"
+                    ).length /
+                      73) *
+                      100 +
+                    "%"
+                  : 0 + "%"
+              }
+              date="Card type percentage"
+            />
+            <StatusCard
+              color="blue"
+              icon="poll"
+              title="DEBITCARD"
+              amount={
+                Object.keys(transactions).length !== 0
+                  ? (transactions.transaction_details.filter(
+                      (item) =>
+                        item.transaction_info.instrument_type === "DEBITCARD"
+                    ).length /
+                      73) *
+                      100 +
+                    "%"
+                  : 0 + "%"
+              }
+              date="Card type percentage"
             />
           </div>
         </div>
@@ -132,43 +151,56 @@ export default function Dashadmin() {
                           </th>
                         </tr>
                       </thead>
-                      {transactions.transaction_details.map((transaction) => (
-                        <tbody>
-                          <tr>
-                            <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                              {transaction.transaction_info.transaction_id}
-                            </th>
+                      {Object.keys(transactions).length !== 0
+                        ? transactions.transaction_details.map(
+                            (transaction) => (
+                              <tbody>
+                                <tr>
+                                  <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                                    {
+                                      transaction.transaction_info
+                                        .transaction_id
+                                    }
+                                  </th>
 
-                            <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                              {
-                                transaction.transaction_info.transaction_amount
-                                  .value
-                              }
-                            </td>
+                                  <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                                    {
+                                      transaction.transaction_info
+                                        .transaction_amount.value
+                                    }
+                                  </td>
 
-                            <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                              {transaction.transaction_info.transaction_status}
-                            </td>
+                                  <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                                    {
+                                      transaction.transaction_info
+                                        .transaction_status
+                                    }
+                                  </td>
 
-                            <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                              {transaction.transaction_info.instrument_type}
-                            </td>
-                            <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                              {
-                                transaction.transaction_info
-                                  .transaction_initiation_date
-                              }
-                            </td>
+                                  <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                                    {
+                                      transaction.transaction_info
+                                        .instrument_type
+                                    }
+                                  </td>
+                                  <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                                    {
+                                      transaction.transaction_info
+                                        .transaction_initiation_date
+                                    }
+                                  </td>
 
-                            <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                              {
-                                transaction.transaction_info
-                                  .transaction_updated_date
-                              }
-                            </td>
-                          </tr>
-                        </tbody>
-                      ))}
+                                  <td className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                                    {
+                                      transaction.transaction_info
+                                        .transaction_updated_date
+                                    }
+                                  </td>
+                                </tr>
+                              </tbody>
+                            )
+                          )
+                        : null}
                     </table>
                   </div>
                 </CardBody>
