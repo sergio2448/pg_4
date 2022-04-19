@@ -13,34 +13,37 @@ function StripedTable() {
 
   const user = useSelector((state)=>state.user)
   const favourites = useSelector((state)=>state.favourites)
-  
+
+  console.log(favourites)
   const dispatch = useDispatch();
-   useEffect(() => {
-    dispatch(getFavourites(user.user.id))
-    console.log(favourites) 
-    const favoritosReduce = favourites[0].favorites.join(',')
-    console.log(favoritosReduce)
+   useEffect( async function() {
+     await dispatch(getFavourites(user.user.id))
+
+    
+
+    
 
   }, [])
   
   
   // console.log(user.user.buyers[0]?.id)
-
+  const taClass =
+  "px-2 py-2 text-left bg-sky-500/80 text-white text-sm font-medium border-black border-y border-x "
   const thClass =
-    "px-2 py-2 text-left bg-blue-900 text-white text-sm font-medium " 
-  const tdClass = "px-4 py-8 border-t border-b border-gray-300 text-sm"
-  const trClass = "border-gray-300 bg-gray-300 "
+    "px-2 py-2 text-left bg-sky-500/80 text-white text-sm font-medium border-black border-y border-x" 
+  const tdClass = "px-4 py-8 border-y border-x  border-black   text-sm"
+  const trClass = "border-black  border-y border-x  "
   return (
     <div>
-    <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
-      <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
+    <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-2xl '>
+      <img className='opacity-60 z-2 object-cover w-screen h-screen ' src={houseBackground} />
     </div>
-    <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>
-    <Nav />
-    <div  className="flex flex-col bg-sky-500/80 relative  items-center justify-center 	w-full h-full border-solid border-4">
-    <h2 className='text-white text-3xl font-semi-bold font-Poppins p-10 '>Favorite Properties</h2>
+    <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black self-center '></div>
+    <Nav />{/* sky-500/80 */}
+    <div  className="bg-white  my-12 rounded-md p-4 relative ml-96 flex flex-col  items-center 	w-1/2 h-full border-solid border-sky-500/90 border-4 self-end">
+    <h2 className='text-white text-3xl font-semi-bold  p-10 text-black '>Favorite Properties</h2>
 
-    <table className="w-1/2 table-auto rounded-md   ">
+    <table className="w-full   table-auto rounded-md   ">
       <thead>
         <tr>
           <th className={thClass}>Properties</th>
@@ -49,26 +52,28 @@ function StripedTable() {
           <th className={thClass}>Rent/Sell</th>
           <th className={thClass}>M2</th>
           <th className={thClass}>Price range</th>
+          <th className={thClass}></th>
         </tr>
       </thead>
       <tbody>
-        {favourites[0].favorites.map(()=>{
+           {favourites[0]?.favorites.map((element)=>{
           return(<tr className={trClass}>
             <td className={tdClass}>
-                <a  href={`http://localhost:3000/estate/${favourites[0].favorites[0].property.id}`} >
+                <a  href={`http://localhost:3000/estate/${element.property.id}`} >
               <img
                 src="https://frtassets.fotocasa.es/statics/img/home_inspirational_block_6.jpg"
-                className="h-24"
+                className="h-12 "
               /></a>
             </td>
-            <td className={tdClass}>{favoritosReduce.property.city}</td>
-            <td className={tdClass}>{favourites[0].favorites[0].property.address}</td>
+            
+            <td className={tdClass}>{element.property.city}</td>
+            <td className={tdClass}>{element.property.address}</td>
             <td className={tdClass}>Rent</td>
-            <td className={tdClass}>{favourites[0].favorites[0].property.m2}m2</td>
-            <td className={tdClass}>${favourites[0].favorites[0].property.cost}</td>
-            <button onSubmit={()=>dispatch(deleteFavourites(favourites[0].favorites[0].id,favourites[0].favorites[0].buyerId, favourites[0].favorites[0].propertyId))}>delete</button>
+            <td className={tdClass}>{element.property.m2}m2</td>
+            <td className={tdClass}>${element.property.cost}</td>
+            <button className='justify-self-center' onClick={(dispatch)=>dispatch(deleteFavourites(element.id,user.user.roleId, element.propertyId))}>delete</button>
           </tr>   )
-        })}
+        })}   
          {/* <tr className={trClass}>
           <td className={tdClass}>
               <a  href={`http://localhost:3000/estate/${favourites[0].favorites[0].property.id}`} >
