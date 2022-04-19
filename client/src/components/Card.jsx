@@ -46,6 +46,7 @@ export default function Cards({
               latitude={m.longitude}
               longitude={m.latitude}
               draggable={false}
+              key={m.logitude}
               >
               <ImLocation2 className='h-8 w-8 text-teal-600'/>
               
