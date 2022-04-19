@@ -28,6 +28,7 @@ module.exports = {
         darkProject: "#132C33",
         lightProject: "#51C4D380",
         whiteProject: "#D8E3E7",
+        "my-grey": "#d4d4d8",
       },
       fontFamily: {
         Monserrat: ["Montserrat", "sans-serif"],
