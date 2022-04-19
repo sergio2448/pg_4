@@ -36,7 +36,7 @@ export default function DropDown() {
                 img={user.picture}
             >
                 {
-                    userDB.user?.role.rolName === "admin" ?
+                    userDB.user?.role?.rolName === "admin" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/cardad")
                         }}>
@@ -78,7 +78,7 @@ export default function DropDown() {
                 }
 
                 {
-                   userDB.user?.role.rolName === "admin" ? 
+                   userDB.user?.role?.rolName === "admin" ? 
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/admin/users")
                         }}>
