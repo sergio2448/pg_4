@@ -4,7 +4,7 @@ const { getById } = require('../middlewares/usercreate.js')
 const { Properties, BanckCards, PromotionDetails } = require('../db')
 const userdata = require('../middlewares/emailuserdata.js')
 const authtoken = require('../middlewares/authtoken.js')
-const { PAYPAL_API, PAYPA_API_CLIENT, PAYPAL_API_SECRET } = process.env
+const { PAYPAL_API} = process.env
 const host = 'http://localhost:3001'
 const hostclient = 'http://localhost:3000'
 
@@ -138,19 +138,19 @@ const captureOrder = async (req, res) => {
             payer: payer.name,
             links: links[0]
         })
-        console.log(data)
+
         const property = await getById(idProperty)
         const { data: { create_time } } = await axios.get(`${PAYPAL_API}v2/checkout/orders/${id}`, {
             headers: {
                 Authorization: `Bearer ${access_token}`
             }
         })
-        console.log(tiempo)
+
         const promotion = await PromotionDetails.create({
             startDate: create_time, tiempo
         })
 
-        console.log(promotion.__proto__)
+
         await promotion.setProperty(idProperty)
         const seller = await property.getSeller()
         const userid = seller.getDataValue('userId')
@@ -165,7 +165,7 @@ const captureOrder = async (req, res) => {
                 }
             })
             const { emailUser } = await userdata(userid)
-            // await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
+            await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
         }
 
         res.status(200).json(data)
@@ -208,7 +208,6 @@ const checkout = async (req, res) => {
                 }
             ],
             where: {
-                // id: "af7bc5c5-734b-4779-a280-c204305e9fb1",
                 statuspromotion: "true"
             },
             attributes: ["id", "sellerId", "statuspromotion"]
@@ -217,21 +216,24 @@ const checkout = async (req, res) => {
 
         findall?.map(({ id, promotionDetail: { tiempo, startDate } }) => {
             let date = new Date(startDate)
-            console.log(datediference(date))
+            console.log(tiempo, startDate, datediference(date))
             if (tiempo === "uno") {
-                datediference(date) === 1 && Properties.update({ statuspromotion: false }, {
+                console.log(datediference(date) > 30)
+                datediference(date) > 30 && Properties.update({ statuspromotion: false }, {
                     where: {
                         id: id
                     }
                 })
             } else if (tiempo === "tres") {
-                datediference(date) === 0 && Properties.update({ statuspromotion: false }, {
+                console.log(datediference(date) > 90)
+                datediference(date) > 90 && Properties.update({ statuspromotion: false }, {
                     where: {
                         id: id
                     }
                 })
             } else if (tiempo === "seis") {
-                datediference(date) === 1 && Properties.update({ statuspromotion: false }, {
+                console.log(datediference(date) > 120)
+                datediference(date) > 120 && Properties.update({ statuspromotion: false }, {
                     where: {
                         id: id
                     }
@@ -239,7 +241,7 @@ const checkout = async (req, res) => {
             }
 
         })
-        
+
         res.status(200).json(findall)
     } catch (error) {
         res.status(500).json(error)
@@ -247,25 +249,8 @@ const checkout = async (req, res) => {
 }
 
 
-const datepromotion = async (req, res) => {
-    const date = "2022-02-19T07:00:28Z"
-    const tiempo = 'tres'
-    try {
-        const promotion = await PromotionDetails.create({
-            startDate: date, tiempo
-        })
-        console.log(promotion);
-        let todate = new Date(date)
-        console.log(datediference(todate))
-        res.status(200).json(promotion)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-}
-
 
 const datediference = (date1, date2 = new Date()) => {
-
     const date1utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
     const date2utc = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
     day = 1000 * 60 * 60 * 24;
@@ -278,6 +263,5 @@ module.exports = {
     propertyNotFound,
     donationCompleted,
     checkout,
-    datepromotion,
     datediference,
 }
