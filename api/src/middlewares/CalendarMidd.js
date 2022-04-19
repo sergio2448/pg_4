@@ -1,5 +1,5 @@
 const { Calendar,Agenda,Properties,Sellers,Users } = require('../db')
-const Op = require('Sequelize').Op;
+const Op = require("sequelize").Op;
 
 const getAgenda = async (userId) =>{
     try {
