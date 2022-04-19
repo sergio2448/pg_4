@@ -1,7 +1,7 @@
 const { DataTypes} = require('sequelize');
 
 module.exports =  (sequelize) => {
-   sequelize.define('users',{
+   sequelize.define('bannedUsers',{
        id:{
            type: DataTypes.UUID,
            defaultValue: DataTypes.UUIDV4,
@@ -10,7 +10,16 @@ module.exports =  (sequelize) => {
        },
        name:{
            type: DataTypes.STRING,
-           allowNull:true,
+           allowNull:false,
+           validate: {
+            notNull: {
+                msg: "El campo no puede ser nulo"
+            },
+            len: {
+                args: [3, 255],
+                msg: "El nombre tiene que ser entre 3 y 255 caracteres"
+            }
+        },
        },
        email:{
         type: DataTypes.STRING,

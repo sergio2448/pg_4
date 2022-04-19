@@ -133,8 +133,8 @@ export default function ListProperties() {
                                                     onClick={async (e) => {
                                                         e.preventDefault()
                                                         try {
-                                                            await axios(`http://localhost:3001/Properties/${property.id}`)
-                                                            let userExist = await axios.delete(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                            await axios.delete(`http://localhost:3001/Properties/${property.id}`)
+                                                            let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
                                                             dispatch(loadUser(userExist.data))
                                                             setShowModal(false)
                                                         } catch (error) {

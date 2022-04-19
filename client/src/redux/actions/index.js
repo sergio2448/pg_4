@@ -51,6 +51,16 @@ export function getHomeDetail(input) {
     }
 }
 
+export function getDetailCalendar(input) {
+    return async (dispatch) => {
+        let json = await axios.get('http://localhost:3001/calendar/' + input);
+        return dispatch({
+            type: 'GET_DETAIL_CALENDAR',
+            payload: json.data
+        })
+    }
+}
+
 export function getFeatureList() {
     return async (dispatch) => {
         let json = await axios.get('http://localhost:3001/feature');

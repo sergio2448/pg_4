@@ -2,7 +2,7 @@ const {
     getbyEmail,
     getRolebyId
 } = require('../middlewares/usercreate')
-const { Features, Properties, Roles } = require('../db')
+const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription, BannedUsers } = require('../db')
 const { PAYPAL_API } = process.env
 
 const isAdmin = async (userEmail) => {
@@ -63,6 +63,37 @@ const getRoleByName = async (name) => {
     return roleId
 }
 
+const allUserDB = async () => {
+    const users = await Users.findAll({
+        include: [{ model: Roles }
+            , {
+            model: Sellers,
+            include: { model: Properties, include: [{ model: Photos }, { model: Features }, { model: Idstatus }] }
+        }
+            , { model: BanckCards }
+            , { model: Buyers, include: { model: Sales } }
+            , { model: Subscription }
+        ],
+    });
+    return users
+}
+
+const banUser = async (userId) => {
+    const matched = await Users.findOne({
+        where: { id: userId }
+    });
+    console.log(JSON.stringify(matched, null, 2))
+    const { id, name, email, image, isPremium, roleId } = matched
+    console.log(name)
+    const addBanedtable = await BannedUsers.create({
+        id, name, email, image, isPremium, roleId
+    })
+    console.log(JSON.stringify(addBanedtable, null, 2))
+    const action = await matched.destroy()
+
+    return action
+
+}
 module.exports = {
     isAdmin,
     transactionsURL,
@@ -70,5 +101,7 @@ module.exports = {
     deletefeature,
     statusPromotion,
     getUserByEmail,
-    getRoleByName
+    getRoleByName,
+    allUserDB,
+    banUser
 }

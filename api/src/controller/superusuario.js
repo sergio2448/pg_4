@@ -11,7 +11,9 @@ const {
     statusProp,
     upProp,
     updateStatus,
-    updateFeatures
+    updateFeatures,
+    getUsers,
+    deleteUser
 } = require('../middlewares/superusuario.js');
 
 const router = Router();
@@ -38,13 +40,8 @@ router.patch('/updateStatus', updateStatus)
 
 router.patch('/updateFeatures/:id', updateFeatures)
 
-router.get("/axiosupdate", async (req, res) => {
-    try {
-        const { data } = await axios.patch('http://localhost:3001/admin/updateProperties', { hola: "mundo" })
-        console.log(data);
-        res.status(200).json(data)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-})
+router.get('/getUsers', getUsers)
+
+router.delete('/deleteUser', deleteUser)
+
 module.exports = router
