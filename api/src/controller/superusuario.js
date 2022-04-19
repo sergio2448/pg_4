@@ -16,6 +16,8 @@ const {
     deleteUser
 } = require('../middlewares/superusuario.js');
 
+const { checkout } = require('../middlewares/payment.cotrollers.js')
+
 const router = Router();
 
 router.get('/usuario', getUser)
@@ -43,5 +45,8 @@ router.patch('/updateFeatures/:id', updateFeatures)
 router.get('/getUsers', getUsers)
 
 router.delete('/deleteUser', deleteUser)
+
+router.get('/updatepromotions', checkout)
+
 
 module.exports = router
