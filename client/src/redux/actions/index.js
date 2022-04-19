@@ -81,12 +81,11 @@ export function getMapList(city) {
 }
 export function updateInfo(value) {
     return async () => {
-        await axios.get('http://localhost:3001/optionUser', {
+        await axios('http://localhost:3001/optionUser', {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(value),
         })
-
     }
 }
 export function dropPosition(position) {
