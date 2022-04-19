@@ -55,6 +55,7 @@ function List() {
                       
                         {
                             currentProperties?.map(c => {
+                              if(c.idstatus.statusName) {
                                 return (
                                   <div
                                     key={c.id}
@@ -78,6 +79,7 @@ function List() {
                                     </Link>
                                   </div>
                                 );
+                              }
                             })
                         }
                     </div>

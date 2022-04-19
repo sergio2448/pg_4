@@ -1,4 +1,5 @@
 import React from 'react'
+import { AiOutlineWhatsApp } from "react-icons/ai";
 import DonateButton from '../components/paypal/paypaldonation.jsx'
 import { Link } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ function Footer() {
           <span>Get connected with us on social networks:</span>
         </div>
         <div className="flex justify-center">
-          <a href="https://www.facebook.com/" className="mr-6 text-gray-200">
+          <a href="https://www.facebook.com/" target="_blank" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f"
               className="w-2.5" role="img" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 320 512">
@@ -19,7 +20,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="https://twitter.com/?lang=es" className="mr-6 text-gray-200">
+          <a href="https://twitter.com/?lang=es" target="_blank" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter"
               className="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
               <path fill="currentColor"
@@ -27,7 +28,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="https://www.google.com" className="mr-6 text-gray-200">
+          <a href="https://www.google.com" target="_blank" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
               className="w-3.5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
               <path fill="currentColor"
@@ -35,7 +36,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="https://www.instagram.com" className="mr-6 text-gray-200">
+          <a href="https://www.instagram.com" target="_blank" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram"
               className="w-3.5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
               <path fill="currentColor"
@@ -43,7 +44,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="https://www.linkedin.com/feed" className="mr-6 text-gray-200">
+          <a href="https://www.linkedin.com/feed" target="_blank" className="mr-6 text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin-in"
               className="w-3.5" role="img" xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512">
@@ -52,7 +53,7 @@ function Footer() {
               </path>
             </svg>
           </a>
-          <a href="https://github.com/sergio2448/pg_4" className="text-gray-200">
+          <a href="https://github.com/sergio2448/pg_4" target="_blank" className="text-gray-200">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github"
               className="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
               <path fill="currentColor"
@@ -157,7 +158,11 @@ function Footer() {
                 </path>
               </svg >
               + 54 872 649 21 
-
+            </p>
+            <p className="flex items-center justify-center md:justify-start font-Monserrat">
+            <a className='flex mt-1' href='https://walink.co/572e39' target="_blank">
+            <AiOutlineWhatsApp className='mr-5 mt-1'></AiOutlineWhatsApp>WhatsApp
+            </a>
             </p>
           </div>
         </div>

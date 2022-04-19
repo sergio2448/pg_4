@@ -43,10 +43,10 @@ const Gallery = ({ photos, lease }) => {
         <div class="container px-5 py-2 mx-auto lg:pt-24 lg:px-32">
           <div class="flex flex-wrap -m-1 md:-m-2">
             <div class="flex flex-wrap w-1/2">
-              <div class="w-full p-1 md:p-2">
+              <div class="w-full p-1 md:p-2 overflow-hidden">
                 <img
                   alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
+                  class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 1
                       ? "http://localhost:3001/Properties/images/" + photos[0]
@@ -57,10 +57,10 @@ const Gallery = ({ photos, lease }) => {
               </div>
             </div>
             <div class="flex flex-wrap w-1/2">
-              <div class="w-1/2 p-1 md:p-2">
+              <div class="w-1/2 p-1 md:p-2 overflow-hidden">
                 <img
                   alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
+                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 2
                       ? "http://localhost:3001/Properties/images/" + photos[1]

@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const { Roles, Users, BanckCards, Properties, Features, Photos ,Sellers,Buyers,Sales,Idstatus, Subscription} = require('../db')
-const { getById } = require('../middlewares/usercreate.js')
+const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription } = require('../db')
+const { getById, getUserById } = require('../middlewares/usercreate.js')
 
 const router = Router();
 
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     const users = await Users.findAll({
         include: [{ model: Roles }
             , {
-                model: Sellers,
+            model: Sellers,
             include: { model: Properties, include: [{ model: Photos }, { model: Features }, { model: Idstatus }] }
         }
             , { model: BanckCards }
@@ -22,6 +22,11 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const { id } = req.params
-    res.json(await getById(id))
+    try {
+        const { id } = req.params
+        res.status(200).json(await getUserById(id))
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
 })
