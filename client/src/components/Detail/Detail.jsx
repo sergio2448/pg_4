@@ -30,7 +30,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
     
-    let { id } = useParams();
+    const { id } = useParams();
     const dispatch = useDispatch();
     const detail = useSelector((state) => state.homeDetail);
     const apiKey =
@@ -86,24 +86,26 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     //AÑADIR A FAVORITOS
     
     const userObject = useSelector((state)=>state.user)
-    console.log(userObject)
+    
+    
     const [values, setValues] = useState({
-      buyerId: userObject.user?.id,
-      propertyId: detail[0]?.id,
       
+      buyerId: userObject.user.buyers[0]?.id,
+      propertyId: id,
+        
     })
     
     async function handleSubmit(e) {
       e.preventDefault();
       try {
-      console.log(values)
+      
          await dispatch(addFavourites(values))
       
           alert('Favourite added successfully!');
           
         } catch (err) {
           console.log(err.message)
-          alert('We could not add your favourite. Please try again.');
+          
           
         }
         
