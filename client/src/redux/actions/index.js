@@ -138,7 +138,7 @@ export function deleteFavourites(id,userId,propertyId) {
 }
 
 export function addFavourites(data) {
-    return axios.post("http://localhost:3001/favorite", data)
+    return axios.post("http://localhost:3001/favorite", data)   
     .then((res)=>{
         console.log(res)
     })
