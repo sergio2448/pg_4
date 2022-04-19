@@ -27,22 +27,24 @@ export const Profile = () => {
         try {
             let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
             setUserLoged(userExist.data)
+            console.log(userExist)
             if(userExist.data.result === "Sin Registros") {
+                let newUser = await axios.post(`http://localhost:3001/optionUser`, {
+                    "firstName": user.given_name ? user.given_name : user.name,
+                    "lastName": user.family_name ? user.family_name : user.name,
+                    "nickName": user.nickname,
+                    "email": user.email,
+                    "image":user.picture,
+                })
+                userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                dispatch(loadUser(userExist.data))
+                const notificationUser={
+                    userid:userExist.data.user.id
+                }
                 setShowModal(true)
+                await axios.post(`http://localhost:3001/send-email/welcome`,notificationUser)
             }
-            let newUser = await axios.post(`http://localhost:3001/optionUser`, {
-                "firstName": user.given_name ? user.given_name : user.name,
-                "lastName": user.family_name ? user.family_name : user.name,
-                "nickName": user.nickname,
-                "email": user.email,
-                "image":user.picture,
-            })
-            userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
             dispatch(loadUser(userExist.data))
-            const notificationUser={
-                userid:userExist.data.user.id
-            }
-            await axios.post(`http://localhost:3001/send-email/welcome`,notificationUser)
         } catch (error) {
             console.log(error)
         }
@@ -57,7 +59,6 @@ export const Profile = () => {
                         setShowModal(false)
                         }} >
                         <ModalHeader toggler={() => {
-                            userSubmit()
                             setShowModal(false)
                         }} >
                             Welcome
