@@ -11,12 +11,13 @@ export default function Schedule() {
 
     const [quotes, setQuotes] = React.useState(null)
     const userDB = useSelector(state => state.user)
+    const [render, setRender] = React.useState(0)
 
     console.log(userDB.user.sellers[0].id)
     console.log(userDB.user.buyers[0].id)
     React.useEffect(async () => {
         try {
-            let quot = await axios.post(`http://localhost:3001/agenda`, {
+            let quot = await axios.put(`http://localhost:3001/agenda`, {
                 idSeller: userDB.user.sellers[0].id,
                 idBuyer: userDB.user.buyers[0].id
             })
@@ -24,7 +25,7 @@ export default function Schedule() {
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [render])
 
     console.log(quotes)
 
@@ -55,6 +56,12 @@ export default function Schedule() {
                                                 Time
                                             </th>
                                             <th scope="col" className="text-sm font-medium text-white px-4 py-2">
+                                                Place
+                                            </th>
+                                            <th scope="col" className="text-sm font-medium text-white px-4 py-2">
+                                                Actual state
+                                            </th>
+                                            <th scope="col" className="text-sm font-medium text-white px-4 py-2">
                                                 Confirm/Delete
                                             </th>
                                         </tr>
@@ -70,6 +77,12 @@ export default function Schedule() {
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                                                         {quote.hours.hours}:{quote.hours.minutes}
                                                     </td>
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                                                        {quote.place}
+                                                    </td>
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                                                        {quote.status}
+                                                    </td>
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
                                                         <Dropdown
                                                             color="lightBlue"
@@ -82,99 +95,54 @@ export default function Schedule() {
                                                             ripple="light"
                                                             className="relative text-center bg-stone-800"
                                                         >
-                                                            <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
-                                                                e.preventDefault()
-                                                                /* try {
-                                                                    let state = await axios("http://localhost:3001/status")
-                                                                    await axios.put(`http://localhost:3001/Properties/${property.id}`, {
-                                                                        idstatusId: state.data[0].id
-                                                                    })
-                                                                    let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
-                                                                    dispatch(loadUser(userExist.data))
-                                                                } catch (error) {
-                                                                    console.log(error)
-                                                                } */
-                                                            }}>
-                                                                Enable
-                                                            </DropdownItem>
-                                                            <DropdownItem
+                                                            {
+                                                                quote.status !== "Approved" && <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
+                                                                    e.preventDefault()
+                                                                    try {
+                                                                        let state = await axios.put("http://localhost:3001/agenda/status", {
+                                                                            id: quote.id,
+                                                                            status: "Approved"
+                                                                        })
+                                                                        setRender(render + 1)
+                                                                    } catch (error) {
+                                                                        console.log(error)
+                                                                    }
+                                                                }}>
+                                                                    Approve
+                                                                </DropdownItem>
+                                                            }
+                                                            
+                                                            {
+                                                                quote.status !== "Cancelled" && <DropdownItem
                                                                 href="#"
                                                                 color="lightBlue"
                                                                 ripple="light"
                                                                 onClick={async (e) => {
                                                                     e.preventDefault()
-                                                                    /* try {
-                                                                        let state = await axios("http://localhost:3001/status")
-                                                                        await axios.put(`http://localhost:3001/Properties/${property.id}`, {
-                                                                            idstatusId: state.data[1].id
+                                                                    try {
+                                                                        let state = await axios.put("http://localhost:3001/agenda/status", {
+                                                                            id: quote.id,
+                                                                            status: "Cancelled"
                                                                         })
-                                                                        let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
-                                                                        dispatch(loadUser(userExist.data))
+                                                                        setRender(render + 1)
                                                                     } catch (error) {
                                                                         console.log(error)
-                                                                    } */
+                                                                    }
                                                                 }}
                                                             >
-                                                                Pause
-                                                            </DropdownItem>
-                                                            <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
-                                                                e.preventDefault()
-                                                                /* try {
-                                                                    let state = await axios("http://localhost:3001/status")
-                                                                    console.log(state.data[2].id)
-                                                                    await axios.put(`http://localhost:3001/Properties/${property.id}`, {
-                                                                        idstatusId: state.data[2].id
-                                                                    })
-                                                                    console.log(userDB)
-                                                                    let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
-                                                                    dispatch(loadUser(userExist.data))
-                                                                } catch (error) {
-                                                                    console.log(error)
-                                                                } */
-                                                            }}>
-                                                                Close
-                                                            </DropdownItem>
+                                                                Cancel
+                                                                </DropdownItem>
+                                                            }
+                                                            
                                                         </Dropdown>
                                                     </td>
-                                                    {/* <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
-                                                    <Button
-                                                        color="red"
-                                                        buttonType="filled"
-                                                        size="regular"
-                                                        rounded={false}
-                                                        block={false}
-                                                        iconOnly={false}
-                                                        ripple="light"
-                                                        onClick={async (e) => {
-                                                            e.preventDefault()
-                                                            try {
-                                                                if (selectedDayRange.from && selectedDayRange.to) {
-                                                                    let newRange = await axios.post('http://localhost:3001/calendar', {
-                                                                        "dates": selectedDayRange,
-                                                                        "type": "seller",
-                                                                        "userId": userDB.user.id
-                                                                    })
-                                                                    navigate("/logged/myprofile")
-                                                                } else {
-                                                                    setShowModal(true)
-                                                                }
-                                                            } catch (error) {
-                                                                console.log(error)
-                                                            }
-                                                        }}
-                                                    >
-                                                        Eliminar
-                                                    </Button>
-                                                </td> */}
                                                 </tr>
                                             )
                                         }
                                     </tbody>
                                 </table>
-                            </div>
-                            
+                            </div> 
                         </div>
-                        
                     </div>
                 </div>
                 <div className="flex flex-col relative mt-8">
@@ -192,6 +160,9 @@ export default function Schedule() {
                                                 Time
                                             </th>
                                             <th scope="col" className="text-sm font-medium text-white px-4 py-2">
+                                                Place
+                                            </th>
+                                            <th scope="col" className="text-sm font-medium text-white px-4 py-2">
                                                 Confirm/Delete
                                             </th>
                                         </tr>
@@ -207,111 +178,19 @@ export default function Schedule() {
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
                                                         {quote.hours.hours}:{quote.hours.minutes}
                                                     </td>
-                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
-                                                        <Dropdown
-                                                            color="lightBlue"
-                                                            placement="bottom-start"
-                                                            buttonText="Change Status"
-                                                            buttonType="filled"
-                                                            size="sm"
-                                                            rounded={true}
-                                                            block={false}
-                                                            ripple="light"
-                                                            className="relative text-center bg-stone-800"
-                                                        >
-                                                            <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
-                                                                e.preventDefault()
-                                                                /* try {
-                                                                    let state = await axios("http://localhost:3001/status")
-                                                                    await axios.put(`http://localhost:3001/Properties/${property.id}`, {
-                                                                        idstatusId: state.data[0].id
-                                                                    })
-                                                                    let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
-                                                                    dispatch(loadUser(userExist.data))
-                                                                } catch (error) {
-                                                                    console.log(error)
-                                                                } */
-                                                            }}>
-                                                                Enable
-                                                            </DropdownItem>
-                                                            <DropdownItem
-                                                                href="#"
-                                                                color="lightBlue"
-                                                                ripple="light"
-                                                                onClick={async (e) => {
-                                                                    e.preventDefault()
-                                                                    /* try {
-                                                                        let state = await axios("http://localhost:3001/status")
-                                                                        await axios.put(`http://localhost:3001/Properties/${property.id}`, {
-                                                                            idstatusId: state.data[1].id
-                                                                        })
-                                                                        let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
-                                                                        dispatch(loadUser(userExist.data))
-                                                                    } catch (error) {
-                                                                        console.log(error)
-                                                                    } */
-                                                                }}
-                                                            >
-                                                                Pause
-                                                            </DropdownItem>
-                                                            <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
-                                                                e.preventDefault()
-                                                                /* try {
-                                                                    let state = await axios("http://localhost:3001/status")
-                                                                    console.log(state.data[2].id)
-                                                                    await axios.put(`http://localhost:3001/Properties/${property.id}`, {
-                                                                        idstatusId: state.data[2].id
-                                                                    })
-                                                                    console.log(userDB)
-                                                                    let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
-                                                                    dispatch(loadUser(userExist.data))
-                                                                } catch (error) {
-                                                                    console.log(error)
-                                                                } */
-                                                            }}>
-                                                                Close
-                                                            </DropdownItem>
-                                                        </Dropdown>
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                                                        {quote.place}
                                                     </td>
-                                                    {/* <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
-                                                    <Button
-                                                        color="red"
-                                                        buttonType="filled"
-                                                        size="regular"
-                                                        rounded={false}
-                                                        block={false}
-                                                        iconOnly={false}
-                                                        ripple="light"
-                                                        onClick={async (e) => {
-                                                            e.preventDefault()
-                                                            try {
-                                                                if (selectedDayRange.from && selectedDayRange.to) {
-                                                                    let newRange = await axios.post('http://localhost:3001/calendar', {
-                                                                        "dates": selectedDayRange,
-                                                                        "type": "seller",
-                                                                        "userId": userDB.user.id
-                                                                    })
-                                                                    navigate("/logged/myprofile")
-                                                                } else {
-                                                                    setShowModal(true)
-                                                                }
-                                                            } catch (error) {
-                                                                console.log(error)
-                                                            }
-                                                        }}
-                                                    >
-                                                        Eliminar
-                                                    </Button>
-                                                </td> */}
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
+                                                        {quote.status}
+                                                    </td>
                                                 </tr>
                                             )
                                         }
                                     </tbody>
                                 </table>
                             </div>
-                            
-                        </div>
-                        
+                        </div>   
                     </div>
                 </div>
             </div>

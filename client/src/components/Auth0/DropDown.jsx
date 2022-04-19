@@ -94,7 +94,7 @@ export default function DropDown() {
                 
 
                 {
-                    typeUser === "buyer" ?
+                    typeUser === "buyer" && userDB.user?.role?.rolName !== "admin" ?
                         <DropdownItem
                             color="lightBlue"
                             ripple="light"
@@ -128,7 +128,7 @@ export default function DropDown() {
                 }
 
                 {
-                    typeUser === "seller" ?
+                    userDB.user?.role?.rolName !== "admin" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/logged/SellerCalendar")
                         }}>
@@ -138,7 +138,7 @@ export default function DropDown() {
                 }
 
                 {
-                    typeUser !== "admin" ? 
+                    userDB.user?.role?.rolName !== "admin" ? 
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/logged/Quotes")
                         }}>
