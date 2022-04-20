@@ -60,18 +60,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   // Calendar
 
 
-<<<<<<< HEAD
-  const [selectedDay, setSelectedDay] = useState();
-  const [selectedDate, setSelectedDate] = useState({ hours: '', minutes: '' });
-
-
-  const addAgenda = (data) => {
-    axios.post('http://localhost:3001/agenda', data)
-=======
     const addAgenda = (data) => {
       axios.post('http://localhost:3001/agenda', data)
       axios.post('http://localhost:3001/agenda', data)
->>>>>>> b22a74e5b029b08365eefb92f638789a68b1754f
       .then(() => {
         alert('Cita agendada con exito!');
       })
