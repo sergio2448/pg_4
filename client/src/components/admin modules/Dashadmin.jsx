@@ -7,23 +7,31 @@ import Card from "@material-tailwind/react/Card";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardBody from "@material-tailwind/react/CardBody";
 import Button from "@material-tailwind/react/Button";
+import houseBackground from '../../styles/images/house-back.jpg';
 
 export default function Dashadmin() {
-  var adminEmail = "angelguillermomontania@gmail.com";
-  const dispatch = useDispatch();
+
   const transactions = useSelector((state) => state.transactions);
+  const userDB = useSelector((state) => state.user)
+  var adminEmail = userDB.user.email;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTransactions(adminEmail));
   }, []);
   return (
-    <>
-      <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
-        <Nav />
-      </div>
-      <div className="bg-sky-900 px-3 md:px-8 h-40" />
+    < div className="bg-sky-800">
+      <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
+                <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
+            </div>
+            <div className='relative z-6'>
+                <div className=' relative z-20 '>
+                    <Nav />
+                </div>
+            </div>
+      <div className="px-3 md:px-8 h-40 relative" />
 
-      <div className="px-3 md:px-8 -mt-24">
+      <div className="px-3 md:px-8 -mt-24 relative">
         <div className="container mx-auto max-w-full">
           <div className="grid grid-cols-1 xl:grid-cols-5">
             <div className="xl:col-start-1 xl:col-end-4 px-4 mb-14"></div>
@@ -32,7 +40,7 @@ export default function Dashadmin() {
         </div>
       </div>
 
-      <div className="px-3 md:px-8">
+      <div className="px-3 md:px-8 relative">
         <div className="container mx-auto max-w-full">
           <div className="grid grid-cols-1 z-10 lg:grid-cols-2 xl:grid-cols-4 mb-4">
             <StatusCard
@@ -108,10 +116,10 @@ export default function Dashadmin() {
         </div>
       </div>
 
-      <div className="px-3 md:px-8 h-auto">
+      <div className="px-3 md:px-8 h-auto relative">
         <div className="container mx-auto max-w-full">
           <div className="">
-            <div className="px-0 mb-14">
+            <div className="px-0 mb-14 pb-16">
               <Card>
                 <CardHeader color="blue" contentPosition="none">
                   <div className="w-full flex items-center justify-between">
@@ -209,6 +217,6 @@ export default function Dashadmin() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

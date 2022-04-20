@@ -66,7 +66,7 @@ export default function SearchBar() {
             [e.target.name]: value
         })
     }
-    console.log(features)
+    
     function handleReset(e) {
         dispatch(getSearchbar(''))
         setInput({
