@@ -1,6 +1,6 @@
 import React from 'react'
 import Nav from '../Nav'
-import houseBackground from '../../styles/images/house-back5.jpg';
+import houseBackground from '../../styles/images/house-back.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from "@material-tailwind/react/Input";
 import Button from "@material-tailwind/react/Button";
@@ -36,8 +36,12 @@ export default function Features() {
                             color="lightBlue"
                             size="lg"
                             outline={true}
-                            placeholder="Large Outline Input"
-                            className="mt-4 text-white"
+                            placeholder="Name Feature"
+                            style={
+                                {
+                                    color: "#FFFF"
+                                }
+                            }
                             value={newFeature.nameFeature}
                             onChange={(e) => setNewFeature({
                                 ...newFeature,
@@ -46,7 +50,7 @@ export default function Features() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="numerable" className='text-white font-Poppins text-xl mr-2'>Is numerable?</label>
+                        <label htmlFor="numerable" className='text-white font-Poppins text-2xl mr-2'>Is numerable?</label>
                         <input type="checkbox" name="numerable" onChange={(e) => setNewFeature({
                             ...newFeature,
                             isNumerable: !newFeature.isNumerable
@@ -80,7 +84,7 @@ export default function Features() {
                 <div className='relative px-12 py-12 flex flex-wrap'>
                     {
                         features?.map(elem => 
-                            <div className='mx-12 my-4 text-white text-2xl flex'>
+                            <div className='mx-12 my-4 text-white text-3xl flex'>
                                 <p className='capitalize mr-4'>
                                     {elem.name}
                                 </p>
@@ -88,7 +92,7 @@ export default function Features() {
                                     color="red"
                                     buttonType="filled"
                                     size="sm"
-                                    rounded={true}
+                                    rounded={false}
                                     block={false}
                                     iconOnly={false}
                                     ripple="dark"

@@ -27,7 +27,9 @@ export const Profile = () => {
         try {
             let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
             setUserLoged(userExist.data)
+            console.log(userExist)
             if(userExist.data.result === "Sin Registros") {
+                console.log("ENTRE EN SIN REGISTROS")
                 let newUser = await axios.post(`http://localhost:3001/optionUser`, {
                     "firstName": user.given_name ? user.given_name : user.name,
                     "lastName": user.family_name ? user.family_name : user.name,
@@ -44,9 +46,10 @@ export const Profile = () => {
                 setShowModal(true)
                 await axios.post(`http://localhost:3001/send-email/welcome`,notificationUser)
             }
+            console.log("Que pasa?")
             dispatch(loadUser(userExist.data))
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
     }, [user, isAuthenticated])
    

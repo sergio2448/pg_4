@@ -64,7 +64,7 @@ export default function Create() {
 
     React.useEffect(async () => {
         console.log("EDIT")
-        axios.get('http://localhost:3001/Properties?id=' + id)
+        axios.post('http://localhost:3001/Properties?id=' + id)
             .then((result) => result.data)
             .then(propertyEdit => {
                 setNewEstate({
@@ -114,15 +114,11 @@ export default function Create() {
         }
     }, []);
 
-    /* console.log(images[0].photos)
-    console.log(imagesDeleted) */
-
     const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
         if (Object.values(errors).length === 0) {
             if (id) {
-                console.log("ENTRE EN PUT, NO POST")
                 try {
                     let estateCreated = await axios.put(`http://localhost:3001/Properties/${id}?override=true`, newEstate)
                     console.log(estateCreated)
@@ -162,7 +158,6 @@ export default function Create() {
         } else {
             console.log("ERROR")
         }
-        navigate("/logged/SellerCalendar")
     };
 
     const handleSubmit = (event) => {

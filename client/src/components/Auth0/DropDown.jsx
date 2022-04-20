@@ -135,7 +135,7 @@ export default function DropDown() {
                 }
 
                 {
-                    userDB.user?.role?.rolName !== "admin" ?
+                    typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/logged/SellerCalendar")
                         }}>
