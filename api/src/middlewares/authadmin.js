@@ -82,13 +82,13 @@ const banUser = async (userId) => {
     const matched = await Users.findOne({
         where: { id: userId }
     });
-    console.log(JSON.stringify(matched, null, 2))
+    
     const { id, name, email, image, isPremium, roleId } = matched
-    console.log(name)
+    
     const addBanedtable = await BannedUsers.create({
         id, name, email, image, isPremium, roleId
     })
-    console.log(JSON.stringify(addBanedtable, null, 2))
+    
     const action = await matched.destroy()
 
     return action

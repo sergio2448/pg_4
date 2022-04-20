@@ -19,7 +19,11 @@ module.exports =  (sequelize) => {
        hours:{
            type: DataTypes.JSONB,
            allowNull:false,
-       },
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
    },{
     timestamps: false,
     createdAt: false,
