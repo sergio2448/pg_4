@@ -62,6 +62,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
     const addAgenda = (data) => {
       axios.post('http://localhost:3001/agenda', data)
+      axios.post('http://localhost:3001/agenda', data)
       .then(() => {
         alert('Cita agendada con exito!');
       })
@@ -69,6 +70,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         alert('Ya existe una cita con este propietario!');
       })
     }
+    
 
     const handleButton = () => {
       if(!calendarInfo.length){
@@ -248,13 +250,13 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         <hr />
 
         
-          {detail[0] && <Review text={detail[0]?.reviews} />}
+          { detail[0] && <Review text={detail[0].reviews}/>}
         
 
         <Comment />
         <hr />
         <hr />{
-          user.user.sellers[0].id !== sellId ? (
+          user.user?.sellers[0].id !== sellId ? (
             <div>
               <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
                 Book an appointment

@@ -1,13 +1,13 @@
 import React from "react";
 
 const Review = ({ text }) => {
-  console.log("text", text);
+  console.log("text", text)
   return (
     <div class="w-full flex flex-col md:flex-row gap-4 mb-8 md:mb-0 flex-between items-center p-8">
       <div class="bg-white dark:bg-gray-800 w-72 shadow-lg mx-auto rounded-xl p-4">
         <p class="text-gray-600 dark:text-white">
           <span class="font-bold text-indigo-500 text-lg">“</span>
-          {text[0].comment} 
+           {text[0] && text[0].comment}
           <span class="font-bold text-indigo-500 text-lg">”</span>
         </p>
         <div class="flex items-center mt-4">
@@ -20,11 +20,7 @@ const Review = ({ text }) => {
           </a>
           <div class="flex flex-col ml-2 justify-between">
             <span class="font-semibold text-indigo-500 text-sm">
-              Jean Miguel
-            </span>
-            <span class="dark:text-gray-400 text-xs flex items-center">
-              User of Tail-Kit
-              <img src="/icons/rocket.svg" class="ml-2 h-4 w-4" />
+            {text[0] && text[0].buyer.firstName}
             </span>
           </div>
         </div>
@@ -32,7 +28,7 @@ const Review = ({ text }) => {
       <div class="bg-white dark:bg-gray-800 w-72 shadow-lg mx-auto rounded-xl p-4">
         <p class="text-gray-600 dark:text-white">
           <span class="font-bold text-indigo-500 text-lg">“</span>
-          {/* {text[1].comment} */} no hay comentario
+          {text[1] && text[1].comment}
           <span class="font-bold text-indigo-500 text-lg">”</span>
         </p>
         <div class="flex items-center mt-4">
@@ -45,11 +41,7 @@ const Review = ({ text }) => {
           </a>
           <div class="flex flex-col ml-2 justify-between">
             <span class="font-semibold text-indigo-500 text-sm">
-              Jean Miguel
-            </span>
-            <span class="dark:text-gray-400 text-xs flex items-center">
-              User of Tail-Kit
-              <img src="/icons/rocket.svg" class="ml-2 h-4 w-4" />
+            {text[1] && text[1].buyer.firstName}
             </span>
           </div>
         </div>
@@ -57,8 +49,7 @@ const Review = ({ text }) => {
       <div class="bg-white dark:bg-gray-800 w-72 shadow-lg mx-auto rounded-xl p-4">
         <p class="text-gray-600 dark:text-white">
           <span class="font-bold text-indigo-500 text-lg">“</span>
-          To get social media testimonials like these, keep your customers
-          engaged with your social media accounts by posting regularly yourself
+          {text[2] && text[2].comment}
           <span class="font-bold text-indigo-500 text-lg">”</span>
         </p>
         <div class="flex items-center mt-4">
@@ -71,11 +62,7 @@ const Review = ({ text }) => {
           </a>
           <div class="flex flex-col ml-2 justify-between">
             <span class="font-semibold text-indigo-500 text-sm">
-              Jean Miguel
-            </span>
-            <span class="dark:text-gray-400 text-xs flex items-center">
-              User of Tail-Kit
-              <img src="/icons/rocket.svg" class="ml-2 h-4 w-4" />
+            {text[2] && text[2].buyer.firstName}
             </span>
           </div>
         </div>
