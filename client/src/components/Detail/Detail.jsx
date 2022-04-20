@@ -2,7 +2,11 @@ import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDetailCalendar, getHomeDetail, addAgenda } from "../../redux/actions/index";
+import {
+  getDetailCalendar,
+  getHomeDetail,
+  addAgenda,
+} from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
@@ -15,6 +19,8 @@ import HoursPicker from "../Calendar/HoursPicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from "react";
+import Review from "./Review";
+import Comment from "./Comment";
 /* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
@@ -26,85 +32,75 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   rooms = 5;
   description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
-    
-    
-    const user = useSelector((state) => state.user)
-    
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const apiKey =
+
+  const user = useSelector((state) => state.user);
+
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
-    const detail = useSelector((state)=> (state.homeDetail))
+  const detail = useSelector((state) => state.homeDetail);
 
-    let userId = detail[0]?.seller.userId;
-    let sellId = detail[0]?.sellerId;
-    useEffect(() => {
-      dispatch(getHomeDetail(id));      
-      return () => {
-        dispatch(getHomeDetail([]));
-      };
-    }, []);
+  let userId = detail[0]?.seller.userId;
+  let sellId = detail[0]?.sellerId;
+  useEffect(() => {
+    dispatch(getHomeDetail(id));
+    return () => {
+      dispatch(getHomeDetail([]));
+    };
+  }, []);
+  console.log("detail", detail);
 
-    
-    const calendarInfo = useSelector((state) => state.detailCalendar);
+  const calendarInfo = useSelector((state) => state.detailCalendar);
 
-    const photos =
+  const photos =
     detail[0]?.photos?.length > 0
-    ? detail[0].photos.map((photo) => photo.photos)
-    : null;
+      ? detail[0].photos.map((photo) => photo.photos)
+      : null;
 
-    // Calendar
-  
-  
-    const [selectedDay, setSelectedDay] = useState();
-    const [selectedDate, setSelectedDate] = useState({hours: '', minutes: ''});
+  // Calendar
 
-    const handleButton = () => {
-      if(!calendarInfo.length){
-        dispatch(getDetailCalendar(userId))
-      }else{
-        let agendaObj = {
-          place: detail[0].address + ', ' + detail[0].city,
-          dates: selectedDay,
-          hours: selectedDate,
-          sellerId: sellId,
-          buyerId: user.user.buyers[0].id
-         }
-         dispatch(addAgenda(agendaObj));
-      }
+  const [selectedDay, setSelectedDay] = useState();
+  const [selectedDate, setSelectedDate] = useState({ hours: "", minutes: "" });
 
+  const handleButton = () => {
+    if (!calendarInfo.length) {
+      dispatch(getDetailCalendar(userId));
+    } else {
+      let agendaObj = {
+        place: detail[0].address + ", " + detail[0].city,
+        dates: selectedDay,
+        hours: selectedDate,
+        sellerId: sellId,
+        buyerId: user.user.buyers[0].id,
+      };
+      dispatch(addAgenda(agendaObj));
     }
-  
-    
-    //AÑADIR A FAVORITOS
-    
-    const userObject = useSelector((state)=>state.user)
-    console.log(userObject)
-    const [values, setValues] = useState({
-      buyerId: userObject.user?.id,
-      propertyId: detail[0]?.id,
-      
-      
-    })
-    
-    async function handleSubmit(e) {
-      e.preventDefault();
-      try {
-      console.log(values)
-         await dispatch(addFavourites(values))
-      
-          alert('Favourite added successfully!');
-          
-        } catch (err) {
-          console.log(err.message)
-          alert('We could not add your favourite. Please try again.');
-          
-        }
-        
-        
-      }
-    return (
-      <div class=" text-center  ">
+  };
+
+  //AÑADIR A FAVORITOS
+
+  const userObject = useSelector((state) => state.user);
+  console.log(userObject);
+  const [values, setValues] = useState({
+    buyerId: userObject.user?.id,
+    propertyId: detail[0]?.id,
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      console.log(values);
+      await dispatch(addFavourites(values));
+
+      alert("Favourite added successfully!");
+    } catch (err) {
+      console.log(err.message);
+      alert("We could not add your favourite. Please try again.");
+    }
+  }
+  return (
+    <div class=" text-center  ">
       <div class="bg-[#075985]">
         <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
           <Nav />
@@ -235,19 +231,43 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </div>
         </div>
         <hr />
+
+        
+          {detail[0] && <Review text={detail[0]?.reviews} />}
+        
+
+        <Comment />
+        <hr />
         <div>
           <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
-          Book an appointment
+            Book an appointment
           </h3>
-          {calendarInfo.length !== 0 && <div className="flex justify-center">
-           <div className="ml-5 rounded border border-stone-400/75">
-             <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className=''/>
+          {calendarInfo.length !== 0 && (
+            <div className="flex justify-center">
+              <div className="ml-5 rounded border border-stone-400/75">
+                <CalendarOneDay
+                  selectedDay={selectedDay}
+                  setSelectedDay={setSelectedDay}
+                  defaultFrom={calendarInfo[0].dates.from}
+                  defaultTo={calendarInfo[0].dates.to}
+                  className=""
+                />
+              </div>
+              <div className="ml-5 pt-16 ">
+                <HoursPicker
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  className=""
+                />
+              </div>
             </div>
-            <div className="ml-5 pt-16 ">
-            <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />
-            </div>
-          </div>}
-          <button onClick={() => handleButton() } className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
+          )}
+          <button
+            onClick={() => handleButton()}
+            className="my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded"
+          >
+            Schedule
+          </button>
         </div>
         <div className="">
           <div className="w-full">
@@ -255,27 +275,31 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
               You will live here I
             </h3>
             <div className="relative bg-black w-full h-64">
-              {apiKey ? (detail.length ? 
-                <ReactMapGL
-                  initialViewState={{
-                    latitude: detail[0].longitude,
-                    longitude: detail[0].latitude,
-                    zoom: 5,
-                  }}
-                  mapStyle="mapbox://styles/mapbox/streets-v9"
-                  mapboxAccessToken={apiKey}
-                >
-                  {
-                    <Marker
-                      latitude={detail[0].longitude}
-                      longitude={detail[0].latitude}
-                      draggable={false}
-                    >
-                      <ImLocation2 className="h-8 w-8 text-teal-600" />
-                    </Marker>
-                  }
-                </ReactMapGL>
-              : "loading..") : (
+              {apiKey ? (
+                detail.length ? (
+                  <ReactMapGL
+                    initialViewState={{
+                      latitude: detail[0].longitude,
+                      longitude: detail[0].latitude,
+                      zoom: 5,
+                    }}
+                    mapStyle="mapbox://styles/mapbox/streets-v9"
+                    mapboxAccessToken={apiKey}
+                  >
+                    {
+                      <Marker
+                        latitude={detail[0].longitude}
+                        longitude={detail[0].latitude}
+                        draggable={false}
+                      >
+                        <ImLocation2 className="h-8 w-8 text-teal-600" />
+                      </Marker>
+                    }
+                  </ReactMapGL>
+                ) : (
+                  "loading.."
+                )
+              ) : (
                 "Loading.."
               )}
             </div>
@@ -286,13 +310,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
       </div>
 
-      
       {/* {
         detail.length? <DirectChatPage seller={detail[0].seller.user}/> : ""
       } */}
-      
     </div>
   );
-};
+};;
 
 export default Detail;
