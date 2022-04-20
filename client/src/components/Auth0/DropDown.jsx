@@ -50,7 +50,7 @@ export default function DropDown() {
 
                                     {
                                         typeUser === "seller" ?
-                                            <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
+                                            <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" defaultChecked onClick={() => {
                                                 if (typeUser === "buyer") {
                                                     dispatch(updateTypeUser("seller"))
                                                 }
@@ -58,7 +58,6 @@ export default function DropDown() {
                                                     dispatch(updateTypeUser("buyer"))
                                                 }
                                             }}
-                                                checked
                                             />
                                             : <input className="form-check-input appearance-none w-9 rounded-full h-5 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" onClick={() => {
                                                 if (typeUser === "buyer") {
@@ -91,7 +90,15 @@ export default function DropDown() {
                     </DropdownItem>
                 }
 
-                
+                {
+                   userDB.user?.role?.rolName === "admin" ? 
+                        <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
+                            navigate("/admin/features")
+                        }}>
+                            Features
+                        </DropdownItem>
+                    : ""
+                }
 
                 {
                     typeUser === "buyer" && userDB.user?.role?.rolName !== "admin" ?
@@ -100,10 +107,10 @@ export default function DropDown() {
                             ripple="light"
                             size="lg"
                             onClick={(e) => {
-                                navigate("/logged/Favorites")
+                                navigate("/logged/Publishing")
                             }}
                         >
-                            Favorites
+                            Publishing
                         </DropdownItem>
                         : ""
                 }
@@ -128,7 +135,7 @@ export default function DropDown() {
                 }
 
                 {
-                    userDB.user?.role?.rolName !== "admin" ?
+                    typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
                             navigate("/logged/SellerCalendar")
                         }}>

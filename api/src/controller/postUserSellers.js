@@ -73,21 +73,15 @@ router.put('/', async (req, res) => {
 
 router.post('/phoneNumber', async (req, res) => {
     try {
-        const { email, phoneNumber } = req.body;
+        const { id, phoneNumber } = req.body;
         const userexistente = await Sellers.findOne({
             where: {
-                userId: "17614c00-33a0-4185-ad20-ac7b7427917d"
+                userId: id
             }
         })
         userexistente.phoneNumber = phoneNumber
         await userexistente.save()
         res.send(userexistente)
-        /* if(userexistente){
-            userexistente.sellers[0].phoneNumber = phoneNumber
-            await userexistente.save()
-            const user = await getbyEmail(email)
-            res.send(user)
-        } */
     } catch (error) {
         res.send(error.message)
     }
