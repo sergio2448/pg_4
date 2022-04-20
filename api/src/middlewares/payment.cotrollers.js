@@ -15,9 +15,6 @@ const hostclient = 'http://localhost:3000'
 const createOrder = async (req, res) => {
     const { id } = req.body
     const { tiempo } = req.query
-    console.log(req.body)
-    console.log(id)
-    console.log(tiempo)
     try {
         const property = await getById(id)
         console.log(!!property)
@@ -167,7 +164,7 @@ const captureOrder = async (req, res) => {
                 }
             })
             const { emailUser } = await userdata(userid)
-            await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
+            await axios.post(`${host}/send-email/payment?emailUser${emailUser}&tiempo=${tiempo}`);
         }
 
         res.status(200).json(data)
@@ -196,7 +193,11 @@ const propertyNotFound = async (req, res) => {
 }
 
 const donationCompleted = (req, res) => {
-    res.json(`${hostclient}/payment`);
+    try {
+        res.status(200).json(`${hostclient}/payment`)
+    } catch (error) {
+        res.status(500).json(error)
+    }
 }
 
 const checkout = async (req, res) => {
@@ -223,23 +224,23 @@ const checkout = async (req, res) => {
 
         findall?.map(({ id, promotionDetail: { tiempo, startDate } }) => {
             let date = new Date(startDate)
-            console.log(tiempo, startDate, datediference(date))
+            
             if (tiempo === "uno") {
-                console.log(datediference(date) > 30)
+            
                 datediference(date) > 30 && Properties.update({ statuspromotion: false }, {
                     where: {
                         id: id
                     }
                 })
             } else if (tiempo === "tres") {
-                console.log(datediference(date) > 90)
+                
                 datediference(date) > 90 && Properties.update({ statuspromotion: false }, {
                     where: {
                         id: id
                     }
                 })
             } else if (tiempo === "seis") {
-                console.log(datediference(date) > 120)
+                
                 datediference(date) > 120 && Properties.update({ statuspromotion: false }, {
                     where: {
                         id: id
