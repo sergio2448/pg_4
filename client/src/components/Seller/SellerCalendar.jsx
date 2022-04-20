@@ -41,7 +41,7 @@ const App = () => {
                     calendarClassName=""
                     shouldHighlightWeekends
                     renderFooter={() => (
-                        <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 2rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem 2rem' }}>
                             <button
                                 type="button"
                                 onClick={() => {
@@ -54,7 +54,7 @@ const App = () => {
                                     backgroundColor: '#0fbcf9',
                                     border: '#0fbcf9',
                                     color: '#000000',
-                                    fontSize: '1.5em',
+                                    fontSize: '1.2em',
                                     borderRadius: '0.5rem',
                                     padding: '1rem 2rem',
                                 }}
@@ -79,12 +79,12 @@ const App = () => {
                 <Button
                     color="lightBlue"
                     buttonType="filled"
-                    size="regular"
+                    size="lg"
                     rounded={false}
                     block={false}
                     iconOnly={false}
                     ripple="light"
-                    className="relative mx-1 bg-stone-800"
+                    className="relative mx-1 text-black bold"
                     onClick={async (e) => {
                         e.preventDefault()
                         try {
@@ -106,19 +106,19 @@ const App = () => {
                     Cargar 
                 </Button>
                 <Modal size="sm" active={showModal} toggler={() => {
-                                    setShowModal(false)
-                                    }} >
-                                    <ModalHeader toggler={() => {
-                                        setShowModal(false)
-                                    }} >
-                                        Select your available days
-                                    </ModalHeader>
-                                    <ModalBody>
-                                        <p className="text-base leading-relaxed text-gray-600 font-normal italic">
-                                        Uuups! Select your available days, otherwise a buyer will book an appointment any day of the year
-                                        </p>
-                                    </ModalBody> 
-                                </Modal>
+                    setShowModal(false)
+                    }} >
+                    <ModalHeader toggler={() => {
+                        setShowModal(false)
+                    }} >
+                        Select your available days
+                    </ModalHeader>
+                    <ModalBody>
+                        <p className="text-base leading-relaxed text-gray-600 font-normal italic">
+                        Uuups! Select your available days, otherwise a buyer will book an appointment any day of the year
+                        </p>
+                    </ModalBody> 
+                </Modal>
             </div>
         </>
     );

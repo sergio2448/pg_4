@@ -29,14 +29,14 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   rooms = 5;
   description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
-    
-    const navigate = useNavigate();
-    
-    const user = useSelector((state) => state.user)
-    
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const apiKey =
+
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user)
+
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
   const detail = useSelector((state) => state.homeDetail);
 
@@ -60,64 +60,73 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   // Calendar
 
 
+<<<<<<< HEAD
+  const [selectedDay, setSelectedDay] = useState();
+  const [selectedDate, setSelectedDate] = useState({ hours: '', minutes: '' });
+
+
+  const addAgenda = (data) => {
+    axios.post('http://localhost:3001/agenda', data)
+=======
     const addAgenda = (data) => {
       axios.post('http://localhost:3001/agenda', data)
       axios.post('http://localhost:3001/agenda', data)
+>>>>>>> b22a74e5b029b08365eefb92f638789a68b1754f
       .then(() => {
         alert('Cita agendada con exito!');
       })
       .catch(() => {
         alert('Ya existe una cita con este propietario!');
       })
+  }
+
+  const handleButton = () => {
+    if (!calendarInfo.length) {
+      dispatch(getDetailCalendar(userId))
+      return null;
+    } else {
+      let agendaObj = {
+        place: detail[0].address + ', ' + detail[0].city,
+        dates: selectedDay,
+        hours: selectedDate,
+        sellerId: sellId,
+        buyerId: user.user.buyers[0].id
+      }
+      addAgenda(agendaObj);
+      navigate('/logged/Quotes');
     }
     
 
-    const handleButton = () => {
-      if(!calendarInfo.length){
-        dispatch(getDetailCalendar(userId))
-        return null;
-      }else{
-        let agendaObj = {
-          place: detail[0].address + ', ' + detail[0].city,
-          dates: selectedDay,
-          hours: selectedDate,
-          sellerId: sellId,
-          buyerId: user.user.buyers[0].id
-         }
-         addAgenda(agendaObj);
-         navigate('/logged/Quotes');
-      }      
-      
+  }
+
+
+  //AÑADIR A FAVORITOS
+
+  const userObject = useSelector((state) => state.user)
+  console.log(userObject)
+  const [values, setValues] = useState({
+    buyerId: userObject.user?.id,
+    propertyId: detail[0]?.id,
+
+
+  })
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await dispatch(addFavourites(values))
+
+      alert('Favourite added successfully!');
+
+    } catch (err) {
+      alert('We could not add your favourite. Please try again.');
+
     }
-  
-    
-    //AÑADIR A FAVORITOS
-    
-    const userObject = useSelector((state)=>state.user)
-    console.log(userObject)
-    const [values, setValues] = useState({
-      buyerId: userObject.user?.id,
-      propertyId: detail[0]?.id,
-      
-      
-    })
-    
-    async function handleSubmit(e) {
-      e.preventDefault();
-      try {
-         await dispatch(addFavourites(values))
-      
-          alert('Favourite added successfully!');
-          
-        } catch (err) {
-          alert('We could not add your favourite. Please try again.');
-          
-        }
-        
-        
-      }
-    return (
-      <div class=" text-center  ">
+
+
+  }
+  return (
+    <div class=" text-center  ">
       <div class="bg-[#075985]">
         <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
           <Nav />
