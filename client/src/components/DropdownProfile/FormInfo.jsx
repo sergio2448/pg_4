@@ -61,7 +61,6 @@ function FormInfo() {
     <Nav />
     <div class="border-solid     border-4 bg-sky-500/80 my-16 w-1/2 h-1/3  font-Monserrat font-bold	  rounded-md p-4 relative ml-96 h-3/4">
     
-    
         <h1 class="block w-full text-center text-4xl font-black mb-16   ">User Info</h1>
         <form action="/" method="post" onSubmit={handleSubmit} className="flex flex-row justify-evenly   ">
             <div className='   '>
