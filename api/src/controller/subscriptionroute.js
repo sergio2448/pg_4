@@ -34,11 +34,3 @@ router.get('/show-plan', planslist)
 router.get('/active-sub', reactiveSub)
 
 // router.get('/transactions-details', transactions)
-/*
-    !faltantes:
-    *ruta que evalua el estado de la subscription
-    *ruta para cancelar subscription,
-    *ruta para ver las transacciones: (admin) // incluir tipos y paginado
-    *ruta para que el usuario consulte sus subscripciones
-    *Definir veneficios para el usuario vip 
-*/

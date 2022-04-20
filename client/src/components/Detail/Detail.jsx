@@ -16,6 +16,8 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from "react";
+import Review from "./Review";
+import Comment from "./Comment";
 /* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
@@ -36,7 +38,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   const dispatch = useDispatch();
   const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
-  const detail = useSelector((state) => (state.homeDetail))
+  const detail = useSelector((state) => state.homeDetail);
 
   let userId = detail[0]?.seller.userId;
   let sellId = detail[0]?.sellerId;
@@ -46,7 +48,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       dispatch(getHomeDetail([]));
     };
   }, []);
-
+  console.log("detail", detail);
 
   const calendarInfo = useSelector((state) => state.detailCalendar);
 
@@ -58,12 +60,18 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   // Calendar
 
 
+<<<<<<< HEAD
   const [selectedDay, setSelectedDay] = useState();
   const [selectedDate, setSelectedDate] = useState({ hours: '', minutes: '' });
 
 
   const addAgenda = (data) => {
     axios.post('http://localhost:3001/agenda', data)
+=======
+    const addAgenda = (data) => {
+      axios.post('http://localhost:3001/agenda', data)
+      axios.post('http://localhost:3001/agenda', data)
+>>>>>>> b22a74e5b029b08365eefb92f638789a68b1754f
       .then(() => {
         alert('Cita agendada con exito!');
       })
@@ -87,6 +95,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       addAgenda(agendaObj);
       navigate('/logged/Quotes');
     }
+    
 
   }
 
@@ -248,8 +257,15 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </div>
         </div>
         <hr />
-        {
-          user.user.sellers[0].id !== sellId ? (
+
+        
+          { detail[0] && <Review text={detail[0].reviews}/>}
+        
+
+        <Comment />
+        <hr />
+        <hr />{
+          user.user?.sellers[0].id !== sellId ? (
             <div>
               <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
                 Book an appointment
@@ -274,27 +290,31 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
               You will live here I
             </h3>
             <div className="relative bg-black w-full h-64">
-              {apiKey ? (detail.length ?
-                <ReactMapGL
-                  initialViewState={{
-                    latitude: detail[0].longitude,
-                    longitude: detail[0].latitude,
-                    zoom: 5,
-                  }}
-                  mapStyle="mapbox://styles/mapbox/streets-v9"
-                  mapboxAccessToken={apiKey}
-                >
-                  {
-                    <Marker
-                      latitude={detail[0].longitude}
-                      longitude={detail[0].latitude}
-                      draggable={false}
-                    >
-                      <ImLocation2 className="h-8 w-8 text-teal-600" />
-                    </Marker>
-                  }
-                </ReactMapGL>
-                : "loading..") : (
+              {apiKey ? (
+                detail.length ? (
+                  <ReactMapGL
+                    initialViewState={{
+                      latitude: detail[0].longitude,
+                      longitude: detail[0].latitude,
+                      zoom: 5,
+                    }}
+                    mapStyle="mapbox://styles/mapbox/streets-v9"
+                    mapboxAccessToken={apiKey}
+                  >
+                    {
+                      <Marker
+                        latitude={detail[0].longitude}
+                        longitude={detail[0].latitude}
+                        draggable={false}
+                      >
+                        <ImLocation2 className="h-8 w-8 text-teal-600" />
+                      </Marker>
+                    }
+                  </ReactMapGL>
+                ) : (
+                  "loading.."
+                )
+              ) : (
                 "Loading.."
               )}
             </div>
@@ -305,11 +325,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
       </div>
 
-
       {/* {
         detail.length? <DirectChatPage seller={detail[0].seller.user}/> : ""
       } */}
-
     </div>
   );
 };
