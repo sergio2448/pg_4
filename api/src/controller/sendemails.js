@@ -69,7 +69,7 @@ router.post('/welcome', async (req, res) => {
             }
         })
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })
 
@@ -96,7 +96,7 @@ router.post('/donation', async (req, res) => {
             }
         })
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })
 
@@ -123,7 +123,7 @@ router.post('/payment/:emailUser/:idProperty', (req, res, next) => {
             }
         })
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })
 
@@ -150,6 +150,6 @@ router.post('/subscribers/:emailUser/', (req, res, next) => {
             }
         })
     } catch (error) {
-        res.send(500).json(error)
+        res.status(500).json(error)
     }
 })

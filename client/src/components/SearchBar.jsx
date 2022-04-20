@@ -97,7 +97,6 @@ export default function SearchBar() {
                 })
             }
         })
-        console.log(featuresArr)
         let listFeature = {
             listFeatures: [...featuresArr]
         }

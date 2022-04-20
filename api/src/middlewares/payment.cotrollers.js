@@ -1,9 +1,12 @@
 const axios = require('axios')
+const { Op } = require("sequelize")
 const { getById } = require('../middlewares/usercreate.js')
-const { Properties, BanckCards } = require('../db')
+const { Properties, BanckCards, PromotionDetails } = require('../db')
 const userdata = require('../middlewares/emailuserdata.js')
 const authtoken = require('../middlewares/authtoken.js')
-const { PAYPAL_API, PAYPA_API_CLIENT, PAYPAL_API_SECRET } = process.env
+const { isAdmin } = require('./authadmin')
+const { PAYPAL_API } = process.env
+
 const host = 'http://localhost:3001'
 const hostclient = 'http://localhost:3000'
 
@@ -14,6 +17,7 @@ const createOrder = async (req, res) => {
     const { tiempo } = req.query
     console.log(req.body)
     console.log(id)
+    console.log(tiempo)
     try {
         const property = await getById(id)
         console.log(!!property)
@@ -54,7 +58,7 @@ const createOrder = async (req, res) => {
                 brand_name: 'Inmobiliaria.com',
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-                return_url: `${host}/pay/capture-order?idProperty=${id}`,
+                return_url: `${host}/pay/capture-order?idProperty=${id}&tiempo=${tiempo}`,
                 cancel_url: `${host}/pay/cancel-order?idProperty=${id}`,
             }
         }
@@ -128,9 +132,7 @@ const captureOrder = async (req, res) => {
                 Authorization: `Bearer ${access_token}`
             }
         })
-        console.log(data)
         const { id, status, purchase_units, payer, links } = data
-
         const response = await BanckCards.create({
             id,
             status,
@@ -138,7 +140,20 @@ const captureOrder = async (req, res) => {
             payer: payer.name,
             links: links[0]
         })
+
         const property = await getById(idProperty)
+        const { data: { create_time } } = await axios.get(`${PAYPAL_API}v2/checkout/orders/${id}`, {
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        })
+
+        const promotion = await PromotionDetails.create({
+            startDate: create_time, tiempo
+        })
+
+
+        await promotion.setProperty(idProperty)
         const seller = await property.getSeller()
         const userid = seller.getDataValue('userId')
 
@@ -152,9 +167,9 @@ const captureOrder = async (req, res) => {
                 }
             })
             const { emailUser } = await userdata(userid)
-        await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
+            await axios.post(`${host}/send-email/payment/${emailUser}/${idProperty}`);
         }
-        
+
         res.status(200).json(data)
     } catch (error) {
         res.status(500).json(error)
@@ -184,10 +199,76 @@ const donationCompleted = (req, res) => {
     res.json(`${hostclient}/payment`);
 }
 
+const checkout = async (req, res) => {
+    try {
+
+        const { adminEmail } = req.query
+        const rolename = await isAdmin(adminEmail)
+        if (!rolename) return res.status(403).json('No tiene autorización para acceder a la información')
+
+        const findall = await Properties.findAll({
+            include: [
+                {
+                    model: PromotionDetails,
+                    attributes: ['tiempo', 'createdAt', "startDate"],
+
+                }
+            ],
+            where: {
+                statuspromotion: "true"
+            },
+            attributes: ["id", "sellerId", "statuspromotion"]
+
+        })
+
+        findall?.map(({ id, promotionDetail: { tiempo, startDate } }) => {
+            let date = new Date(startDate)
+            console.log(tiempo, startDate, datediference(date))
+            if (tiempo === "uno") {
+                console.log(datediference(date) > 30)
+                datediference(date) > 30 && Properties.update({ statuspromotion: false }, {
+                    where: {
+                        id: id
+                    }
+                })
+            } else if (tiempo === "tres") {
+                console.log(datediference(date) > 90)
+                datediference(date) > 90 && Properties.update({ statuspromotion: false }, {
+                    where: {
+                        id: id
+                    }
+                })
+            } else if (tiempo === "seis") {
+                console.log(datediference(date) > 120)
+                datediference(date) > 120 && Properties.update({ statuspromotion: false }, {
+                    where: {
+                        id: id
+                    }
+                })
+            }
+
+        })
+
+        res.status(200).json("usuarios actualizados")
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+
+
+const datediference = (date1, date2 = new Date()) => {
+    const date1utc = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const date2utc = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    day = 1000 * 60 * 60 * 24;
+    return (date2utc - date1utc) / day
+}
 module.exports = {
     createOrder,
     captureOrder,
     cancelOrder,
     propertyNotFound,
-    donationCompleted
+    donationCompleted,
+    checkout,
+    datediference,
 }

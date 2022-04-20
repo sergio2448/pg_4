@@ -1,4 +1,4 @@
-const { Properties, Features, Photos,Produc_Features,Idstatus,Sellers,Users,Reviews,Buyers } = require('../db')
+const { Properties, Features, Photos,Produc_Features,Idstatus,Sellers,Users,Reviews,Buyers, PromotionDetails } = require('../db')
 const { Op, fn, col } = require("sequelize")
 const {
     getById,
@@ -61,7 +61,8 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                          { model: Photos },
                          { model: Idstatus },
                          {model:Sellers,include:{model:Users}},
-                         { model: Reviews,include:{model:Buyers} }],
+                         { model: Reviews,include:{model:Buyers} },
+                         {model:PromotionDetails}],
                 where: filterSearch
             });
 
@@ -96,7 +97,8 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                                     { model: Photos },
                                     { model: Idstatus },
                                     {model:Sellers,include:{model:Users}},
-                                    { model: Reviews,include:{model:Buyers}  }],
+                                    { model: Reviews,include:{model:Buyers}},
+                                    {model:PromotionDetails}],
                         where: {
                             id: joinSearchFeatures.map(data => data.produc_features)
                         }
@@ -128,7 +130,9 @@ const getProperties = async (id, cost, address, city, state, country, cp, lease,
                                                                  { model: Photos },
                                                                  { model: Idstatus },
                                                                  {model:Sellers,include:{model:Users}},
-                                                                 { model: Reviews,include:{model:Buyers}  }] })
+                                                                 { model: Reviews,include:{model:Buyers}},
+                                                                 {model:PromotionDetails}
+                                                                ] })
         }
         return respProperties;
 
