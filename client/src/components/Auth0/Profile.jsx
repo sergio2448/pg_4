@@ -27,7 +27,6 @@ export const Profile = () => {
         try {
             let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
             setUserLoged(userExist.data)
-            console.log(userExist)
             if(userExist.data.result === "Sin Registros") {
                 let newUser = await axios.post(`http://localhost:3001/optionUser`, {
                     "firstName": user.given_name ? user.given_name : user.name,
@@ -38,6 +37,7 @@ export const Profile = () => {
                 })
                 userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
                 dispatch(loadUser(userExist.data))
+                setUserLoged(userExist.data)
                 const notificationUser={
                     userid:userExist.data.user.id
                 }
@@ -83,14 +83,15 @@ export const Profile = () => {
                                 iconOnly={false}
                                 ripple="light"
                                 onClick={async (e) => {
-                                    setShowModal(false)
                                     e.preventDefault()
                                     try {
                                         let phone = await axios.post("http://localhost:3001/optionUser/phoneNumber", {
                                             phoneNumber: phoneNumber,
-                                            email: user.email
+                                            id: userLoged.user.id
                                         })
-                                        console.log(phone)
+                                        let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                                        dispatch(loadUser(userExist.data))
+                                        setShowModal(false)
                                     } catch (error) {
                                         console.log(error)
                                     }

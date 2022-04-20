@@ -63,6 +63,7 @@ export default function Create() {
     });
 
     React.useEffect(async () => {
+        console.log("EDIT")
         axios.get('http://localhost:3001/Properties?id=' + id)
             .then((result) => result.data)
             .then(propertyEdit => {

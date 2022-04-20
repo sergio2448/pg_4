@@ -27,8 +27,6 @@ export default function Schedule() {
         }
     }, [render])
 
-    console.log(quotes)
-
     return (
         <div className="w-full h-screen bg-stone-200/75 ">
             <div class="shadow-inner shadow-black">
@@ -45,7 +43,7 @@ export default function Schedule() {
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center mt-8">
                         <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8">
                             Whit seller
-                            <div className="overflow-hidden rounded-2xl">
+                            <div className="overflow-hidden rounded-2xl shadow-2xl">
                                 <table className="min-w-full text-center">
                                     <thead className="border-b bg-gray-800 boder-gray-900">
                                         <tr>
@@ -141,6 +139,11 @@ export default function Schedule() {
                                         }
                                     </tbody>
                                 </table>
+                                {
+                                    !quotes && <div className="text-center my-8">
+                                        <p className="font-Poppins text-2xl italic">You don't have appointments as a seller.</p>
+                                    </div>
+                                }
                             </div> 
                         </div>
                     </div>
@@ -149,7 +152,7 @@ export default function Schedule() {
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center">
                         <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8">
                             Whit buyer
-                            <div className="overflow-hidden rounded-2xl">
+                            <div className="overflow-hidden rounded-2xl shadow-2xl">
                                 <table className="min-w-full text-center">
                                     <thead className="border-b bg-gray-800 boder-gray-900">
                                         <tr>
@@ -189,6 +192,11 @@ export default function Schedule() {
                                         }
                                     </tbody>
                                 </table>
+                                {
+                                    !quotes && <div className="text-center my-8">
+                                        <p className="font-Poppins text-2xl italic">You don't have appointments as a buyer.</p>
+                                    </div>
+                                }
                             </div>
                         </div>   
                     </div>

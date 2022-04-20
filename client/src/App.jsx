@@ -18,6 +18,7 @@ import Dashadmin from "./components/admin modules/Dashadmin";
 import UsersAdmin from "./components/admin modules/Users/UsersAdmin"
 import SellerCalendar from "./components/Seller/SellerCalendar"
 import Schedule from './components/Detail/Schedule';
+import Features from './components/admin modules/Features';
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
                     <Route path='/sub' element={<PaypalButtonSub/>}/>
                     <Route path="/cardad" element={<Dashadmin />} />
                     <Route path='/admin/users' element={<UsersAdmin />} />
+                    <Route path='/admin/features' element={<Features />} />
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>
