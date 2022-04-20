@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {ImLocation2} from "react-icons/im"
@@ -18,11 +20,32 @@ export default function Cards({
   rooms,
   latitude,
   longitude,
-  maplist
+  maplist,
+  id,
+  currentProperties,
+  setCurrentProperties
 }) {
   rooms = 5;
   const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
   const mapRef = useRef();
+  const user = useSelector(state => state.user)
+
+  function deleteProperties(id, adminEmail) {
+    return axios.delete(`http://localhost:3001/admin/delete-prop?id=${id}&adminEmail=${adminEmail}`)
+    .then((res)=>{
+        alert('Propiedad eliminada')
+    })
+    .catch((err) => console.error(err));
+
+  }
+
+  function handleButton(e) {
+  deleteProperties(id, user.user.email)
+  setCurrentProperties(currentProperties.filter(c => {
+    c.id !== id
+  }))
+}
+
 
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
@@ -79,7 +102,7 @@ export default function Cards({
           <span></span>
         )} 
         {
-          window.location.pathname == "/logged/Publishing" ? (<button className='text-white bg-red-600 border-dashed rounded-md text-xl hover:bg-red-800'>Eliminate</button>) : (<span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
+          window.location.pathname == "/logged/Publishing" ? (<button onClick={() => {handleButton()}} className='text-white bg-red-600 border-dashed rounded-md text-xl hover:bg-red-800'>Eliminate</button>) : (<span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
           {lease == 'Venta' ? 'For Sale' : 'Rent'}
         </span>)
         }

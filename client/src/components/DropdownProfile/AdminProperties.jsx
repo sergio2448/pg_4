@@ -11,7 +11,7 @@ function AdminProperties() {
 
     const dispatch = useDispatch();
     const properties = useSelector((state) => state.homeCards);
-
+    const [currentProperties, setCurrentProperties] = useState(properties);
 
     useEffect(() => {
         dispatch(getListCards());
@@ -32,14 +32,14 @@ function AdminProperties() {
                     <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
                       
                         {
-                            properties?.map(c => {
+                            currentProperties?.map(c => {
                               if(c.idstatus.statusName === "Publicado") {
                                 return (
                                   <div
                                     key={c.id}
                                     className="text-transform: capitalize bg-white transition ease-in-out duration-200 hover:shadow-stone-900 hover:shadow-xl "
                                   >
-                                    <Link to={"/estate/" + c.id}>
+                                  
                                       <Card
                                         image={
                                           "http://localhost:3001/Properties/images/" +
@@ -53,8 +53,11 @@ function AdminProperties() {
                                         country={c.country}
                                         cost={c.cost}
                                         measure={c.m2}
+                                        id={c.id}
+                                        currentProperties={currentProperties}
+                                        setCurrentProperties={setCurrentProperties}
                                       />
-                                    </Link>
+                                  
                                   </div>
                                 );
                               }

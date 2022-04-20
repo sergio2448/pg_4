@@ -133,8 +133,8 @@ export function deleteFavourites(id,userId,propertyId) {
     
 }
 
-export function deleteProperties(id) {
-  return function(){axios.delete(`http://localhost:3001/admin/delete-prop?${id}`)}
+export function deleteProperties(id, adminEmail) {
+  return axios.delete(`http://localhost:3001/admin/delete-prop?id=${id}&adminEmail=${adminEmail}`)
   .then((res)=>{
       console.log(res)
   })
