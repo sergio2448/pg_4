@@ -14,7 +14,10 @@ import ListProperties from './components/Seller/ListProperties';
 import StripedTable from './components/DropdownProfile/StripedTable';
 import UserInfo from './components/DropdownProfile/UserInfo';
 import FormInfo from './components/DropdownProfile/FormInfo';
-
+import Dashadmin from "./components/admin modules/Dashadmin";
+import UsersAdmin from "./components/admin modules/Users/UsersAdmin"
+import SellerCalendar from "./components/Seller/SellerCalendar"
+import Schedule from './components/Detail/Schedule';
 
 function App() {
 
@@ -30,11 +33,15 @@ function App() {
                     <Route path='/estate/edit/:id' element={<Create />} />
                     <Route path='/logged/Favorites' element={<StripedTable/>} />
                     <Route path='/logged/myprofile' element={<UserInfo/>} />
-                    <Route path='/logged/UpdateInfo' element={<FormInfo/>} />          
+                    <Route path='/logged/Updatedata' element={<FormInfo/>} />  
+                    <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />
+                    <Route path='/logged/Quotes' element={<Schedule />} />
                     <Route path='/pay/:id' element={<PaypalButton/>}/>
                     <Route path='/payment' element={<Payment/>}/>
                     <Route path='/listProperties' element={<ListProperties />} />
                     <Route path='/sub' element={<PaypalButtonSub/>}/>
+                    <Route path="/cardad" element={<Dashadmin />} />
+                    <Route path='/admin/users' element={<UsersAdmin />} />
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>

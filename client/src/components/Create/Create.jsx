@@ -12,6 +12,7 @@ import Page4 from './Page4'
 import houseBackground from "../../styles/images/house-back.jpg"
 import { validate } from '../../validators/createValidator';
 import { useDispatch, useSelector } from 'react-redux';
+import Footer from '../Footer';
 let apiKey = ""
 const changeCitys = async (country, set) => {
     try {
@@ -36,6 +37,7 @@ export default function Create() {
     const [errors, setErrors] = React.useState({});
     const [citys, setCitys] = React.useState([])
     const [images, setImages] = React.useState(null)
+    const [imagesDeleted, setImagesDeleted] = React.useState([])
     const [pages, setPages] = React.useState({
         page1: true,
         page2: false,
@@ -62,33 +64,32 @@ export default function Create() {
 
     React.useEffect(async () => {
         axios.get('https://app-inmuebles.herokuapp.com/Properties?id=' + id)
-        .then((result) => result.data)
-        .then(propertyEdit => {
-            console.log(propertyEdit)
-            setNewEstate({
-                sellerId: userDB.user.sellers[0] ? userDB.user.sellers[0].id : 0,
-                lease: propertyEdit[0].lease,
-                cost: propertyEdit[0].cost,
-                m2: propertyEdit[0].m2,
-                country: propertyEdit[0].country,
-                state: propertyEdit[0].state,
-                city: propertyEdit[0].city,
-                photos: propertyEdit[0].photos,
-                address: propertyEdit[0].address,
-                cp: propertyEdit[0].cp,
-                features: propertyEdit[0].features,
-                propertyType: propertyEdit[0].propertyType,
-                description: propertyEdit[0].description,
-                longitude: propertyEdit[0].longitude,
-                latitude: propertyEdit[0].latitude
+            .then((result) => result.data)
+            .then(propertyEdit => {
+                setNewEstate({
+                    sellerId: userDB.user.sellers[0] ? userDB.user.sellers[0].id : 0,
+                    lease: propertyEdit[0].lease,
+                    cost: propertyEdit[0].cost,
+                    m2: propertyEdit[0].m2,
+                    country: propertyEdit[0].country,
+                    state: propertyEdit[0].state,
+                    city: propertyEdit[0].city,
+                    photos: propertyEdit[0].photos,
+                    address: propertyEdit[0].address,
+                    cp: propertyEdit[0].cp,
+                    features: propertyEdit[0].features,
+                    propertyType: propertyEdit[0].propertyType,
+                    description: propertyEdit[0].description,
+                    longitude: propertyEdit[0].longitude,
+                    latitude: propertyEdit[0].latitude
+                })
+                setImages(propertyEdit[0].photos)
+                changeCitys(propertyEdit[0].country, setCitys)
+                setImagesDeleted(propertyEdit[0].photos.map(elem => elem.photos))
             })
-            setImages(propertyEdit[0].photos)
-            changeCitys(propertyEdit[0].country, setCitys)
-            
-        })
-        .catch((error) => {
-            console.log(error)
-        }) 
+            .catch((error) => {
+                console.log(error)
+            })
     }, [id])
 
     React.useEffect(async () => {
@@ -112,25 +113,39 @@ export default function Create() {
         }
     }, []);
 
+    /* console.log(images[0].photos)
+    console.log(imagesDeleted) */
+
     const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
-        if(Object.values(errors).length === 0) {
-            if(id) {
+        if (Object.values(errors).length === 0) {
+            if (id) {
                 console.log("ENTRE EN PUT, NO POST")
                 try {
                     let estateCreated = await axios.put(`https://app-inmuebles.herokuapp.com/Properties/${id}?override=true`, newEstate)
-                    //CARGA O ELIMINACION DE IMAGENES AQUI
                     console.log(estateCreated)
-                    return 
+                    if (imagesDeleted) {
+                        console.log(imagesDeleted)
+                        await axios.put(`https://app-inmuebles.herokuapp.com/Properties/images/${id}`, {
+                            "listImage": imagesDeleted
+                        })
+                    }
+                    if (!images[0].photos) {
+                        const f = new FormData()
+                        for (let i = 0; i < images.length; i++) {
+                            f.append("files", images[i])
+                        }
+                        const result = await axios.post(`https://app-inmuebles.herokuapp.com/Properties/img/${id}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                    }
+                    let userExist = await axios(`https://app-inmuebles.herokuapp.com/optionUser/${user.email}`)
+                    dispatch(loadUser(userExist.data))
                 } catch (error) {
                     console.log(error.message)
                 }
             } else {
-                console.log("ENTRE EN POST, NO PUT")
                 try {
                     let estateCreated = await axios.post(`https://app-inmuebles.herokuapp.com/Properties/pro`, newEstate)
-                    console.log(estateCreated)
                     idEstateCreated = estateCreated.data.id
                     const f = new FormData()
                     for (let i = 0; i < images.length; i++) {
@@ -146,7 +161,7 @@ export default function Create() {
         } else {
             console.log("ERROR")
         }
-        /* navigate("/") */
+        navigate("/logged/SellerCalendar")
     };
 
     const handleSubmit = (event) => {
@@ -184,60 +199,62 @@ export default function Create() {
                 ...newEstate
             }))
         }
+        document.querySelector("#quantity").value = ""
+        document.querySelector("#features").value = "~"
     }
 
 
     return (
         isAuthenticated ?
-            <div className='h-120'>
-                <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-xl'>
-                    <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
+            <div className='h-screen'>
+                <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-xl'>
+                    <img className='opacity-60 z-2 object-cover w-full h-screen blur-sm' src={houseBackground} />
                 </div>
                 <div className='relative z-6'>
                     <div className=' relative z-20 '>
                         <Nav />
                     </div>
                 </div>
-            {
-                userDB.user.sellers[0] ? <div className=' mt-16 relative z-10 mb-20'>
-                <div className="mt-10 sm:mt-0 mb-24">
-                    <div className="md:grid md:grid-cols-3 md:gap-6">
-                        <div className="md:col-span-1 mx-4 bg-[#00000099] p-3 mt-16 h-16 rounded-sm">
-                            <div className="px-4 sm:px-0">
-                                <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Property details</h3>
-                                <p className="mt-1 text-sm text-gray-400">Use the exact or declared data of your property.</p>
+                {
+                    userDB.user.sellers[0] ? <div className=' mt-16 relative z-10 mb-8'>
+                        <div className="mt-10 sm:mt-0">
+                            <div className="md:grid md:grid-cols-3 md:gap-6">
+                                <div className="md:col-span-1 mx-4 bg-[#00000099] p-3 mt-16 h-16 rounded-sm">
+                                    <div className="px-4 sm:px-0">
+                                        <h3 className="text-lg font-medium leading-6 text-whiteProject sm:text-2xl">Property details</h3>
+                                        <p className="mt-1 text-sm text-gray-400">Use the exact or declared data of your property.</p>
+                                    </div>
+                                </div>
+                                <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
+                                    <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
+                                    <form>
+                                        <div className="shadow overflow-hidden sm:rounded-xl">
+                                            {
+                                                pages.page1 ? <Page1 setCitys={setCitys} handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
+                                            }
+                                            {
+                                                pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit} /> : ""
+                                            }
+                                            {
+                                                pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} imagesDeleted={imagesDeleted} setImagesDeleted={setImagesDeleted} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images} /> : ""
+                                            }
+                                            {
+                                                pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
+                                            }
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
-                            <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
-                            <form>
-                                <div className="shadow overflow-hidden sm:rounded-xl">
-                                    {
-                                        pages.page1 ? <Page1 setCitys={setCitys} handleSubmit={handleSubmit} countries={countries} citys={citys} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} /> : ""
-                                    }
-                                    {
-                                        pages.page2 ? <Page2 handleFeatures={handleFeatures} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} newEstate={newEstate} handleSubmit={handleSubmit} /> : ""
-                                    }
-                                    {
-                                        pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images}/> : ""
-                                    }
-                                    {
-                                        pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
-                                    }
-                                </div>
-                            </form>
-                        </div>
                     </div>
-                </div>
-            </div>
-            : <div className='relative z-10 w-1/2 flex justify-center items-center my-32 mx-auto bg-[#00000090] p-8'>
-                <p className='text-4xl text-white'>  
-                    You are not a seller, if you want to change your account type, go to the top menu and select my profile.
-                </p>
-            </div>
-            }
+                        : <div className='relative z-10 w-1/2 flex justify-center items-center my-32 mx-auto bg-[#00000090] p-8'>
+                            <p className='text-4xl text-white'>
+                                You are not a seller, if you want to change your account type, go to the top menu and select my profile.
+                            </p>
+                        </div>
+                }
+                <Footer />
 
-                
             </div>
             : loginWithRedirect()
     )

@@ -6,21 +6,17 @@ import ModalBody from "@material-tailwind/react/ModalBody";
 import ModalFooter from "@material-tailwind/react/ModalFooter";
 import Button from "@material-tailwind/react/Button";
 import Slideshow2 from "./Slideshow2";
-import Pagination1 from "./Pagination1";
-import axios from "axios";
 
-const Gallery = ({ photos }) => {
+const Gallery = ({ photos, lease }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div>
       <>
         <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
-          <ModalHeader toggler={() => setShowModal(false)}>Sale</ModalHeader>
+          <ModalHeader toggler={() => setShowModal(false)}>{lease}</ModalHeader>
           <ModalBody>
             <div className="">
               <Slideshow2 photos={photos} />
-
-              <Pagination1 />
             </div>
           </ModalBody>
           <ModalFooter>
@@ -47,10 +43,10 @@ const Gallery = ({ photos }) => {
         <div class="container px-5 py-2 mx-auto lg:pt-24 lg:px-32">
           <div class="flex flex-wrap -m-1 md:-m-2">
             <div class="flex flex-wrap w-1/2">
-              <div class="w-full p-1 md:p-2">
+              <div class="w-full p-1 md:p-2 overflow-hidden">
                 <img
                   alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
+                  class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 1
                       ? "https://app-inmuebles.herokuapp.com/Properties/images/" +
@@ -62,10 +58,10 @@ const Gallery = ({ photos }) => {
               </div>
             </div>
             <div class="flex flex-wrap w-1/2">
-              <div class="w-1/2 p-1 md:p-2">
+              <div class="w-1/2 p-1 md:p-2 overflow-hidden">
                 <img
                   alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
+                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 2
                       ? "https://app-inmuebles.herokuapp.com/Properties/images/" +

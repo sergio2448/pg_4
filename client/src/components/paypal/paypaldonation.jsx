@@ -9,9 +9,8 @@ const generateId = () => {
 const Paypalbutton = () => {
     const buttonRef = useRef(null);
     const buttonId = useMemo(() => `ID-${generateId()}`, []);
-    // const emailUser = "email@example.com"
+
     useEffect(() => {
-        
         const button = window.PayPal.Donation.Button({
             env: 'sandbox',
             hosted_button_id: `T26QVZCLKVLHG`,
@@ -22,22 +21,6 @@ const Paypalbutton = () => {
             },
             onComplete: async function (params) {
                 // Your onComplete handler
-                // console.log(params)
-                await fetch("http://localhost:3001/pay/donation", {
-                    method: 'POST'
-                    , headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(
-                        {
-                            emailUser
-                        })
-                })
-                // console.log(response)
-                // const json= await response.json()
-                // console.log(json)
-                // window.location.href = json
 
             },
         });

@@ -1,13 +1,27 @@
 import React from 'react'
+import { FaWindowClose } from "react-icons/fa"
 
-export default function Page3({ setImages, images, setPages, pages, setCurrentStep, errors, handleSubmit, newEstate }) {
+export default function Page3({ setImages, images, imagesDeleted, setImagesDeleted, setPages, pages, setCurrentStep, errors, handleSubmit, newEstate }) {
 
     return (
         <div className="px-4 py-5 sm:p-6 bg-[#00000099]">
-            <div id='prevImages' className='flex '>
+            <div id='prevImages' className='flex flex-wrap'>
                 {
                     newEstate.photos ? newEstate.photos.map((photo) => {
-                        return <img src={'http://localhost:3001/Properties/images/' + photo.photos} className="w-48 h-48 m-4"></img>
+                        if(imagesDeleted.includes(photo.photos))return (
+                            <div className='relative'>
+                                <img src={'http://localhost:3001/Properties/images/' + photo.photos} className="w-48 h-48 m-2" />
+                                <FaWindowClose className='absolute top-4 right-4 text-xl text-red-700' onClick={(e) => {
+                                    e.preventDefault()
+                                    setImagesDeleted(imagesDeleted.map(elem => {
+                                        if(photo.photos !== elem) {
+                                            return elem
+                                        }
+                                    }))
+                                }}/>
+                            </div>
+                        )
+
                     }) : ""
                 }
             </div>

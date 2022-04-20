@@ -30,7 +30,7 @@ const fileUpload = multer({
   //El argumento de single debe coincidir con el nombre del key en la consulta de postman
 }).any("file");
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const {
       id,
@@ -46,6 +46,9 @@ router.get("/", async (req, res) => {
       
     } = req.query;
     const {listFeatures} = req.body;
+    console.log('>>>>');
+    console.log(listFeatures)
+    console.log('>>>>');
     const result = await getProperties(
       id,
       cost,
@@ -142,13 +145,11 @@ router.put('/:id', async (req, res) => {
     const { override } = req.query
     const { id } = req.params
     const { features } = req.body
-    //console.log(features);
     try {
         let values = {};
         for (let key in req.body) {
             if (key !== 'features') {
-              //console.log(req.body[key]);
-                (req.body[key]) && (values[key] = req.body[key])
+                (req.body[key].length > 0) && (values[key] = req.body[key])
             }
         }
         await updateProperties(values, id)

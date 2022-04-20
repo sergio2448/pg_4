@@ -15,12 +15,15 @@ const calendar = require('../controller/Calendar')
 const favorite = require('../controller/Favorite')
 const status = require('../controller/Status')
 const subscription = require('../controller/subscriptionroute.js')
-
+const superusuario = require('../controller/superusuario.js')
+const { BanckCards } = require('../db')
 
 
 const router = Router();
 
 router.use("/Properties", PropertiesRoute);
+
+router.use('/agenda', getAgenda);
 
 //todo: crea un usuario
 router.use('/user', userCreate)
@@ -64,5 +67,7 @@ router.use('/favorite', favorite)
 //todo: crea la subscripción a la pagina
 router.use('/sub', subscription)
 
+//todo: rutas del usuario admin
+router.use('/admin', superusuario)
 
 module.exports = router;

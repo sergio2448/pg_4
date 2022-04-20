@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 let date = new Date()
 let date2 = new Date()
 
-export default function HoursPicker() {
+export default function HoursPicker({selectedDate, setSelectedDate}) {
     const [startDate, setStartDate] = React.useState(date2);
 
     return (
@@ -39,9 +39,10 @@ export default function HoursPicker() {
             ]}
             inline
             selected={startDate}
-            onChange={(date) => {
-                console.log(date)
-                setStartDate(date)
+            onChange={(date) => {         
+                setStartDate(date);
+                setSelectedDate({hours: (date.getHours().toString().length == 1 ? '0'+ date.getHours() : date.getHours() + '' ), minutes: (date.getMinutes().toString().length == 1 ? date.getMinutes() + '0' : date.getMinutes() + '')});
+                
             }}
             showTimeSelect
             showTimeSelectOnly

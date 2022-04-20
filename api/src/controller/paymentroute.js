@@ -6,7 +6,9 @@ const {
     // createProduct,
     // redirectPayment
     propertyNotFound,
-    donationCompleted
+    donationCompleted,
+    checkout,
+    
 } = require('../middlewares/payment.cotrollers.js')
 const router = Router();
 

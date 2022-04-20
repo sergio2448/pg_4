@@ -13,7 +13,9 @@ import { loadUser } from "../../redux/actions";
 export const Profile = () => {
 
     const [userLoged, setUserLoged] = React.useState("")
-    const [showModal, setShowModal] = React.useState(true);
+    const [showModal, setShowModal] = React.useState(false);
+    const [phoneNumber, setPhoneNumber] = React.useState(null);
+    const [firstTime, setFirstTime] = React.useState(false)
     const { isAuthenticated, isLoading, user} = useAuth0();
     const dispatch = useDispatch();
 
@@ -27,62 +29,79 @@ export const Profile = () => {
               `https://app-inmuebles.herokuapp.com/optionUser/${user.email}`
             );
             setUserLoged(userExist.data)
-            if(userExist.data.result === "Existente") {
+            console.log(userExist)
+            if(userExist.data.result === "Sin Registros") {
+                let newUser = await axios.post(`https://app-inmuebles.herokuapp.com/optionUser`, {
+                    "firstName": user.given_name ? user.given_name : user.name,
+                    "lastName": user.family_name ? user.family_name : user.name,
+                    "nickName": user.nickname,
+                    "email": user.email,
+                    "image":user.picture,
+                })
+                userExist = await axios(`https://app-inmuebles.herokuapp.com/optionUser/${user.email}`)
                 dispatch(loadUser(userExist.data))
+                const notificationUser={
+                    userid:userExist.data.user.id
+                }
+                setShowModal(true)
+                await axios.post(`https://app-inmuebles.herokuapp.com/send-email/welcome`,notificationUser)
             }
+            dispatch(loadUser(userExist.data))
         } catch (error) {
             console.log(error)
         }
-    }, [user])
-
-
-    const userSubmit = async () => {
-        let newUser = await axios.post(
-          `https://app-inmuebles.herokuapp.com/optionUser`,
-          {
-            firstName: user.given_name,
-            lastName: user.family_name,
-            nickName: user.nickname,
-            email: user.email,
-            image: user.picture,
-          }
-        );
-        let userExist = await axios(
-          `https://app-inmuebles.herokuapp.com/optionUser/${user.email}`
-        );
-        dispatch(loadUser(userExist.data))
-        setShowModal(false)
-        const notificationUser={
-            userid:userExist.data.user.id
-        }
-        await axios.post(
-          `https://app-inmuebles.herokuapp.com/send-email/welcome`,
-          notificationUser
-        );
-    }
+    }, [user, isAuthenticated])
    
     return (
         isAuthenticated && (
             <div className="flex relative justify-end mr-4">
-                
-                
 
                 {
-                    userLoged.result === "Sin Registros" ? <Modal size="sm" active={showModal} toggler={() => {
-                        userSubmit()
+                    showModal ? <Modal size="sm" active={showModal} toggler={() => {
                         setShowModal(false)
                         }} >
                         <ModalHeader toggler={() => {
-                            userSubmit()
                             setShowModal(false)
                         }} >
                             Welcome
                         </ModalHeader>
                         <ModalBody>
-                            <p className="text-base leading-relaxed text-gray-600 font-normal">
-                            Welcome! Keep in mind that you start as a buyer, if you want to change roles, go to...Welcome! Keep in mind that you start as a buyer, if you want to change roles, go to...
+                            <p className="text-base text-gray-600 font-normal">
+                            Welcome! Keep in mind that you start as a buyer. If you want to change roles, go to your profile on the top right.
                             </p>
                         </ModalBody>
+                        <ModalFooter>
+                            <div className="flex justify-center flex-col items-center text-center">
+                            <p className="text-base leading-relaxed text-gray-600 font-sm italic">Please enter your phone number so your buyers can contact you.</p>
+                            <p className="text-base leading-relaxed text-gray-600 font-sm italic mt-4">With your country prefix.</p>
+                            <input type="number" className="border-black border-solid border text-black" onChange={(e) => {setPhoneNumber(e.target.value)}}/>
+                            <Button
+                                color="lightBlue"
+                                buttonType="filled"
+                                size="regular"
+                                className="mt-8"
+                                rounded={false}
+                                block={false}
+                                iconOnly={false}
+                                ripple="light"
+                                onClick={async (e) => {
+                                    setShowModal(false)
+                                    e.preventDefault()
+                                    try {
+                                        let phone = await axios.post("https://app-inmuebles.herokuapp.com/optionUser/phoneNumber", {
+                                            phoneNumber: phoneNumber,
+                                            email: user.email
+                                        })
+                                        console.log(phone)
+                                    } catch (error) {
+                                        console.log(error)
+                                    }
+                                }}
+                            >
+                                Save number
+                            </Button>
+                            </div>
+                        </ModalFooter>
                             
                     </Modal>
                  : ""

@@ -1,21 +1,24 @@
 import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
-import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getHomeDetail } from "../../redux/actions/index";
+import { useNavigate, useParams } from "react-router-dom";
+import { getDetailCalendar, getHomeDetail } from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import CalendarOneDay from "../Calendar/CalendarOneDay";
+import HoursPicker from "../Calendar/HoursPicker";
+import axios from "axios";
+
+import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
-import React, { useState, useEffect } from 'react'
-
-
-
-
-
+import React, { useState, useEffect } from "react";
+import Review from "./Review";
+import Comment from "./Comment";
+/* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -26,51 +29,93 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   rooms = 5;
   description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
-
-  let { id } = useParams();
-  const dispatch = useDispatch();
-  const detail = useSelector((state) => state.homeDetail);
-  const apiKey =
+    
+    const navigate = useNavigate();
+    
+    const user = useSelector((state) => state.user)
+    
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
+  const detail = useSelector((state) => state.homeDetail);
 
+  let userId = detail[0]?.seller.userId;
+  let sellId = detail[0]?.sellerId;
   useEffect(() => {
     dispatch(getHomeDetail(id));
     return () => {
       dispatch(getHomeDetail([]));
     };
-  }, [id]);
+  }, []);
+  console.log("detail", detail);
+
+  const calendarInfo = useSelector((state) => state.detailCalendar);
 
   const photos =
     detail[0]?.photos?.length > 0
       ? detail[0].photos.map((photo) => photo.photos)
       : null;
 
-  //AÑADIR A FAVORITOS
+  // Calendar
 
-  /*  const userObject = useSelector((state)=>state.user)
+
+    const addAgenda = (data) => {
+      axios.post('http://localhost:3001/agenda', data)
+      axios.post('http://localhost:3001/agenda', data)
+      .then(() => {
+        alert('Cita agendada con exito!');
+      })
+      .catch(() => {
+        alert('Ya existe una cita con este propietario!');
+      })
+    }
+    
+
+    const handleButton = () => {
+      if(!calendarInfo.length){
+        dispatch(getDetailCalendar(userId))
+        return null;
+      }else{
+        let agendaObj = {
+          place: detail[0].address + ', ' + detail[0].city,
+          dates: selectedDay,
+          hours: selectedDate,
+          sellerId: sellId,
+          buyerId: user.user.buyers[0].id
+         }
+         addAgenda(agendaObj);
+         navigate('/logged/Quotes');
+      }      
+      
+    }
+  
+    
+    //AÑADIR A FAVORITOS
+    
+    const userObject = useSelector((state)=>state.user)
     console.log(userObject)
     const [values, setValues] = useState({
-      buyerId: userObject.user.id,
+      buyerId: userObject.user?.id,
       propertyId: detail[0]?.id,
+      
       
     })
     
     async function handleSubmit(e) {
       e.preventDefault();
       try {
-      console.log(values)
          await dispatch(addFavourites(values))
       
           alert('Favourite added successfully!');
           
         } catch (err) {
-          console.log(err.message)
           alert('We could not add your favourite. Please try again.');
           
         }
         
         
-      } */
+      }
   return (
     <div class=" text-center  ">
       <div class="bg-[#075985]">
@@ -84,7 +129,12 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </strong>
       </h2>
       <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
-        {photos ? <Gallery photos={photos} /> : null}
+        {photos ? (
+          <Gallery
+            photos={photos}
+            lease={detail[0]?.lease ? detail[0]?.lease : Sale}
+          />
+        ) : null}
       </div>
 
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
@@ -165,16 +215,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div>
           <div class="grid grid-cols-2 gap-3">
-            <h5 class="text-right font-Poppins">
-              <strong>User:</strong> Pepito Perez
-            </h5>
-
-            {/* <button onClick={handleSubmit}>Favourite</button>
-            <img class="h-10 w-10 rounded-full" src={seller} alt="" /> */}
+            <button onClick={handleSubmit}>Favourite</button>
           </div>
-          <button class="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded ">
-            Check Availability
-          </button>
         </div>
       </div>
 
@@ -206,44 +248,77 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           </div>
         </div>
         <hr />
-        <div>
-          <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
-            You will live here I
-          </h3>
-          <div className="relative bg-black w-full h-64">
-            {apiKey ? (
-              detail.length ? (
-                <ReactMapGL
-                  initialViewState={{
-                    latitude: detail[0].longitude,
-                    longitude: detail[0].latitude,
-                    zoom: 5,
-                  }}
-                  mapStyle="mapbox://styles/mapbox/streets-v9"
-                  mapboxAccessToken={apiKey}
-                >
-                  {
-                    <Marker
-                      latitude={detail[0].longitude}
-                      longitude={detail[0].latitude}
-                      draggable={false}
-                    >
-                      <ImLocation2 className="h-8 w-8 text-teal-600" />
-                    </Marker>
-                  }
-                </ReactMapGL>
+
+        
+          { detail[0] && <Review text={detail[0].reviews}/>}
+        
+
+        <Comment />
+        <hr />
+        <hr />{
+          user.user?.sellers[0].id !== sellId ? (
+            <div>
+              <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
+                Book an appointment
+              </h3>
+              {
+                calendarInfo.length !== 0 && <div className="flex justify-center">
+                  <div className="ml-5 rounded border border-stone-400/75">
+                    <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
+                  </div>
+                  <div className="ml-5 pt-16 ">
+                    <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />
+                  </div>
+                </div>
+              }
+              <button onClick={() => handleButton()} className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
+            </div>
+          ) : (<div></div>)
+        }
+        <div className="">
+          <div className="w-full">
+            <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
+              You will live here I
+            </h3>
+            <div className="relative bg-black w-full h-64">
+              {apiKey ? (
+                detail.length ? (
+                  <ReactMapGL
+                    initialViewState={{
+                      latitude: detail[0].longitude,
+                      longitude: detail[0].latitude,
+                      zoom: 5,
+                    }}
+                    mapStyle="mapbox://styles/mapbox/streets-v9"
+                    mapboxAccessToken={apiKey}
+                  >
+                    {
+                      <Marker
+                        latitude={detail[0].longitude}
+                        longitude={detail[0].latitude}
+                        draggable={false}
+                      >
+                        <ImLocation2 className="h-8 w-8 text-teal-600" />
+                      </Marker>
+                    }
+                  </ReactMapGL>
+                ) : (
+                  "loading.."
+                )
               ) : (
-                "loading.."
-              )
-            ) : (
-              "Loading.."
-            )}
+                "Loading.."
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-6 font-normal text-base font-Monserrat">
           <Footer />
         </div>
       </div>
+
+      {/* {
+        detail.length? <DirectChatPage seller={detail[0].seller.user}/> : ""
+      } */}
     </div>
   );
 };

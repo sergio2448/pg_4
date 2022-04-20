@@ -8,10 +8,22 @@ module.exports =  (sequelize) => {
            primaryKey:true,
            allowNull:false,
        },
-       name:{
+       place:{
            type: DataTypes.STRING,
            allowNull:false,
        },
+       dates:{
+           type: DataTypes.JSONB,
+           allowNull:false,
+       },
+       hours:{
+           type: DataTypes.JSONB,
+           allowNull:false,
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
    },{
     timestamps: false,
     createdAt: false,
