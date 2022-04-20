@@ -5,10 +5,6 @@ import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {ImLocation2} from "react-icons/im"
 
-
-
-
-
 export default function Cards({
   image,
   featured = false,
@@ -46,6 +42,7 @@ export default function Cards({
               latitude={m.longitude}
               longitude={m.latitude}
               draggable={false}
+              key={m.logitude}
               >
               <ImLocation2 className='h-8 w-8 text-teal-600'/>
               
@@ -80,10 +77,12 @@ export default function Cards({
           </span>
         ) : (
           <span></span>
-        )}
-        <span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
+        )} 
+        {
+          window.location.pathname == "/logged/Publishing" ? (<button className='text-white bg-red-600 border-dashed rounded-md text-xl hover:bg-red-800'>Eliminate</button>) : (<span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
           {lease == 'Venta' ? 'For Sale' : 'Rent'}
-        </span>
+        </span>)
+        }
       </div>
         <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
           {name + ", " + city + ", " + country}

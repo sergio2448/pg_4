@@ -1,5 +1,4 @@
 import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
-import seller from "../../styles/images/seller.png";
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -15,26 +14,28 @@ import HoursPicker from "../Calendar/HoursPicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { addFavourites } from "../../redux/actions/index";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 /* import DirectChatPage from "../chatbox/DirectChatPage"; */
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
-    city = "Hardcode City";
-    country = "Hardcode Country";
-    cost = "$4000 usd";
-    measure = "300 sq m";
-    rooms = 5;
-    description =
+  city = "Hardcode City";
+  country = "Hardcode Country";
+  cost = "$4000 usd";
+  measure = "300 sq m";
+  rooms = 5;
+  description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
     
-    const detail = useSelector((state) => state.homeDetail);
+    
     const user = useSelector((state) => state.user)
-    let { id } = useParams();
+    
+    const { id } = useParams();
     const dispatch = useDispatch();
     const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
-    
+    const detail = useSelector((state)=> (state.homeDetail))
+
     let userId = detail[0]?.seller.userId;
     let sellId = detail[0]?.sellerId;
     useEffect(() => {
@@ -83,6 +84,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       buyerId: userObject.user?.id,
       propertyId: detail[0]?.id,
       
+      
     })
     
     async function handleSubmit(e) {
@@ -104,7 +106,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     return (
       <div class=" text-center  ">
       <div class="bg-[#075985]">
-        <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">  
+        <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
           <Nav />
         </div>
       </div>
@@ -114,7 +116,12 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </strong>
       </h2>
       <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
-        {photos ? <Gallery photos={photos} /> : null}
+        {photos ? (
+          <Gallery
+            photos={photos}
+            lease={detail[0]?.lease ? detail[0]?.lease : Sale}
+          />
+        ) : null}
       </div>
 
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
@@ -195,16 +202,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div>
           <div class="grid grid-cols-2 gap-3">
-            <h5 class="text-right font-Poppins">
-              <strong>User:</strong> Pepito Perez
-            </h5>
-
             <button onClick={handleSubmit}>Favourite</button>
-            <img class="h-10 w-10 rounded-full" src={seller} alt="" />
           </div>
-          <button class="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded ">
-            Check Availability
-          </button>
         </div>
       </div>
 

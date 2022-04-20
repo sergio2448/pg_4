@@ -45,15 +45,15 @@ function UserInfo() {
       <div className="mt-4">
         <div className={rowClass}>
           <span className={leftClass}>Full name</span>
-          <span className={rightClass}>{user.user.role.rolName === 'buyer'? `${user.user.buyers[0].firstName} ${user.user.buyers[0].lastName}`  : `${user.user.sellers[0].firstName}  ${user.user.sellers[0].lastName}`}</span>
+          <span className={rightClass}>{user.user?.role?.rolName === 'buyer'? `${user.user?.buyers[0].firstName} ${user.user?.buyers[0].lastName}`  : `${user.user?.sellers[0].firstName}  ${user.user?.sellers[0].lastName}`}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Email Address</span>
-          <span className={rightClass}>{user.user.email}</span>
+          <span className={rightClass}>{user.user?.email}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Username</span>
-          <span className={rightClass}>{user.user.name}</span>
+          <span className={rightClass}>{user.user?.name}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Location</span>
@@ -62,22 +62,22 @@ function UserInfo() {
         <div className={rowClass}>
           <span className={leftClass}>BirthDate</span>
           <span className={rightClass}>
-            {user.user.role.rolName === 'buyer'? 
-            user.user.buyers[0].datebirth? user.user.buyers[0].datebirth : '-' 
-            : user.user.sellers[0].datebirth? user.user.sellers[0].datebirth : '-'}</span>
+            {user.user?.role?.rolName === 'buyer'? 
+            user.user?.buyers[0].datebirth? user.user?.buyers[0].datebirth : '-' 
+            : user.user?.sellers[0].datebirth? user.user?.sellers[0].datebirth : '-'}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Phone Number</span>
-          <span className={rightClass}>{user.user.role.rolName === 'buyer'? user.user.buyers[0].phoneNumber? user.user.buyers[0].phoneNumber : '-' : user.user.sellers[0].phoneNumber? user.user.sellers[0].phoneNumber : '-'}</span>
+          <span className={rightClass}>{user.user?.role?.rolName === 'buyer'? user.user?.buyers[0].phoneNumber? user.user?.buyers[0].phoneNumber : '-' : user.user?.sellers[0].phoneNumber? user.user?.sellers[0].phoneNumber : '-'}</span>
         </div>
         </div>
         <div className='mt-4'>
         <div className={rowClass}>
           <span className={leftClass}>User Role</span>
-          <span className={rightClass}>{user.user.role.rolName}</span>
+          <span className={rightClass}>{user.user?.role?.rolName}</span>
         </div>
         <div className={rowClass}>
-          <span className={leftClass}>{user.user.role.rolName === 'buyer'? 'Favourites post' : 'Propierties posted'}</span>
+          <span className={leftClass}>{user.user?.role?.rolName === 'buyer'? 'Favourites post' : 'Propierties posted'}</span>
           <span className={rightClass}>
           (Hardcodeado, agregar a db)
           </span>

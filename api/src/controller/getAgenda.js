@@ -3,11 +3,11 @@ const { getAgenda, postAgenda } = require('../middlewares/CalendarMidd')
 const router = Router();
 
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const { userId } = req.body;
-        console.log(userId);
-        const listAgebda=await getAgenda(userId);
+        const { idSeller, idBuyer } = req.body;
+        console.log(idSeller, idBuyer);
+        const listAgebda=await getAgenda(idSeller, idBuyer);
         listAgebda?.length>0?
         res.status(200).json(listAgebda)
         :res.status(404).json({message:"No se encontraron registro"});

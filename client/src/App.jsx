@@ -18,8 +18,7 @@ import Dashadmin from "./components/admin modules/Dashadmin";
 import UsersAdmin from "./components/admin modules/Users/UsersAdmin"
 import SellerCalendar from "./components/Seller/SellerCalendar"
 import AdminProperties from './components/DropdownProfile/AdminProperties';
-
-
+import Schedule from './components/Detail/Schedule';
 
 function App() {
 
@@ -38,6 +37,8 @@ function App() {
                     <Route path='/logged/Updatedata' element={<FormInfo/>} />  
                     <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />  
                     <Route path='/logged/Publishing' element={<AdminProperties />} />
+                    <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />
+                    <Route path='/logged/Quotes' element={<Schedule />} />
                     <Route path='/pay/:id' element={<PaypalButton/>}/>
                     <Route path='/payment' element={<Payment/>}/>
                     <Route path='/listProperties' element={<ListProperties />} />

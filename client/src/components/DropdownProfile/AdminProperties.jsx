@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListCards } from '../../redux/actions';
 import houseBackground from '../../styles/images/house-back.jpg'
+
+//http://localhost:3001/admin/delete-prop?
 function AdminProperties() {
 
     const dispatch = useDispatch();
