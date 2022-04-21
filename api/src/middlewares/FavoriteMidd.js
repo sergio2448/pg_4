@@ -22,11 +22,12 @@ const getFavorites = async (userId) =>{
     }
 }
 
-const deleteFavorites = async (id,userId,propertyId) =>{
+const deleteFavorites = async (favoriteId,userId,propertyId) =>{
     try {
         let listdata
-        if(id){
-            listdata= await Favorite.destroy({ where:{id}});
+        if(favoriteId){
+            listdata= await Favorite.destroy({ where:{id:favoriteId}});
+            
         }else{
             const dataBuyer= await Buyers.findAll({where:{userId}})
             const buyerId=dataBuyer.map(d => d.dataValues.id);
