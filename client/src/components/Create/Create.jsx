@@ -202,15 +202,15 @@ export default function Create() {
 
     return (
         isAuthenticated ?
-            <div className='h-screen'>
-                <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-xl'>
-                    <img className='opacity-60 z-2 object-cover w-full h-screen blur-sm' src={houseBackground} />
-                </div>
-                <div className='relative z-6'>
-                    <div className=' relative z-20 '>
-                        <Nav />
-                    </div>
-                </div>
+        <div >
+        <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-2xl '>
+          <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
+        </div>
+        
+        <Nav />
+        <div className="relative flex flex-col items-center mt-12 ">
+            <h3 className="text-5xl font-bold	text-white font-Poppins ">Create Your Publication</h3>
+            </div>
                 {
                     userDB.user.sellers[0] ? <div className=' mt-16 relative z-10 mb-8'>
                         <div className="mt-10 sm:mt-0">

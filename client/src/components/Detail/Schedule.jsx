@@ -35,18 +35,20 @@ export default function Schedule() {
             <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
                 <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
             </div>
-            <div className='relative z-6'>
+            
                 <div className=' relative z-20 '>
                     <Nav />
-                </div>
+                
             </div>
-
+            <div className="relative flex flex-col items-center mt-20 ">
+            <h3 className="text-5xl font-bold	text-white font-Poppins ">User Quotes</h3>
+            </div>
             <div className="flex flex-col items-center mb-16">
-            <div className="border-solid   border-4 bg-gray-300/80 my-8  font-black  w-4/6  p-12 relative items-center ">
+            <div className="  mb-6  font-black  w-4/6  p-12 relative items-center ">
                 <div className="flex flex-col relative ">
                     
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center mt-8">
-                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-black text-xl">
+                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white text-xl">
                             Whit seller
                             <div className="overflow-hidden rounded-2xl shadow-2xl border">
                                 <table className="min-w-full text-center">
@@ -147,7 +149,7 @@ export default function Schedule() {
                                 </table>
                                 {
                                     !quotes && <div className="text-center my-8 ">
-                                        <p className="font-Poppins text-black text-2xl italic">You don't have appointments as a seller.</p>
+                                        <p className="font-Poppins text-white text-2xl italic">You don't have appointments as a seller.</p>
                                     </div>
                                 }
                             </div> 
@@ -156,7 +158,7 @@ export default function Schedule() {
                 </div>
                 <div className="flex flex-col relative mt-16">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center">
-                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-black text-xl">
+                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white text-xl">
                             Whit buyer
                             <div className="overflow-hidden rounded-2xl shadow-2xl border">
                                 <table className="min-w-full text-center border-white border-solid ">
@@ -200,7 +202,7 @@ export default function Schedule() {
                                 </table>
                                 {
                                     !quotes && <div className="text-center my-8 ">
-                                        <p className="font-Poppins text-black text-2xl italic">You don't have appointments as a buyer.</p>
+                                        <p className="font-Poppins text-white text-2xl italic">You don't have appointments as a buyer.</p>
                                     </div>
                                 }
                             </div>
@@ -208,6 +210,7 @@ export default function Schedule() {
                     </div></div>
                 </div>
             </div>
+            
             <Footer/>
         </div>
     )
