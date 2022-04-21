@@ -15,7 +15,7 @@ ReactDOM.render(
     <Auth0Provider
       domain="dev-dbk-z8uv.us.auth0.com"
       clientId="ay12D2EuY0bRAPe0JZiefqMweD08h4jj"
-      redirectUri={"https://new-pg.herokuapp.com"}
+      redirectUri={window.location.origin}
     >
       <Provider store={store}>
         <BrowserRouter>

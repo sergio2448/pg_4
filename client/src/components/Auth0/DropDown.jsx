@@ -148,7 +148,7 @@ export default function DropDown() {
                 }
 
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
-                    logout({returnTo: "https://new-pg.herokuapp.com/"})
+                    logout({returnTo: window.location.origin})
                 }}>
                     LogOut
                 </DropdownLink>

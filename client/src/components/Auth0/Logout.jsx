@@ -8,7 +8,7 @@ export const LogoutButton = () =>{
     return (
       <button
         onClick={() =>
-          logout({ returnTo: "https://app-inmuebles.herokuapp.com" })
+          logout({ returnTo: window.location.origin })
         }
       >
         Logout
