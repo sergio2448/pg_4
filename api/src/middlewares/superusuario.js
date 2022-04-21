@@ -32,8 +32,15 @@ const transactions = async (req, res) => {
     try {
         const rolename = await isAdmin(userEmail)
         if (!rolename) return res.status(403).json('No tiene autorización para acceder a la información')
-        req.query.start_date = datetoISO(start_date)
-        req.query.end_date = datetoISO(end_date)
+        if (start_date.length === 0 && end_date.length === 0) {
+            req.query.start_date =  new Date(new Date()- 730*60*60*1000).toISOString()
+            req.query.end_date = new Date().toISOString()
+        } else {
+            req.query.start_date = datetoISO(start_date)
+            req.query.end_date = datetoISO(end_date)
+        }
+
+
         const url = transactionsURL(req.query)
         const access_token = await authtoken()
         const { data } = await axios.get(`${url}`, {
@@ -55,17 +62,16 @@ const suspenduser = (req, res) => {
 
 const deleteprop = async (req, res) => {
     try {
-        const {id, adminEmail} = req.query
+        const { id, adminEmail } = req.query
         const rolename = await isAdmin(adminEmail)
         if (!rolename) return res.status(403).json('No tiene autorización para acceder a la información')
         const suprimir = await suprProp(id)
-        console.log(suprimir)
         res.status(200).json("propieda eliminada")
     } catch (error) {
-        console.log("error en deleteProp"+error)
+        console.log("error en deleteProp" + error)
         res.status(500).json(error)
     }
-   
+
 }
 
 const setRoleAdmin = async (req, res) => {
@@ -206,7 +212,7 @@ const deleteUser = async (req, res) => {
         if (!rolename) return res.status(403).json('No tiene autorización para realizar la acción')
         const baned = await banUser(userId)
         console.log(baned)
-        res.status(200).json({msg: "Usuario baneado exitosamente"})
+        res.status(200).json({ msg: "Usuario baneado exitosamente" })
     } catch (error) {
         res.status(500).json(error)
     }
