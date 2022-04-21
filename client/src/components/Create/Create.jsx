@@ -221,7 +221,7 @@ export default function Create() {
                                         <p className="mt-1 text-sm text-gray-400">Use the exact or declared data of your property.</p>
                                     </div>
                                 </div>
-                                <div className="mt-5 md:mt-0 md:col-span-2 mx-4">
+                                <div className="mt-5 mb-12 md:mt-0 md:col-span-2 mx-4">
                                     <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
                                     <form>
                                         <div className="shadow overflow-hidden sm:rounded-xl">

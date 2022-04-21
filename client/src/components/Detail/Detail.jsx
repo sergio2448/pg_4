@@ -130,18 +130,18 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
         <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
     </div>
-    <div className='relative z-6'>
+    
         <div className=' relative z-20 '>
             <Nav />
-        </div>
+        
     </div>
-    <div className='relative w-full h-screen mt-16'>
+    <div className='relative w-full h-full mt-16'>
       <h2 class="mt-6 text-stone-300 text-5xl font-base font-Poppins">
         <strong>
           {detail[0]?.country}, {detail[0]?.city}
         </strong>
       </h2>
-      <div className="w-8/12 ml-20 mr-20 mb-16 mt-10 mx-auto">
+      <div className="w-8/12 h-fit ml-20 mr-20 mb-40 mt-10 mx-auto">
         {photos ? (
           <Gallery
             photos={photos}

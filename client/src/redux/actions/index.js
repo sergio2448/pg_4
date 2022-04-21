@@ -124,12 +124,24 @@ export function getFavourites(id) {
             })
     }
 }
+export function getFavouritesUpdate(id) {
+    return function (dispatch) {
+        return axios.get(`http://localhost:3001/favorite/${id}`)
+            .then((response) => {
+                dispatch({
+                    type: 'GET_FAVOURITESUPDATE',
+                    payload: response.data,
+                })
+            })
+    }
+}
 
 
 export function deleteFavourites(id,userId,propertyId) {
 
             return(axios.delete(`http://localhost:3001/favorite?propertyId=${propertyId}&userId=${userId}&favoriteId=${id}`))
             .then((res)=>{
+                
                 console.log(res)
             })
             .catch((err) => console.error(err));
