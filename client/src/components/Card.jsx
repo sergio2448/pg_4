@@ -41,9 +41,13 @@ export default function Cards({
 
   function handleButton(e) {
   deleteProperties(id, user.user.email)
-  setCurrentProperties(currentProperties.filter(c => {
-    c.id !== id
-  }))
+  let newProps = [];
+  currentProperties.map(c => {
+    if(c.id !== id){
+      newProps.push(c);
+    }
+  })
+  setCurrentProperties(newProps);
 }
 
 
@@ -102,7 +106,7 @@ export default function Cards({
           <span></span>
         )} 
         {
-          window.location.pathname == "/logged/Publishing" ? (<button onClick={() => {handleButton()}} className='text-white bg-red-600 border-dashed rounded-md text-xl hover:bg-red-800'>Eliminate</button>) : (<span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
+          window.location.pathname == "/logged/Publishing" ? (<button onClick={(e) => {handleButton(e)}} className='text-white bg-red-600 border-dashed rounded-md text-xl hover:bg-red-800'>Eliminate</button>) : (<span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
           {lease == 'Venta' ? 'For Sale' : 'Rent'}
         </span>)
         }

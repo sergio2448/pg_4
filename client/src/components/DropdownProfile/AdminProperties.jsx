@@ -6,12 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListCards } from '../../redux/actions';
 import houseBackground from '../../styles/images/house-back.jpg'
 
-//http://localhost:3001/admin/delete-prop?
 function AdminProperties() {
 
     const dispatch = useDispatch();
     const properties = useSelector((state) => state.homeCards);
-    const [currentProperties, setCurrentProperties] = useState(properties);
+    const [currentProperties, setCurrentProperties] = useState([]);
 
     useEffect(() => {
         dispatch(getListCards());
@@ -32,8 +31,9 @@ function AdminProperties() {
                     <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
                       
                         {
-                            currentProperties?.map(c => {
-                              if(c.idstatus.statusName === "Publicado") {
+                            properties.length ? ( (!currentProperties.length ? setCurrentProperties(properties) : currentProperties.length) &&
+                              currentProperties?.map(c => {
+                              if(c.idstatus.statusName) {
                                 return (
                                   <div
                                     key={c.id}
@@ -61,7 +61,7 @@ function AdminProperties() {
                                   </div>
                                 );
                               }
-                            })
+                            })) : <div>Loading..</div>
                         }
                     </div>
                 </div>
