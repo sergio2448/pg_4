@@ -94,7 +94,7 @@ const App = () => {
                                     "type":"seller",
                                     "userId": userDB.user.id
                                 })
-                                navigate("/logged/myprofile")
+                                navigate("/listProperties")
                             } else {
                                 setShowModal(true)
                             }

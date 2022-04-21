@@ -249,7 +249,9 @@ export default function Create() {
                             </p>
                         </div>
                 }
+                
                 <Footer />
+            
 
             </div>
             : loginWithRedirect()
