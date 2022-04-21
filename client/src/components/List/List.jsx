@@ -22,13 +22,12 @@ function List() {
 
     // Paginado
     let listing;
-    searchFeatures.length ? listing = searchFeatures : listing = listCards;
+    searchFeatures.length ? listing = searchFeatures.filter(elem => elem.idstatus.statusName === "Publicado") : listing = listCards.filter(elem => elem.idstatus.statusName === "Publicado");
     const [currentPage, setCurrentPage] = useState(1);
     const propertiesPerPage = 6;
     const lastProperty = propertiesPerPage * currentPage; 
     const firstProperty = lastProperty - propertiesPerPage;
-    const currentProperties = listing.slice(firstProperty, lastProperty);
-
+    let currentProperties = listing.slice(firstProperty, lastProperty);
     const paginado = (paginas) => {
       setCurrentPage(paginas)
     }
