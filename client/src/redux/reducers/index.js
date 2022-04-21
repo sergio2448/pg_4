@@ -17,6 +17,7 @@ const initialState = {
   typeUser: "buyer",
   detailCalendar: [],
   transactions: {},
+  favouritesUpdate:{},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -98,6 +99,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         favourites: action.payload,
       };
+      
     case "UPDATE_TYPE_USER":
       return {
         ...state,
