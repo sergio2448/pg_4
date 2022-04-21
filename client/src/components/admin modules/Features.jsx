@@ -33,7 +33,7 @@ export default function Features() {
                     <div>
                         <Input
                             type="text"
-                            color="lightBlue"
+                            color="white"
                             size="sm"
                             outline={true}
                             placeholder="Name Feature"
@@ -50,18 +50,19 @@ export default function Features() {
                         />
                     </div>
                     <div className='flex justify-center items-center'>
-                        <label htmlFor="numerable" className='text-white font-Poppins text-1xl mr-1 font-Poppins'>Is numerable?</label>
-                        <select name="" id="" onChange={(e) => setNewFeature({
-                            ...newFeature,
-                            isNumerable: !newFeature.isNumerable
-                        })}>
-                            <option value="" hidden>~</option>
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
+                        <label htmlFor="numerable" className='text-white font-Poppins text-2xl mr-2 font-Poppins'>Is numerable?</label>
+                        <div className="flex justify-center form-check form-switch pl-0"> 
+                            <input className="form-check-input appearance-none w-14 rounded-full h-7 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" defaultChecked onChange={() => {
+                                setNewFeature({
+                                    ...newFeature,
+                                    isNumerable: !newFeature.isNumerable
+                                })
+                            }}
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className='mb-20'>
+                <div className='mb-20 mr-16'>
                     <Button
                         color="lightBlue"
                         buttonType="filled"
