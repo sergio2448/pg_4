@@ -5,7 +5,7 @@ const {
 } = require('../middlewares/usercreate')
 const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription, BannedUsers } = require('../db')
 const { PAYPAL_API } = process.env
-const hostback = "http://localhost:3001"
+const hostback = "https://new-pg.herokuapp.com"
 
 
 const isAdmin = async (userEmail) => {

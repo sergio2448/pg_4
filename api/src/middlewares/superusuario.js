@@ -15,7 +15,7 @@ const { changestatus } = require('./StatusMidd')
 const { removeFeature, setassociations, addassociations } = require('./PropertiesController')
 const { datetoISO } = require('./AddSubscription.js')
 const authtoken = require('../middlewares/authtoken.js')
-const host = 'http://localhost:3001'
+const host = 'https://new-pg.herokuapp.com/'
 const getUser = async (req, res) => {
     try {
         const { userEmail } = req.query
