@@ -11,7 +11,7 @@ import ModalBody from "@material-tailwind/react/ModalBody";
 import ModalFooter from "@material-tailwind/react/ModalFooter";
 import Button from "@material-tailwind/react/Button";
 
-export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate, submit }) {
+export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate, submit, errorsForm }) {
 
     const [showModal, setShowModal] = React.useState(false)
     const [time, setTime] = React.useState(10000)
@@ -129,11 +129,16 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
                 <div className="px-4 py-3 text-center sm:px-6">
                     <button
                         onClick={(e) => {
-                            submit(e)
-                            setShowModal(true)
-                            setTimeout(() => {
-                                setTime(null)
-                            }, time);
+                            if(Object.values(errorsForm).length === 0) {
+                                submit(e)
+                                setShowModal(true)
+                                setTimeout(() => {
+                                    setTime(null)
+                                }, time);
+                            } else {
+                                alert("Your upload form is not correct")
+                                navigate("/")
+                            }
                         }}
                         className="inline-flex justify-center ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-4 py-2 rounded"
                     >

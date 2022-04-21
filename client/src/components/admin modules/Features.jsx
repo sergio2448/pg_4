@@ -14,7 +14,7 @@ export default function Features() {
     const dispatch = useDispatch()
     const [newFeature, setNewFeature] = React.useState({
         nameFeature: null,
-        isNumerable: false,
+        isNumerable: null,
     })
 
     return (
@@ -29,12 +29,12 @@ export default function Features() {
             </div>
             <div className='flex flex-col relative justify-around items-center'>
                 <div className='flex justify-evenly items-center mt-20 mb-8 w-4/5'>
-                    <p className='text-3xl font-Poppins text-white'>ADD FEATURES:</p>
+                    <p className='text-2xl font-Poppins text-white'>Add Features:</p>
                     <div>
                         <Input
                             type="text"
-                            color="lightBlue"
-                            size="lg"
+                            color="white"
+                            size="sm"
                             outline={true}
                             placeholder="Name Feature"
                             style={
@@ -49,15 +49,20 @@ export default function Features() {
                             })}
                         />
                     </div>
-                    <div>
-                        <label htmlFor="numerable" className='text-white font-Poppins text-2xl mr-2'>Is numerable?</label>
-                        <input type="checkbox" name="numerable" onChange={(e) => setNewFeature({
-                            ...newFeature,
-                            isNumerable: !newFeature.isNumerable
-                        })}/>
+                    <div className='flex justify-center items-center'>
+                        <label htmlFor="numerable" className='text-white font-Poppins text-2xl mr-2 font-Poppins'>Is numerable?</label>
+                        <div className="flex justify-center form-check form-switch pl-0"> 
+                            <input className="form-check-input appearance-none w-14 rounded-full h-7 bg-black bg-no-repeat bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" defaultChecked onChange={() => {
+                                setNewFeature({
+                                    ...newFeature,
+                                    isNumerable: !newFeature.isNumerable
+                                })
+                            }}
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className='mb-20'>
+                <div className='mb-20 mr-16'>
                     <Button
                         color="lightBlue"
                         buttonType="filled"
@@ -85,7 +90,7 @@ export default function Features() {
                     {
                         features?.map(elem => 
                             <div className='mx-12 my-4 text-white text-3xl flex'>
-                                <p className='capitalize mr-4'>
+                                <p className='capitalize mr-4 font-Poppins'>
                                     {elem.name}
                                 </p>
                                 <Button

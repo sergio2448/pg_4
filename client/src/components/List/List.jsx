@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListCards, getFeatureList } from '../../redux/actions';
 import houseBackground from '../../styles/images/house-back.jpg';
 import Paginado from './Paginado';
+import Footer from '../Footer';
 
 function List() {
 
@@ -47,7 +48,7 @@ function List() {
                 <div className='relative z-6 text-center'>
                     <SearchBar />
                 </div>
-                {errorSearchBar.length ? (<div className='flex justify-center '><div className=' mt-28 bg-stone-800 rounded px-4 py-2 flex justify-center text-rose-700 text-2xl font-semi-bold font-Poppins'>Error: Not properties found, Try again! </div></div>) : <div className='flex justify-center '><div className={searchFeatures.length ? 'text-center  mt-28 bg-stone-800 rounded px-4 py-2 flex justify-center  text-emerald-500 text-2xl font-semi-bold font-Poppins' : 'bg-transparent mt-36 rounded px-4 py-2'}> {searchFeatures.length ? searchFeatures.length + ' Properties found!' : ''} </div></div>}
+                {errorSearchBar.length ? (<div className='flex justify-center '><div className=' mt-28 bg-stone-800 rounded px-4 py-2 flex justify-center text-rose-700 text-2xl font-semi-bold font-Poppins'>Error: Not properties found, Try again! </div></div>) : <div className='flex justify-center '><div className={listing.length ? 'text-center  mt-28 bg-stone-800 rounded px-4 py-2 flex justify-center  text-emerald-500 text-2xl font-semi-bold font-Poppins' : 'bg-transparent mt-36 rounded px-4 py-2'}> {listing.length ? listing.length + ' Properties found!' : ''} </div></div>}
                 <div className=' mt-45 pt-24 py-15 text-center'>
                 <Paginado propertiesPerPage={propertiesPerPage} listing={listing.length} paginado={paginado}/>
                     <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
@@ -82,6 +83,7 @@ function List() {
                             })
                         }
                     </div>
+                    <Footer/>
                 </div>
             </div>
         </div>

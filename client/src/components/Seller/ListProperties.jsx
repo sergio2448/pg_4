@@ -15,6 +15,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { loadUser } from '../../redux/actions';
 import axios from 'axios';
 import Paypalbutton from '../paypal/paypalbutton';
+import Footer from '../Footer';
 
 export default function ListProperties() {
 
@@ -27,13 +28,16 @@ export default function ListProperties() {
 
     return (
         <div>
-            <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
-                <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
+            <div className='z-1 fixed bg-black w-full h-screen shadow-black shadow-2xl'>
+                <img className='opacity-60 z-2 object-cover  w-full h-screen blur-sm' src={houseBackground} />
             </div>
-            <div className='relative z-6'>
+            
                 <div className=' relative z-20 '>
                     <Nav />
                 </div>
+        
+            <div className="relative flex flex-col items-center mt-12 ">
+            <h3 className="text-5xl font-bold	text-white font-Poppins ">Publications</h3>
             </div>
             <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">Customers also purchased</h2>
@@ -316,6 +320,7 @@ export default function ListProperties() {
                     }
                 </div>   
             </div>
+            <Footer/>
         </div>
     )
 }

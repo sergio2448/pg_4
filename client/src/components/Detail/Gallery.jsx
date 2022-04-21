@@ -40,7 +40,7 @@ const Gallery = ({ photos, lease }) => {
         </Modal>
       </>
       <section class="overflow-hidden text-gray-700">
-        <div class="container px-5 py-2 mx-auto lg:pt-24 lg:px-32">
+        <div class="container max-w-md px-5 py-2 mx-auto lg:pt-24 lg:px-32">
           <div class="flex flex-wrap -m-1 md:-m-2">
             <div class="flex flex-wrap w-1/2">
               <div class="w-full p-1 md:p-2 overflow-hidden">
