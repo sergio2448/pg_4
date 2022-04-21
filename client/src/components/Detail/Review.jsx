@@ -4,7 +4,7 @@ const Review = ({ text }) => {
 
   
   return (
-    <div className="w-full flex flex-col md:flex-row gap-4 mb-8 md:mb-0 flex-between items-center p-8">
+    <div className="w-full flex flex-col md:flex-row gap-4 mb-8 md:mb-0 flex-between items-center p-2">
       {
         text.reviews && text.reviews.map(coment =>
           <div className="bg-white dark:bg-gray-800 w-72 shadow-lg mx-auto rounded-xl p-4">
