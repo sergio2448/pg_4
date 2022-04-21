@@ -29,7 +29,7 @@ export default function Features() {
             </div>
             <div className='flex flex-col relative justify-around items-center'>
                 <div className='flex justify-evenly items-center mt-20 mb-8 w-4/5'>
-                    <p className='text-3xl font-Poppins text-white'>ADD FEATURES:</p>
+                    <p className='text-3xl font-Poppins text-white'>Add Features:</p>
                     <div>
                         <Input
                             type="text"

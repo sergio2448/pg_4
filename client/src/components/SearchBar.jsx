@@ -135,35 +135,8 @@ export default function SearchBar() {
                         {listfeatures.length > 0 && listfeatures.map(({ name, isNumerable }) => {
                             return <FiltFeatures onChange={handleSelect} feature={name} numerable={isNumerable} className= 'pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'/>
                         })}
-                        {/* <select name='rooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Rooms</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option value={3}>+3</option>
-                        </select>
-                        <select name='bathrooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Bathrooms</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option value={3}>+3</option>
-                        </select>
-                        <select name='garden' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Garden</option>
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                        <select name='pool' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Pool</option>
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                        <select name='floor' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Floors</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select> */}
-                        <button onClick={e => handleReset(e)} type='reset' className='course-reset ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Reset</button>
+      
+                        <button onClick={e => handleReset(e)} type='reset' className='course-reset ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded mt-2'>Reset</button>
                     </div>)
 
                         :

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListCards, getFeatureList } from '../../redux/actions';
 import houseBackground from '../../styles/images/house-back.jpg';
 import Paginado from './Paginado';
+import Footer from '../Footer';
 
 function List() {
 
@@ -82,6 +83,7 @@ function List() {
                             })
                         }
                     </div>
+                    <Footer/>
                 </div>
             </div>
         </div>
