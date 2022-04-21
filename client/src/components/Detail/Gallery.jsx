@@ -13,7 +13,7 @@ const Gallery = ({ photos, lease }) => {
     <div>
       <>
         <Modal size="sm" active={showModal} toggler={() => setShowModal(false)}>
-          <ModalHeader toggler={() => setShowModal(false)}>{lease}</ModalHeader>
+          <ModalHeader toggler={() => setShowModal(false)}>{lease ==="Venta" ? "Sale" : "Buy"}</ModalHeader>
           <ModalBody>
             <div className="">
               <Slideshow2 photos={photos} />
@@ -27,14 +27,6 @@ const Gallery = ({ photos, lease }) => {
               ripple="dark"
             >
               Close
-            </Button>
-
-            <Button
-              color="green"
-              onClick={(e) => setShowModal(false)}
-              ripple="light"
-            >
-              Check Availabily
             </Button>
           </ModalFooter>
         </Modal>
@@ -56,78 +48,24 @@ const Gallery = ({ photos, lease }) => {
                 />
               </div>
             </div>
-            <div class="flex flex-wrap w-1/2">
-              <div class="w-1/2 p-1 md:p-2 overflow-hidden">
-                <img
-                  alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
-                  src={
-                    photos.length >= 2
-                      ? "http://localhost:3001/Properties/images/" + photos[1]
-                      : hardcodeHouse
-                  }
-                  onClick={(e) => setShowModal(true)}
-                />
-              </div>
-              <div class="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
-                  src={
-                    photos.length >= 3
-                      ? "http://localhost:3001/Properties/images/" + photos[2]
-                      : hardcodeHouse
-                  }
-                  onClick={(e) => setShowModal(true)}
-                />
-              </div>
-              <div class="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
-                  src={
-                    photos.length >= 4
-                      ? "http://localhost:3001/Properties/images/" + photos[3]
-                      : hardcodeHouse
-                  }
-                  onClick={(e) => setShowModal(true)}
-                />
-              </div>
-              <div class="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
-                  src={
-                    photos.length >= 5
-                      ? "http://localhost:3001/Properties/images/" + photos[4]
-                      : hardcodeHouse
-                  }
-                  onClick={(e) => setShowModal(true)}
-                />
-              </div>
-              <div class="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
-                  src={
-                    photos.length >= 6
-                      ? "http://localhost:3001/Properties/images/" + photos[5]
-                      : hardcodeHouse
-                  }
-                  onClick={(e) => setShowModal(true)}
-                />
-              </div>
-              <div class="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  class="block object-cover object-center w-full h-full rounded-lg cursor-pointer"
-                  src={
-                    photos.length >= 7
-                      ? "http://localhost:3001/Properties/images/" + photos[6]
-                      : hardcodeHouse
-                  }
-                  onClick={(e) => setShowModal(true)}
-                />
+            <div className="h-96">
+              <div class="flex flex-wrap w-1/2">
+              {
+                photos && photos.slice(0).map(photo => 
+                  <div class="w-1/2 p-1 md:p-2 overflow-hidden">
+                  <img
+                    alt="gallery"
+                    class="block object-cover object-center w-full h-full rounded-lg cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
+                    src={
+                      photos.length >= 2
+                        ? "http://localhost:3001/Properties/images/" + photo
+                        : hardcodeHouse
+                    }
+                    onClick={(e) => setShowModal(true)}
+                  />
+                  </div>
+                )
+              }
               </div>
             </div>
           </div>
