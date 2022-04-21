@@ -29,21 +29,20 @@ export default function Schedule() {
 
     return (
         <div className="w-full h-screen bg-stone-200/75 ">
-            <div class="shadow-inner shadow-black">
-                <div className="z-1 absolute bg-black w-full h-full shadow-black shadow-2xl">
-                    <img className=" opacity-60 z-2 object-cover w-full h-full blur-sm" src={houseBackground} />
-                </div>
-                <div className='z-2 absolute  w-full h-full shadow-inner shadow-black'></div>
-                <div class="shadow-nav h-20 relative z-20 ">
+            <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
+                <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
+            </div>
+            <div className='relative z-6'>
+                <div className=' relative z-20 '>
                     <Nav />
                 </div>
             </div>
-            <div className="bg-white relative w-full h-screen">
+            <div className="relative w-full h-screen">
                 <div className="flex flex-col relative">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center mt-8">
-                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8">
+                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white">
                             Whit seller
-                            <div className="overflow-hidden rounded-2xl shadow-2xl">
+                            <div className="overflow-hidden rounded-2xl shadow-2xl border">
                                 <table className="min-w-full text-center">
                                     <thead className="border-b bg-gray-800 boder-gray-900">
                                         <tr>
@@ -141,19 +140,19 @@ export default function Schedule() {
                                 </table>
                                 {
                                     !quotes && <div className="text-center my-8">
-                                        <p className="font-Poppins text-2xl italic">You don't have appointments as a seller.</p>
+                                        <p className="font-Poppins text-white text-2xl italic">You don't have appointments as a seller.</p>
                                     </div>
                                 }
                             </div> 
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col relative mt-8">
+                <div className="flex flex-col relative mt-16">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center">
-                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8">
+                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white">
                             Whit buyer
-                            <div className="overflow-hidden rounded-2xl shadow-2xl">
-                                <table className="min-w-full text-center">
+                            <div className="overflow-hidden rounded-2xl shadow-2xl border">
+                                <table className="min-w-full text-center border-white border-solid ">
                                     <thead className="border-b bg-gray-800 boder-gray-900">
                                         <tr>
                                             <th scope="col" className="text-sm font-medium text-white px-4 py-2">
@@ -166,7 +165,7 @@ export default function Schedule() {
                                                 Place
                                             </th>
                                             <th scope="col" className="text-sm font-medium text-white px-4 py-2">
-                                                Confirm/Delete
+                                                Actual State
                                             </th>
                                         </tr>
                                     </thead>
@@ -194,7 +193,7 @@ export default function Schedule() {
                                 </table>
                                 {
                                     !quotes && <div className="text-center my-8">
-                                        <p className="font-Poppins text-2xl italic">You don't have appointments as a buyer.</p>
+                                        <p className="font-Poppins text-white text-2xl italic">You don't have appointments as a buyer.</p>
                                     </div>
                                 }
                             </div>
