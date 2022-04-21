@@ -27,7 +27,9 @@ function Home() {
     }
   }, []);
 
-  const apiKey = useSelector((state) => state.apikey);
+  const handleButton = () => {    
+    console.log(state.homeCards);
+  }
 
 
 
@@ -98,10 +100,6 @@ function Home() {
             }) : <div>loading..</div>
           }
         </div>
-
-        <Link to='/estate'>
-          <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>
-        </Link>
       </div>
       <Footer />
     </div>

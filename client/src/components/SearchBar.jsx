@@ -88,7 +88,6 @@ export default function SearchBar() {
         e.preventDefault();
         let featuresArr = [];
         let objKeys = Object.keys(features);
-        console.log(objKeys)
         objKeys.map(k => {
             if (features[k].length) {
                 featuresArr.push({
@@ -100,7 +99,6 @@ export default function SearchBar() {
         let listFeature = {
             listFeatures: [...featuresArr]
         }
-        console.log(listFeature)
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
         dispatch(getSearchbar(aInput, listFeature))
         if (window.location.pathname == '/') {
