@@ -87,7 +87,7 @@ function Home() {
         <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Resent Properties for Sale/Rent</h2>
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
-            homeCards.length ? homeCards.reverse().map(c => {
+            homeCards.length ? homeCards.map(c => {
               if (c.photos && count2 !== 3 && c.idstatus.statusName === "Publicado") {
                 count2++
                 return (

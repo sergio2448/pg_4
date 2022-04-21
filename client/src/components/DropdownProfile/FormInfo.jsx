@@ -27,7 +27,7 @@ function FormInfo() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            console.log(values)
+            
             await dispatch(updateInfo(values))
             
             alert('Information Update!');
@@ -92,7 +92,7 @@ function FormInfo() {
              <div class="flex flex-col mb-4">
                 <label class="mb-2 font-bold ml-8 text-lg text-gray-900" for="last_name">Phone Number</label>
                 <input class="border py-2 px-3 ml-8 text-grey-800 rounded-md"
-                type="text"
+                type="number"
                 name="phoneNumber"
                 required='required'
                 id="phone_number"
@@ -374,11 +374,3 @@ function FormInfo() {
 export default FormInfo
 
 
-// firstName: '',
-//         lastName: '',
-//         nickName: '',
-//         phoneNumber: '',
-//         dateBirth: '',
-//         role: user.user.role.rolName,
-//         image:user.user.image,
-//         email: user.user.email,

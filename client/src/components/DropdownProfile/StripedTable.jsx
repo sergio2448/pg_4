@@ -7,7 +7,7 @@ import { getFavourites } from "../../redux/actions";
 import Footer from '../Footer';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-
+import { BsFillHouseFill } from "react-icons/bs";
 
 
 
@@ -105,7 +105,8 @@ console.log(favourites)
               
                 src="https://frtassets.fotocasa.es/statics/img/home_inspirational_block_6.jpg"
                 className="h-12"
-              /></a>
+              />
+              </a>
             </td>
             
             <td className={tdClass}>{element.property?.city}</td>
