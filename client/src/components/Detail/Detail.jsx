@@ -42,13 +42,13 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
   const detail = useSelector((state) => state.homeDetail);
 
-  let userId = detail[0]?.seller.userId;
+  let userId = detail[0]?.seller?.userId;
   let sellId = detail[0]?.sellerId;
   useEffect(() => {
     dispatch(getHomeDetail(id));
-    return () => {
-      dispatch(getHomeDetail([]));
-    };
+     return () => {
+       dispatch(getHomeDetail([]));
+     };
   }, []);
   console.log("detail", detail);
 
@@ -56,7 +56,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   const photos =
     detail[0]?.photos?.length > 0
-      ? detail[0].photos.map((photo) => photo.photos)
+      ? detail[0]?.photos.map((photo) => photo.photos)
       : null;
 
   // Calendar
@@ -78,11 +78,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       return null;
     } else {
       let agendaObj = {
-        place: detail[0].address + ', ' + detail[0].city,
+        place: detail[0]?.address + ', ' + detail[0]?.city,
         dates: selectedDay,
         hours: selectedDate,
         sellerId: sellId,
-        buyerId: user.user.buyers[0].id
+        buyerId: user.user?.buyers[0]?.id
       }
       addAgenda(agendaObj);
       navigate('/logged/Quotes');
@@ -94,11 +94,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   //AÑADIR A FAVORITOS
 
-  const userObject = useSelector((state) => state.user)
-  console.log(userObject)
-  const [values, setValues] = useState({
-    buyerId: userObject.user?.id,
-    propertyId: detail[0]?.id,
+  
+  console.log(detail[0]?.id)
+  const [values, setValues] = React.useState({
+    buyerId: user.user?.buyers[0]?.id,
+    propertyId: id,
 
 
   })
@@ -143,7 +143,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
         <div>
           <h5 class="text-center font-Poppins">
-            Measure: <strong> {detail[0]?.m2 ? detail[0].m2 : 45} m²</strong>
+            Measure: <strong> {detail[0]?.m2 ? detail[0]?.m2 : 45} m²</strong>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               enable-background="new 0 0 24 24"

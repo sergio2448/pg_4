@@ -53,13 +53,13 @@ function StripedTable() {
   const tdClass = "px-4 py-8 border-y border-x  border-black   text-md bg-white font-Poppins "
   const trClass = "border-black  border-y border-x bg-white align-middle items-center font-Poppins "
   return (
-    <div>
+    <div >
     <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-2xl '>
       <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
     </div>
     <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black self-center '></div>
     <Nav />{/* sky-500/80 */}
-    <div  className="  my-12 rounded-md p-4 relative  flex flex-col  items-center 	w-screen h-full shadow-md    self-end">
+    <div  className="  my-12 rounded-md p-4 relative bg-gray-300/80 flex flex-col  items-center 	w-screen h-full shadow-md    self-end">
     <h2 className='text-white text-5xl pb-20  relative font-bold font-Poppins'>Favorite Properties</h2>
 
     <table className="w-4/6 table-auto  rounded-md   ">
