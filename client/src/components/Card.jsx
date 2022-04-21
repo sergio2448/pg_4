@@ -33,21 +33,24 @@ export default function Cards({
   function deleteProperties(id, adminEmail) {
     return axios.delete(`http://localhost:3001/admin/delete-prop?id=${id}&adminEmail=${adminEmail}`)
     .then((res)=>{
-        alert('Propiedad eliminada')
+        alert('Property has been deleted.')
     })
     .catch((err) => console.error(err));
 
   }
 
   function handleButton(e) {
-  deleteProperties(id, user.user.email)
-  let newProps = [];
-  currentProperties.map(c => {
-    if(c.id !== id){
-      newProps.push(c);
-    }
-  })
-  setCurrentProperties(newProps);
+  if (window.confirm("Do you really want to delete this property?")) {
+    deleteProperties(id, user.user.email)
+    let newProps = [];
+    currentProperties.map(c => {
+      if(c.id !== id){
+        newProps.push(c);
+      }
+    })
+    setCurrentProperties(newProps);  
+  }
+  
 }
 
 
