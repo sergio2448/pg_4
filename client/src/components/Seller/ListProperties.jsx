@@ -316,11 +316,12 @@ export default function ListProperties() {
                                     
                                 </div>
                             </div>
-                        )): <p className='font-Poppins text-5xl italic hover:scale-125 transition-all select-none absolute mx-40 text-white'>You don't have any properties created.</p>
+                        )): <p className='text-white text-5xl pb-20  absolute mx-32 font-bold font-Poppins'>You don't have any properties created.</p>
                     }
                 </div>   
             </div>
-            <Footer/>
+            <div className='bottom-0 absolute'>
+            <Footer/></div>
         </div>
     )
 }

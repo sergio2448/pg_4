@@ -36,7 +36,7 @@ function Home() {
 
   return (
     <div>
-      <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
+      <div className='z-1 absolute bg-black w-full h-3/4 shadow-black shadow-2xl'>
         <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
       </div>
       <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>

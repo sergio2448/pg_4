@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
 })
 router.put('/updateData', async (req, res) => {
     try{
-    const { firstName,lastName,nickName,id,dateBirth,phoneNumber} = req.body;
+    const { firstName,lastName,nickName,id,dateBirth,phoneNumber, country} = req.body;
     
    
     const userexistente = await Sellers.findOne({
@@ -71,9 +71,9 @@ router.put('/updateData', async (req, res) => {
     console.log(userexistente)
     userexistente.firstName = firstName
     userexistente.lastName = lastName
-    userexistente.nickName = nickName
     userexistente.phoneNumber = phoneNumber
     userexistente.dateBirth = dateBirth
+    userexistente.country = country
     await userexistente.save()
     res.send(userexistente)}
 
