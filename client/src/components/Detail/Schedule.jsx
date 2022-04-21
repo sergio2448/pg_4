@@ -5,6 +5,7 @@ import axios from "axios"
 import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import { useSelector } from "react-redux";
+import Footer from "../Footer";
 
 
 export default function Schedule() {
@@ -18,8 +19,8 @@ export default function Schedule() {
     React.useEffect(async () => {
         try {
             let quot = await axios.put(`http://localhost:3001/agenda`, {
-                idSeller: userDB.user.sellers[0].id,
-                idBuyer: userDB.user.buyers[0].id
+                idSeller: userDB.user?.sellers[0]?.id,
+                idBuyer: userDB.user?.buyers[0]?.id
             })
             setQuotes(quot.data)
         } catch (error) {
@@ -39,14 +40,17 @@ export default function Schedule() {
                     <Nav />
                 </div>
             </div>
-            <div className="relative w-full h-screen">
-                <div className="flex flex-col relative">
+
+            <div className="flex flex-col items-center mb-16">
+            <div className="border-solid   border-4 bg-gray-300/80 my-8  font-black  w-4/6  p-12 relative items-center ">
+                <div className="flex flex-col relative ">
+                    
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center mt-8">
-                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white">
+                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-black text-xl">
                             Whit seller
                             <div className="overflow-hidden rounded-2xl shadow-2xl border">
                                 <table className="min-w-full text-center">
-                                    <thead className="border-b bg-gray-800 boder-gray-900">
+                                    <thead className="border-b bg-stone-900 boder-gray-900">
                                         <tr>
                                             <th scope="col" className="text-sm font-medium text-white px-4 py-2">
                                                 Date
@@ -65,7 +69,8 @@ export default function Schedule() {
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
+                                        <div className="bg-gray-300/80">
                                         {
                                             quotes?.map(quote =>
                                                 quote.sellerId === userDB.user.sellers[0].id &&
@@ -137,12 +142,12 @@ export default function Schedule() {
                                                     </td>
                                                 </tr>
                                             )
-                                        }
+                                        }</div>
                                     </tbody>
                                 </table>
                                 {
-                                    !quotes && <div className="text-center my-8">
-                                        <p className="font-Poppins text-white text-2xl italic">You don't have appointments as a seller.</p>
+                                    !quotes && <div className="text-center my-8 ">
+                                        <p className="font-Poppins text-black text-2xl italic">You don't have appointments as a seller.</p>
                                     </div>
                                 }
                             </div> 
@@ -151,11 +156,11 @@ export default function Schedule() {
                 </div>
                 <div className="flex flex-col relative mt-16">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center">
-                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white">
+                        <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-black text-xl">
                             Whit buyer
                             <div className="overflow-hidden rounded-2xl shadow-2xl border">
                                 <table className="min-w-full text-center border-white border-solid ">
-                                    <thead className="border-b bg-gray-800 boder-gray-900">
+                                    <thead className="border-b bg-stone-900 boder-gray-900">
                                         <tr>
                                             <th scope="col" className="text-sm font-medium text-white px-4 py-2">
                                                 Date
@@ -194,16 +199,16 @@ export default function Schedule() {
                                     </tbody>
                                 </table>
                                 {
-                                    !quotes && <div className="text-center my-8">
-                                        <p className="font-Poppins text-white text-2xl italic">You don't have appointments as a buyer.</p>
+                                    !quotes && <div className="text-center my-8 ">
+                                        <p className="font-Poppins text-black text-2xl italic">You don't have appointments as a buyer.</p>
                                     </div>
                                 }
                             </div>
                         </div>   
-                    </div>
+                    </div></div>
                 </div>
             </div>
-            
+            <Footer/>
         </div>
     )
 

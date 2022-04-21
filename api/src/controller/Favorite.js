@@ -7,7 +7,7 @@ const router = Router();
 router.post('/', async (req, res) => {
     try {
         const { buyerId, propertyId} = req.body;
-        console.log(req.body)
+        console.log(propertyId)
         const dbsearch = await Favorite.findOne({
             where:{
                 propertyId:propertyId,

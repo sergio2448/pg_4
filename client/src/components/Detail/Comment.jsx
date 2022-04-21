@@ -30,10 +30,10 @@ const Comment = ({ propertyId }) => {
   }
 
   return (
-    <div class="w-full max-w-sm mx-auto">
+    <div class="w-full max-w-sm mx-auto ">
       {
         renderInput ? <textarea
-          class="h-24 w-full border rounded-xl overflow-hidden resize-none focus:border-blue-500 ring-1 ring-transparent focus:ring-blue-500 focus:outline-none text-black p-2 transition ease-in-out duration-300"
+          class="h-24 text-base w-full border border-stone-400/75 rounded-xl overflow-hidden resize-none focus:border-blue-500 ring-1 ring-transparent focus:ring-blue-500 focus:outline-none text-black p-2 transition ease-in-out duration-300"
           placeholder="Christ bless you! . . ."
           onChange={(e) => {
             document.querySelector("#errorComent").innerText = ""
@@ -45,8 +45,8 @@ const Comment = ({ propertyId }) => {
       }
       {
         renderInput ?
-          <div class="flex justify-center flex-col items-center my-4 mb-16">
-            <button class="rounded-lg py-1.5 px-3 text-white bg-black" onClick={submitComent}>
+          <div class="flex justify-center flex-col items-center mb-6">
+            <button class='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded' onClick={submitComent}>
               Comment
             </button>
             <p className="font-semibold text-red-600 text-sm" id="errorComent"></p>

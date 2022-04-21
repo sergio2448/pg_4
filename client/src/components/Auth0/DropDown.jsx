@@ -114,7 +114,19 @@ export default function DropDown() {
                         </DropdownItem>
                         : ""
                 }
-               
+               {
+                    typeUser === "buyer" ? <DropdownItem
+                        color="lightBlue"
+                        ripple="light"
+                        size="lg"
+                        onClick={(e) => {
+                            navigate("/logged/Favorites")
+                        }}
+                    >
+                        Favorites
+                    </DropdownItem>
+                    : ""
+                }
                 {
                     typeUser === "seller" ?
                         <DropdownItem color="lightBlue" ripple="light" size="lg" onClick={() => {
