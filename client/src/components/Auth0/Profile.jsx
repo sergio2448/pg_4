@@ -26,25 +26,25 @@ export const Profile = () => {
     React.useEffect(async () => {
         try {
             let userExist = await axios(
-              `https://app-inmuebles.herokuapp.com/optionUser/${user.email}`
+              `https://new-pg.herokuapp.com/optionUser/${user.email}`
             );
             setUserLoged(userExist.data)
             console.log(userExist)
             if(userExist.data.result === "Sin Registros") {
-                let newUser = await axios.post(`https://app-inmuebles.herokuapp.com/optionUser`, {
+                let newUser = await axios.post(`https://new-pg.herokuapp.com/optionUser`, {
                     "firstName": user.given_name ? user.given_name : user.name,
                     "lastName": user.family_name ? user.family_name : user.name,
                     "nickName": user.nickname,
                     "email": user.email,
                     "image":user.picture,
                 })
-                userExist = await axios(`https://app-inmuebles.herokuapp.com/optionUser/${user.email}`)
+                userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${user.email}`)
                 dispatch(loadUser(userExist.data))
                 const notificationUser={
                     userid:userExist.data.user.id
                 }
                 setShowModal(true)
-                await axios.post(`https://app-inmuebles.herokuapp.com/send-email/welcome`,notificationUser)
+                await axios.post(`https://new-pg.herokuapp.com/send-email/welcome`,notificationUser)
             }
             dispatch(loadUser(userExist.data))
         } catch (error) {
@@ -88,7 +88,7 @@ export const Profile = () => {
                                     setShowModal(false)
                                     e.preventDefault()
                                     try {
-                                        let phone = await axios.post("https://app-inmuebles.herokuapp.com/optionUser/phoneNumber", {
+                                        let phone = await axios.post("https://new-pg.herokuapp.com/optionUser/phoneNumber", {
                                             phoneNumber: phoneNumber,
                                             email: user.email
                                         })

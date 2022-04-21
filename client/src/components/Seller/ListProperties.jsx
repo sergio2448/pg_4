@@ -46,7 +46,7 @@ export default function ListProperties() {
                                 <div className="group relative">
                                     <div className="w-full border-solid border-2 border-black min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                         <img
-                                            src={'http://localhost:3001/Properties/images/' + property.photos[0].photos}
+                                            src={'https://new-pg.herokuapp.com/Properties/images/' + property.photos[0].photos}
                                             alt="Hello"
                                             className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                                         />
@@ -133,8 +133,8 @@ export default function ListProperties() {
                                                     onClick={async (e) => {
                                                         e.preventDefault()
                                                         try {
-                                                            await axios.delete(`http://localhost:3001/Properties/${property.id}`)
-                                                            let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                            await axios.delete(`https://new-pg.herokuapp.com/Properties/${property.id}`)
+                                                            let userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${userDB.user.email}`)
                                                             dispatch(loadUser(userExist.data))
                                                             setShowModal(false)
                                                         } catch (error) {
@@ -162,11 +162,11 @@ export default function ListProperties() {
                                         <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
                                             e.preventDefault()
                                             try {
-                                                let state = await axios("http://localhost:3001/status")
-                                                await axios.put(`http://localhost:3001/Properties/${property.id}`, {
+                                                let state = await axios("https://new-pg.herokuapp.com/status")
+                                                await axios.put(`https://new-pg.herokuapp.com/Properties/${property.id}`, {
                                                     idstatusId: state.data[0].id
                                                 })
-                                                let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                let userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${userDB.user.email}`)
                                                 dispatch(loadUser(userExist.data))
                                             } catch (error) {
                                                 console.log(error)
@@ -181,11 +181,11 @@ export default function ListProperties() {
                                             onClick={async (e) =>{ 
                                                 e.preventDefault()
                                                 try {
-                                                    let state = await axios("http://localhost:3001/status")
-                                                    await axios.put(`http://localhost:3001/Properties/${property.id}`, {
+                                                    let state = await axios("https://new-pg.herokuapp.com/status")
+                                                    await axios.put(`https://new-pg.herokuapp.com/Properties/${property.id}`, {
                                                         idstatusId: state.data[1].id
                                                     })
-                                                    let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                    let userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${userDB.user.email}`)
                                                     dispatch(loadUser(userExist.data))
                                                 } catch (error) {
                                                     console.log(error)
@@ -197,13 +197,13 @@ export default function ListProperties() {
                                         <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
                                             e.preventDefault()
                                             try {
-                                                let state = await axios("http://localhost:3001/status")
+                                                let state = await axios("https://new-pg.herokuapp.com/status")
                                                 console.log(state.data[2].id)
-                                                await axios.put(`http://localhost:3001/Properties/${property.id}`, {
+                                                await axios.put(`https://new-pg.herokuapp.com/Properties/${property.id}`, {
                                                     idstatusId: state.data[2].id
                                                 })
                                                 console.log(userDB)
-                                                let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                let userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${userDB.user.email}`)
                                                 dispatch(loadUser(userExist.data))
                                             } catch (error) {
                                                 console.log(error)

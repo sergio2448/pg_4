@@ -63,7 +63,7 @@ export default function Create() {
     });
 
     React.useEffect(async () => {
-        axios.get('https://app-inmuebles.herokuapp.com/Properties?id=' + id)
+        axios.get('https://new-pg.herokuapp.com/Properties?id=' + id)
             .then((result) => result.data)
             .then(propertyEdit => {
                 setNewEstate({
@@ -123,11 +123,11 @@ export default function Create() {
             if (id) {
                 console.log("ENTRE EN PUT, NO POST")
                 try {
-                    let estateCreated = await axios.put(`https://app-inmuebles.herokuapp.com/Properties/${id}?override=true`, newEstate)
+                    let estateCreated = await axios.put(`https://new-pg.herokuapp.com/Properties/${id}?override=true`, newEstate)
                     console.log(estateCreated)
                     if (imagesDeleted) {
                         console.log(imagesDeleted)
-                        await axios.put(`https://app-inmuebles.herokuapp.com/Properties/images/${id}`, {
+                        await axios.put(`https://new-pg.herokuapp.com/Properties/images/${id}`, {
                             "listImage": imagesDeleted
                         })
                     }
@@ -136,23 +136,23 @@ export default function Create() {
                         for (let i = 0; i < images.length; i++) {
                             f.append("files", images[i])
                         }
-                        const result = await axios.post(`https://app-inmuebles.herokuapp.com/Properties/img/${id}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                        const result = await axios.post(`https://new-pg.herokuapp.com/Properties/img/${id}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
                     }
-                    let userExist = await axios(`https://app-inmuebles.herokuapp.com/optionUser/${user.email}`)
+                    let userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${user.email}`)
                     dispatch(loadUser(userExist.data))
                 } catch (error) {
                     console.log(error.message)
                 }
             } else {
                 try {
-                    let estateCreated = await axios.post(`https://app-inmuebles.herokuapp.com/Properties/pro`, newEstate)
+                    let estateCreated = await axios.post(`https://new-pg.herokuapp.com/Properties/pro`, newEstate)
                     idEstateCreated = estateCreated.data.id
                     const f = new FormData()
                     for (let i = 0; i < images.length; i++) {
                         f.append("files", images[i])
                     }
-                    const result = await axios.post(`https://app-inmuebles.herokuapp.com/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
-                    let userExist = await axios(`https://app-inmuebles.herokuapp.com/optionUser/${user.email}`)
+                    const result = await axios.post(`https://new-pg.herokuapp.com/Properties/img/${idEstateCreated}`, f, { headers: { 'Content-Type': 'multipart/form-data' } })
+                    let userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${user.email}`)
                     dispatch(loadUser(userExist.data))
                 } catch (error) {
                     console.log(error)

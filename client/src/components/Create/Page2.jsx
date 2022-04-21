@@ -7,7 +7,7 @@ export default function Page2({handleFeatures, setCurrentStep, setPages, pages, 
 
     React.useEffect(async () => {
         let result = await axios.get(
-          "https://app-inmuebles.herokuapp.com/feature"
+          "https://new-pg.herokuapp.com/feature"
         );
         setFeatures(result.data)
     }, [])

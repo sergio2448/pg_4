@@ -18,7 +18,7 @@ export default function UsersAdmin() {
 
     React.useEffect(async () => {
         try {
-            let axiosAllUser = await axios(`http://localhost:3001/admin/getUsers?adminEmail=${userDB.user.email}`)
+            let axiosAllUser = await axios(`https://new-pg.herokuapp.com/admin/getUsers?adminEmail=${userDB.user.email}`)
             setAllUsers(axiosAllUser.data)
         } catch (error) {
             console.log(error)
@@ -120,7 +120,7 @@ export default function UsersAdmin() {
                                                                 setShowModal(false)
                                                                 e.preventDefault()
                                                                 try {
-                                                                    let userDelete = await axios.delete(`http://localhost:3001/admin/deleteUser?adminEmail=${userDB.user.email}&userId=${user.id}`)
+                                                                    let userDelete = await axios.delete(`https://new-pg.herokuapp.com/admin/deleteUser?adminEmail=${userDB.user.email}&userId=${user.id}`)
                                                                     setRender(render + 1)
                                                                     console.log(userDelete)
                                                                 } catch (error) {

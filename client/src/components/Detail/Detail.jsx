@@ -61,8 +61,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
 
     const addAgenda = (data) => {
-      axios.post('http://localhost:3001/agenda', data)
-      axios.post('http://localhost:3001/agenda', data)
+      axios.post('https://new-pg.herokuapp.com/agenda', data)
       .then(() => {
         alert('Cita agendada con exito!');
       })

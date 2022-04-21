@@ -3,7 +3,7 @@ import { getHomeDetail } from '../../redux/actions/index'
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import DonateButton from"./paypaldonation.jsx"
-const backhost = 'https://app-inmuebles.herokuapp.com'
+const backhost = 'https://new-pg.herokuapp.com/'
 const Paypalbutton = ({id}) => {
 
     const [destacar, setDestacar] = useState(false)
