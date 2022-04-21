@@ -101,7 +101,7 @@ export default function DropDown() {
                 }
 
                 {
-                    typeUser === "buyer" && userDB.user?.role?.rolName !== "admin" ?
+                    typeUser === "buyer" && userDB.user?.role?.rolName == "admin" ?
                         <DropdownItem
                             color="lightBlue"
                             ripple="light"
