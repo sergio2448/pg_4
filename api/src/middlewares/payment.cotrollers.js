@@ -167,7 +167,7 @@ const captureOrder = async (req, res) => {
             await axios.post(`${host}/send-email/payment?emailUser${emailUser}&tiempo=${tiempo}`);
         }
 
-        res.status(200).json(data)
+        res.redirect(`${hostclient}`)
     } catch (error) {
         res.status(500).json(error)
     }

@@ -30,6 +30,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
 
+  const [selectedDay, setSelectedDay] = React.useState(null)
+  const [selectedDate, setSelectedDate] = React.useState(null)
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user)
@@ -61,7 +63,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
 
     const addAgenda = (data) => {
-      axios.post('http://localhost:3001/agenda', data)
       axios.post('http://localhost:3001/agenda', data)
       .then(() => {
         alert('Cita agendada con exito!');
@@ -116,6 +117,8 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
 
   }
+
+  console.log(detail)
   return (
     <div class=" text-center  ">
       <div class="bg-[#075985]">
@@ -250,10 +253,14 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         <hr />
 
         
-          { detail[0] && <Review text={detail[0].reviews}/>}
-        
+          { 
+            detail[0] && <Review text={detail[0]}/>
+          }
+          {
+            user.user && detail[0] ? <Comment propertyId={detail[0].id}/> : ""
+          }
 
-        <Comment />
+        
         <hr />
         <hr />{
           user.user?.sellers[0].id !== sellId ? (

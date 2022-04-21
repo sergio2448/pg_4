@@ -27,7 +27,9 @@ function Home() {
     }
   }, []);
 
-  const apiKey = useSelector((state) => state.apikey);
+  const handleButton = () => {    
+    console.log(state.homeCards);
+  }
 
 
 
@@ -39,13 +41,13 @@ function Home() {
       </div>
       <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black'></div>
       <Nav />
-      <div className='relative z-6 pt-28 text-center'>
+      <div className='relative z-6  relative pt-28 text-center'>
         <h2 className='text-white text-2xl font-semi-bold font-Poppins'>Best place to</h2>
         <h2 className='text-white text-5xl pb-32 font-bold font-Poppins'>Find your perfect home</h2>
         <SearchBar />
       </div>
-      <div className=' mt-64 py-16 text-center'>
-        <h2 className='text-stone-600 text-5xl font-base font-Poppins'>Explore the Neighbourhoods</h2>
+      <div className=' mt-64 py-16 text-center '>
+        <h2 className='text-white text-5xl relative font-base font-Poppins'>Explore the Neighbourhoods</h2>
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
             mapasList.length ? mapasList.map(c => {
@@ -98,10 +100,6 @@ function Home() {
             }) : <div>loading..</div>
           }
         </div>
-
-        <Link to='/estate'>
-          <button className='ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>See More!</button>
-        </Link>
       </div>
       <Footer />
     </div>
