@@ -6,13 +6,14 @@ import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import { useSelector } from "react-redux";
 import Footer from "../Footer";
-
+import { Link } from "react-router-dom";
 
 export default function Schedule() {
 
     const [quotes, setQuotes] = React.useState(null)
     const userDB = useSelector(state => state.user)
     const [render, setRender] = React.useState(0)
+    const [property, setProperties] = React.useState(null)
 
     
     React.useEffect(async () => {
@@ -192,7 +193,9 @@ export default function Schedule() {
                                                         {quote.place}
                                                     </td>
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
-                                                        {quote.status}
+                                                        <Link to={`/estate/${quote.propertyId}`}>
+                                                            {quote.status}
+                                                        </Link>
                                                     </td>
                                                 </tr>
                                             )

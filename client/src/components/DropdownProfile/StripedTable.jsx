@@ -7,7 +7,7 @@ import { getFavourites } from "../../redux/actions";
 import Footer from '../Footer';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { BsFillHouseFill } from "react-icons/bs";
+
 
 
 
@@ -18,13 +18,13 @@ function StripedTable() {
   const navigate = useNavigate()
   const user = useSelector((state)=>state.user)
   const favourites = useSelector((state)=>state.favourites)
-console.log(favourites)
+
 
 
   
   const dispatch = useDispatch();
    useEffect( () => {
-     dispatch(getFavourites(user.user?.id));    
+     dispatch(getFavourites(user.user.id));    
   }, [])
 
 
@@ -93,37 +93,32 @@ console.log(favourites)
         </tr>
       </thead>
       <tbody>
-    
+            
 
-           {favourites.length ? ((!render.length ? setrender(favourites) : render.length) && render[0]?.favorites?.map((element)=>{
+           {favourites.length ? ((!render.length ? setrender(favourites) : render.length) && render[0].favorites?.map((element)=>{
           return(<tr key={element.id} className={trClass}>
 
             
             <td className={tdClass} >
-                <a onClick={()=>Redirect(element)}>
+                <a >
               <img
-              
                 src="https://frtassets.fotocasa.es/statics/img/home_inspirational_block_6.jpg"
                 className="h-12"
-              />
-              </a>
+              /></a>
             </td>
             
-            <td className={tdClass}>{element.property?.city}</td>
-            <td className={tdClass}>{element.property?.address}</td>
-            <td className={tdClass}>{element.property?.lease === "Alquiler"? "rent" : "sell"}</td>
-            <td className={tdClass}>{element.property?.m2}m2</td>
-            <td className={tdClass}>${element.property?.cost}</td>
+            <td className={tdClass}>{element.property.city}</td>
+            <td className={tdClass}>{element.property.address}</td>
+            <td className={tdClass}>{element.property.lease === "Alquiler"? "rent" : "sell"}</td>
+            <td className={tdClass}>{element.property.m2}m2</td>
+            <td className={tdClass}>${element.property.cost}</td>
             <div className='flex flex-col pt-10 '>
             <button className='' onClick={()=> handleSubmit(element)}>Delete Favorites</button></div>
           </tr>   )
         })): (<div>NO HAY FAVORITOS!</div>) } 
          
       </tbody>
-      
     </table>
-    
-    
  </div>
           <div className='bottom-0 absolute'>
     <Footer /></div>

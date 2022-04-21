@@ -180,23 +180,27 @@ export default function Create() {
         event.preventDefault()
         let option = document.querySelector("#features").value
         let quantity = document.querySelector("#quantity").value
-        let newFeature = {
-            name: option,
-            value: quantity
+        if(option && quantity) {
+            let newFeature = {
+                name: option,
+                value: quantity
+            }
+            let features = newEstate.features
+            features.push(newFeature)
+            setNewEstate({
+                ...newEstate,
+                features: features
+            })
+            if (newEstate.features.length !== 0) {
+                setErrors(validate({
+                    ...newEstate
+                }))
+            }
+            document.querySelector("#quantity").value = ""
+            document.querySelector("#features").value = "~"
+        } else {
+            alert("Minimun 1 feature is requires")
         }
-        let features = newEstate.features
-        features.push(newFeature)
-        setNewEstate({
-            ...newEstate,
-            features: features
-        })
-        if (newEstate.features.length !== 0) {
-            setErrors(validate({
-                ...newEstate
-            }))
-        }
-        document.querySelector("#quantity").value = ""
-        document.querySelector("#features").value = "~"
     }
 
 
