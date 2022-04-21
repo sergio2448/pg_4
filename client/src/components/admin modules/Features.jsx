@@ -14,7 +14,7 @@ export default function Features() {
     const dispatch = useDispatch()
     const [newFeature, setNewFeature] = React.useState({
         nameFeature: null,
-        isNumerable: false,
+        isNumerable: null,
     })
 
     return (
@@ -29,12 +29,12 @@ export default function Features() {
             </div>
             <div className='flex flex-col relative justify-around items-center'>
                 <div className='flex justify-evenly items-center mt-20 mb-8 w-4/5'>
-                    <p className='text-3xl font-Poppins text-white'>ADD FEATURES:</p>
+                    <p className='text-2xl font-Poppins text-white'>Add Features:</p>
                     <div>
                         <Input
                             type="text"
                             color="lightBlue"
-                            size="lg"
+                            size="sm"
                             outline={true}
                             placeholder="Name Feature"
                             style={
@@ -49,12 +49,16 @@ export default function Features() {
                             })}
                         />
                     </div>
-                    <div>
-                        <label htmlFor="numerable" className='text-white font-Poppins text-2xl mr-2'>Is numerable?</label>
-                        <input type="checkbox" name="numerable" onChange={(e) => setNewFeature({
+                    <div className='flex justify-center items-center'>
+                        <label htmlFor="numerable" className='text-white font-Poppins text-1xl mr-1 font-Poppins'>Is numerable?</label>
+                        <select name="" id="" onChange={(e) => setNewFeature({
                             ...newFeature,
                             isNumerable: !newFeature.isNumerable
-                        })}/>
+                        })}>
+                            <option value="" hidden>~</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
                     </div>
                 </div>
                 <div className='mb-20'>
@@ -85,7 +89,7 @@ export default function Features() {
                     {
                         features?.map(elem => 
                             <div className='mx-12 my-4 text-white text-3xl flex'>
-                                <p className='capitalize mr-4'>
+                                <p className='capitalize mr-4 font-Poppins'>
                                     {elem.name}
                                 </p>
                                 <Button

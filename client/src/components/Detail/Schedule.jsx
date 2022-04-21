@@ -27,6 +27,8 @@ export default function Schedule() {
         }
     }, [render])
 
+    console.log(quotes)
+
     return (
         <div className="w-full h-screen bg-stone-200/75 ">
             <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>

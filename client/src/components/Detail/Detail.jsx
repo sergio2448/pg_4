@@ -32,6 +32,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   const [selectedDay, setSelectedDay] = React.useState(null)
   const [selectedDate, setSelectedDate] = React.useState(null)
+  const [quotes, setQuotes] = React.useState(null)
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user)
@@ -118,7 +119,6 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   }
 
-  console.log(detail)
   return (
     <div class=" text-center  ">
       <div class="bg-[#075985]">
