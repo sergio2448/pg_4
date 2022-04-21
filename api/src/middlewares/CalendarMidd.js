@@ -11,12 +11,12 @@ const getAgenda = async (idSeller, idBuyer) =>{
 }
 
 
-const postAgenda = async (place, dates, hours, sellerId, buyerId) =>{
+const postAgenda = async (place, dates, hours, sellerId, buyerId, propertyId) =>{
     try{
         const cita = await Agenda.findOne({ where: { sellerId: sellerId, buyerId: buyerId } });
     
         if (!cita) {
-            resultCreate = await Agenda.create({place, dates,hours, status: "Pending", sellerId, buyerId});
+            resultCreate = await Agenda.create({place, dates,hours, status: "Pending", sellerId, buyerId, propertyId});
             return resultCreate;
 
         } else {

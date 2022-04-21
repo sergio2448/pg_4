@@ -22,8 +22,8 @@ router.put('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { place,dates,hours, sellerId, buyerId} = req.body;
-        const createCita = await postAgenda(place, dates,hours,sellerId, buyerId);
+        const { place,dates,hours, sellerId, buyerId, propertyId} = req.body;
+        const createCita = await postAgenda(place, dates,hours,sellerId, buyerId, propertyId);
         createCita?.dataValues ?
         res.status(200).json(createCita?.dataValues)
         :res.status(404).json({message:"No se pudo crear la cita."});
