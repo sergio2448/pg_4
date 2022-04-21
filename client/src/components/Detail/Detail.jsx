@@ -1,4 +1,4 @@
-import hardcodeHouse from "../../styles/images/hardcode-house.jpg";
+import houseBackground from '../../styles/images/house-back.jpg';
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -29,24 +29,27 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   rooms = 5;
   description =
     "A perfect place to rest, in a very quiet neighborhood, 5 minutes walk from some places of interest (Parque Principal, Cancha, Malecón, Terminal de buses), located in the urban area, with the possibility of parking in front of the accommodation and system security 24/7.";
-    
-    const navigate = useNavigate();
-    
-    const user = useSelector((state) => state.user)
-    
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const apiKey =
+
+  const [selectedDay, setSelectedDay] = React.useState(null)
+  const [selectedDate, setSelectedDate] = React.useState(null)
+  const [quotes, setQuotes] = React.useState(null)
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user)
+
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const apiKey =
     "pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ";
   const detail = useSelector((state) => state.homeDetail);
 
-  let userId = detail[0]?.seller.userId;
+  let userId = detail[0]?.seller?.userId;
   let sellId = detail[0]?.sellerId;
   useEffect(() => {
     dispatch(getHomeDetail(id));
-    return () => {
-      dispatch(getHomeDetail([]));
-    };
+     return () => {
+       dispatch(getHomeDetail([]));
+     };
   }, []);
   console.log("detail", detail);
 
@@ -54,7 +57,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   const photos =
     detail[0]?.photos?.length > 0
-      ? detail[0].photos.map((photo) => photo.photos)
+      ? detail[0]?.photos.map((photo) => photo.photos)
       : null;
 
   // Calendar
@@ -68,66 +71,74 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       .catch(() => {
         alert('Ya existe una cita con este propietario!');
       })
+  }
+
+
+  const [contact, setContact] = useState(false);
+  const handleButton = () => {
+    if (!calendarInfo.length) {
+      dispatch(getDetailCalendar(userId))
+      setContact(true);
+      return null;
+    } else {
+      let agendaObj = {
+        place: detail[0]?.address + ', ' + detail[0]?.city,
+        dates: selectedDay,
+        hours: selectedDate,
+        sellerId: sellId,
+        buyerId: user.user?.buyers[0]?.id
+      }
+      addAgenda(agendaObj);
+      navigate('/logged/Quotes');
     }
     
 
-    const handleButton = () => {
-      if(!calendarInfo.length){
-        dispatch(getDetailCalendar(userId))
-        return null;
-      }else{
-        let agendaObj = {
-          place: detail[0].address + ', ' + detail[0].city,
-          dates: selectedDay,
-          hours: selectedDate,
-          sellerId: sellId,
-          buyerId: user.user.buyers[0].id
-         }
-         addAgenda(agendaObj);
-         navigate('/logged/Quotes');
-      }      
-      
-    }
+  }
+
+
+  //AÑADIR A FAVORITOS
+
   
-    
-    //AÑADIR A FAVORITOS
-    
-    const userObject = useSelector((state)=>state.user)
-    console.log(userObject)
-    const [values, setValues] = useState({
-      buyerId: userObject.user?.id,
-      propertyId: detail[0]?.id,
-      
-      
-    })
-    
-    async function handleSubmit(e) {
-      e.preventDefault();
-      try {
-         await dispatch(addFavourites(values))
-      
-          alert('Favourite added successfully!');
-          
-        } catch (err) {
-          alert('We could not add your favourite. Please try again.');
-          
-        }
-        
-        
-      }
+  console.log(detail[0]?.id)
+  const [values, setValues] = React.useState({
+    buyerId: user.user?.buyers[0]?.id,
+    propertyId: id,
+
+
+  })
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await dispatch(addFavourites(values))
+
+      alert('Favourite added successfully!');
+
+    } catch (err) {
+      alert('We could not add your favourite. Please try again.');
+
+    }
+
+
+  }
+
   return (
     <div class=" text-center  ">
-      <div class="bg-[#075985]">
-        <div class="bg-sky-900 shadow-nav h-20 relative z-20 ">
-          <Nav />
+    <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
+        <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
+    </div>
+    <div className='relative z-6'>
+        <div className=' relative z-20 '>
+            <Nav />
         </div>
-      </div>
-      <h2 class="mt-6 text-stone-600 text-5xl font-base font-Poppins">
+    </div>
+    <div className='relative w-full h-screen '>
+      <h2 class="mt-6 text-stone-300 text-5xl font-base font-Poppins">
         <strong>
-          {detail[0]?.country},{detail[0]?.city}
+          {detail[0]?.country}, {detail[0]?.city}
         </strong>
       </h2>
-      <div class="w-500 h-500 ml-20 mr-20 mb-10 mt-10">
+      <div className="w-3/5 ml-20 mr-20 mb-32 mt-10 mx-auto">
         {photos ? (
           <Gallery
             photos={photos}
@@ -136,10 +147,10 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         ) : null}
       </div>
 
-      <div class="mx-32 px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
+      <div class="mx-32  px-6 mt-12 grid grid-cols-4 gap-6 mb-6">
         <div>
           <h5 class="text-center font-Poppins">
-            Measure: <strong> {detail[0]?.m2 ? detail[0].m2 : 45} m²</strong>
+            Measure: <strong> {detail[0]?.m2 ? detail[0]?.m2 : 45} m²</strong>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               enable-background="new 0 0 24 24"
@@ -220,55 +231,65 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       </div>
 
       <hr />
-      <div class="py-8 px-6 mb-6 text-xl font-bold font-Poppins">
-        <p class="mb-6">
+      <div class='text-stone-600 text-3xl font-semibold my-6 font-base font-Poppins'>
+          <h3 className='mt-6'>Description</h3>
+        <p class="mb-6 text-stone-400 font-normal text-xl">
           {detail[0]?.description ? detail[0]?.description : description}
         </p>
         <hr />
         <div>
-          <h3>Main data of the property</h3>
+          <h3 className='mt-6'>Main data of the property</h3>
         </div>
-        <div class="mx-32 px-6 mt-12 grid grid-cols-3 gap-6 mb-6">
-          <div>
-            <h5 class="text-center font-Poppins">
+        <div className="mx-32 px-6 mt-12 grid grid-cols-2 gap-6 mb-6">
+          <div className='mb-6 text-stone-400 font-normal text-xl'>
+            <h5 className="text-center text-xl font-Poppins">
               City: <strong>{detail[0]?.city}</strong>
             </h5>
-            <h5 class="text-center font-Poppins">
+            <h5 className="text-center text-xl font-Poppins">
               Country: <strong>{detail[0]?.country}</strong>
             </h5>
           </div>
-          <div>
-            <h5 class="text-center font-Poppins">
+          <div className='mb-6 text-stone-400 font-normal text-xl'>
+            <h5 className="text-center text-xl font-Poppins">
               Cost: <strong>{detail[0]?.cost}</strong>
             </h5>
-            <h5 class="text-center font-Poppins">
+            <h5 className="text-center text-xl font-Poppins">
               State: <strong>{detail[0]?.state}</strong>
             </h5>
           </div>
         </div>
         <hr />
+            
+          <h3 className='mt-6'>Write your review</h3>  
+          { 
+            detail[0] && <Review text={detail[0]}/>
+          }
+            
+          {
+            user.user && detail[0] ? <Comment propertyId={detail[0].id}/> : ""
+          }
 
         
-          { detail[0] && <Review text={detail[0].reviews}/>}
-        
-
-        <Comment />
         <hr />
         <hr />{
           user.user?.sellers[0].id !== sellId ? (
             <div>
-              <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
+              <h3 class='text-stone-600 text-3xl mt-6 font-base font-Poppins'>
                 Book an appointment
               </h3>
               {
-                calendarInfo.length !== 0 && <div className="flex justify-center">
-                  <div className="ml-5 rounded border border-stone-400/75">
-                    <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
-                  </div>
-                  <div className="ml-5 pt-16 ">
-                    <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />
-                  </div>
+                (calendarInfo.length == 0) && (contact) ? (<div>
+                  <h3 className='mt-6 text-stone-400 font-normal '>Contact</h3>
+                  { detail[0]?.seller.phoneNumber && <h5 className='text-stone-400 font-normal text-xl'>Phone: {detail[0].seller.phoneNumber}</h5>}
+                  { detail[0].seller.user.email && <h5 className=' text-stone-400 font-normal text-xl'>Email: {detail[0].seller.user.email}</h5>}
+                </div>) : (calendarInfo.length !== 0) && (<div className="flex justify-center">
+                <div className="ml-5 rounded border border-stone-400/75">
+                  <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
                 </div>
+                <div className="ml-5 pt-16 ">
+                  <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />
+                </div>
+              </div>)
               }
               <button onClick={() => handleButton()} className='my-6 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Schedule</button>
             </div>
@@ -276,10 +297,10 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         }
         <div className="">
           <div className="w-full">
-            <h3 class="px-6 mt-6 mb-6 text-xl font-bold font-Poppins">
-              You will live here I
+            <h3 class='text-stone-600 text-3xl mt-6 font-base font-Poppins mb-6'>
+              You will live here
             </h3>
-            <div className="relative bg-black w-full h-64">
+            <div className="relative w-full h-64 px-6 mb-12">
               {apiKey ? (
                 detail.length ? (
                   <ReactMapGL
@@ -318,7 +339,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       {/* {
         detail.length? <DirectChatPage seller={detail[0].seller.user}/> : ""
       } */}
-    </div>
+    </div></div>
   );
 };
 

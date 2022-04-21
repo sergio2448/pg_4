@@ -10,6 +10,7 @@ import ModalHeader from "@material-tailwind/react/ModalHeader";
 import ModalBody from "@material-tailwind/react/ModalBody";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 
 const App = () => {
 
@@ -24,13 +25,15 @@ const App = () => {
     console.log(selectedDayRange)
     return (
         <>
-            <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
-                <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
+            <div >
+    <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-2xl '>
+      <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
+    </div>
+    
+    <Nav />
             </div>
-            <div className='relative z-6'>
-                <div className=' relative z-20 '>
-                    <Nav />
-                </div>
+            <div className="relative flex flex-col items-center mt-12 ">
+            <h3 className="text-5xl font-bold	text-white font-Poppins ">User Calendar</h3>
             </div>
             <div className="mt-16 flex justify-center">
                 <Calendar
@@ -41,7 +44,7 @@ const App = () => {
                     calendarClassName=""
                     shouldHighlightWeekends
                     renderFooter={() => (
-                        <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 2rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem 2rem' }}>
                             <button
                                 type="button"
                                 onClick={() => {
@@ -54,7 +57,7 @@ const App = () => {
                                     backgroundColor: '#0fbcf9',
                                     border: '#0fbcf9',
                                     color: '#000000',
-                                    fontSize: '1.5em',
+                                    fontSize: '1.2em',
                                     borderRadius: '0.5rem',
                                     padding: '1rem 2rem',
                                 }}
@@ -75,16 +78,16 @@ const App = () => {
                     selectedDayRange.to ? <p className="relative">From the {selectedDayRange.to.day}th day of the {selectedDayRange.to.month}th month</p> : ""
                 }
             </div>
-            <div className="relative mt-12 flex justify-center">
+            <div className="relative mt-12 flex justify-center mb-12">
                 <Button
                     color="lightBlue"
                     buttonType="filled"
-                    size="regular"
+                    size="lg"
                     rounded={false}
                     block={false}
                     iconOnly={false}
                     ripple="light"
-                    className="relative mx-1 bg-stone-800"
+                    className="relative mx-1 text-black bold"
                     onClick={async (e) => {
                         e.preventDefault()
                         try {
@@ -94,7 +97,7 @@ const App = () => {
                                     "type":"seller",
                                     "userId": userDB.user.id
                                 })
-                                navigate("/logged/myprofile")
+                                navigate("/listProperties")
                             } else {
                                 setShowModal(true)
                             }
@@ -106,20 +109,25 @@ const App = () => {
                     Cargar 
                 </Button>
                 <Modal size="sm" active={showModal} toggler={() => {
-                                    setShowModal(false)
-                                    }} >
-                                    <ModalHeader toggler={() => {
-                                        setShowModal(false)
-                                    }} >
-                                        Select your available days
-                                    </ModalHeader>
-                                    <ModalBody>
-                                        <p className="text-base leading-relaxed text-gray-600 font-normal italic">
-                                        Uuups! Select your available days, otherwise a buyer will book an appointment any day of the year
-                                        </p>
-                                    </ModalBody> 
-                                </Modal>
+                    setShowModal(false)
+                    }} >
+                    <ModalHeader toggler={() => {
+                        setShowModal(false)
+                    }} >
+                        Select your available days
+                    </ModalHeader>
+                    <ModalBody>
+                        <p className="text-base leading-relaxed text-gray-600 font-normal italic">
+                        Uuups! Select your available days, otherwise a buyer will book an appointment any day of the year
+                        </p>
+                    </ModalBody> 
+                </Modal>
+
+                
             </div>
+
+            
+            <Footer/>
         </>
     );
 };

@@ -4,9 +4,18 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {ImLocation2} from "react-icons/im"
 const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Modal from "@material-tailwind/react/Modal";
+import ModalHeader from "@material-tailwind/react/ModalHeader";
+import ModalBody from "@material-tailwind/react/ModalBody";
+import ModalFooter from "@material-tailwind/react/ModalFooter";
+import Button from "@material-tailwind/react/Button";
 
-export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate, submit }) {
+export default function Page4({ setPages, pages, setCurrentStep, newEstate, setNewEstate, submit, errorsForm }) {
+
+    const [showModal, setShowModal] = React.useState(false)
+    const [time, setTime] = React.useState(10000)
+    const navigate = useNavigate()
 
     const [viewport, setViewport ] = React.useState({
         latitude: 37.8,
@@ -119,14 +128,74 @@ export default function Page4({ setPages, pages, setCurrentStep, newEstate, setN
             <div>
                 <div className="px-4 py-3 text-center sm:px-6">
                     <button
-                        onClick={(e) => submit(e)}
+                        onClick={(e) => {
+                            if(Object.values(errorsForm).length === 0) {
+                                submit(e)
+                                setShowModal(true)
+                                setTimeout(() => {
+                                    setTime(null)
+                                }, time);
+                            } else {
+                                alert("Your upload form is not correct")
+                                navigate("/")
+                            }
+                        }}
                         className="inline-flex justify-center ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-4 py-2 rounded"
-                        to="/"
                     >
                         Upload property
                     </button>
                 </div>
             </div>
+            <Modal size="sm" active={showModal} toggler={() => {
+                            if(time === null) {
+                                navigate('/listProperties')
+                            }
+                        }}>
+                <ModalHeader toggler={() => {
+                    if(time === null) {
+                        navigate('/listProperties')
+                    }
+                }}>
+                {
+                    time !== null ? "Await..." : "Ready"
+                }
+                </ModalHeader>
+                <ModalBody>
+                    {
+                        time !== null ? <p className="text-base text-gray-600 font-normal">
+                            Wait a few seconds! We are processing the property. At the end you will get a button to continue
+                        </p> : <p className="text-base text-gray-600 font-normal">
+                            Ready! You can click on the button to continue to select your available days for a client
+                        </p>
+                    }
+                </ModalBody>
+                <ModalFooter>
+                    {
+                        time !== null ? 
+                        <div class="flex justify-center items-center">
+                            <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div> : 
+                        <Button
+                            color="lightBlue"
+                            buttonType="filled"
+                            size="regular"
+                            className="mt-8"
+                            rounded={false}
+                            block={false}
+                            iconOnly={false}
+                            ripple="light"
+                            onClick={async (e) => {
+                                e.preventDefault()
+                                navigate('/logged/SellerCalendar')
+                            }}
+                        >
+                            Go!
+                        </Button>
+                    }
+                </ModalFooter>
+            </Modal>
         </div>
 
     )

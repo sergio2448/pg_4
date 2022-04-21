@@ -29,7 +29,6 @@ export const Profile = () => {
               `https://new-pg.herokuapp.com/optionUser/${user.email}`
             );
             setUserLoged(userExist.data)
-            console.log(userExist)
             if(userExist.data.result === "Sin Registros") {
                 let newUser = await axios.post(`https://new-pg.herokuapp.com/optionUser`, {
                     "firstName": user.given_name ? user.given_name : user.name,
@@ -40,6 +39,7 @@ export const Profile = () => {
                 })
                 userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${user.email}`)
                 dispatch(loadUser(userExist.data))
+                setUserLoged(userExist.data)
                 const notificationUser={
                     userid:userExist.data.user.id
                 }
@@ -48,7 +48,7 @@ export const Profile = () => {
             }
             dispatch(loadUser(userExist.data))
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
     }, [user, isAuthenticated])
    
@@ -85,14 +85,15 @@ export const Profile = () => {
                                 iconOnly={false}
                                 ripple="light"
                                 onClick={async (e) => {
-                                    setShowModal(false)
                                     e.preventDefault()
                                     try {
                                         let phone = await axios.post("https://new-pg.herokuapp.com/optionUser/phoneNumber", {
                                             phoneNumber: phoneNumber,
-                                            email: user.email
+                                            id: userLoged.user.id
                                         })
-                                        console.log(phone)
+                                        let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                                        dispatch(loadUser(userExist.data))
+                                        setShowModal(false)
                                     } catch (error) {
                                         console.log(error)
                                     }

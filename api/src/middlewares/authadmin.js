@@ -1,9 +1,12 @@
+const axios = require('axios')
 const {
     getbyEmail,
     getRolebyId
 } = require('../middlewares/usercreate')
 const { Roles, Users, BanckCards, Properties, Features, Photos, Sellers, Buyers, Sales, Idstatus, Subscription, BannedUsers } = require('../db')
 const { PAYPAL_API } = process.env
+const hostback = "http://localhost:3001"
+
 
 const isAdmin = async (userEmail) => {
     const usermatched = await getbyEmail(userEmail)
@@ -82,13 +85,13 @@ const banUser = async (userId) => {
     const matched = await Users.findOne({
         where: { id: userId }
     });
-    
+
     const { id, name, email, image, isPremium, roleId } = matched
-    
+
     const addBanedtable = await BannedUsers.create({
         id, name, email, image, isPremium, roleId
     })
-    
+
     const action = await matched.destroy()
 
     return action
@@ -96,9 +99,18 @@ const banUser = async (userId) => {
 }
 
 const suprProp = async (id) => {
+    const Prop = await Properties.findOne({
+        where: { id }
+    })
+    const seller = await Prop.getSeller()
+    const user = await seller.getUser()
+    const email = user.getDataValue("email")
+    const nameUser = user.getDataValue("name")
+    
     const supProp = await Properties.destroy({
         where: { id }
     })
+    await axios.post(`${hostback}/send-email/deletprop/${email}?nameUser=${nameUser}`)
     return supProp
 }
 module.exports = {

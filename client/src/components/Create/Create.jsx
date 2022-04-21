@@ -112,16 +112,12 @@ export default function Create() {
             console.log(error.message)
         }
     }, []);
-
-    /* console.log(images[0].photos)
-    console.log(imagesDeleted) */
-
+    console.log("Errors", Object.values(errors))
     const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
         if (Object.values(errors).length === 0) {
             if (id) {
-                console.log("ENTRE EN PUT, NO POST")
                 try {
                     let estateCreated = await axios.put(`https://new-pg.herokuapp.com/Properties/${id}?override=true`, newEstate)
                     console.log(estateCreated)
@@ -159,9 +155,8 @@ export default function Create() {
                 }
             }
         } else {
-            console.log("ERROR")
+            console.log("ERROR DE CREACION")
         }
-        navigate("/logged/SellerCalendar")
     };
 
     const handleSubmit = (event) => {
@@ -206,15 +201,15 @@ export default function Create() {
 
     return (
         isAuthenticated ?
-            <div className='h-screen'>
-                <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-xl'>
-                    <img className='opacity-60 z-2 object-cover w-full h-screen blur-sm' src={houseBackground} />
-                </div>
-                <div className='relative z-6'>
-                    <div className=' relative z-20 '>
-                        <Nav />
-                    </div>
-                </div>
+        <div >
+        <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-2xl '>
+          <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
+        </div>
+        
+        <Nav />
+        <div className="relative flex flex-col items-center mt-12 ">
+            <h3 className="text-5xl font-bold	text-white font-Poppins ">Create Your Publication</h3>
+            </div>
                 {
                     userDB.user.sellers[0] ? <div className=' mt-16 relative z-10 mb-8'>
                         <div className="mt-10 sm:mt-0">
@@ -239,7 +234,7 @@ export default function Create() {
                                                 pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} imagesDeleted={imagesDeleted} setImagesDeleted={setImagesDeleted} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images} /> : ""
                                             }
                                             {
-                                                pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
+                                                pages.page4 ? <Page4 setCurrentStep={setCurrentStep} errorsForm={errors} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
                                             }
                                         </div>
                                     </form>
@@ -253,7 +248,9 @@ export default function Create() {
                             </p>
                         </div>
                 }
+                
                 <Footer />
+            
 
             </div>
             : loginWithRedirect()

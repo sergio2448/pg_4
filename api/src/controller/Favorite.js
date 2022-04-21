@@ -7,10 +7,18 @@ const router = Router();
 router.post('/', async (req, res) => {
     try {
         const { buyerId, propertyId} = req.body;
+        console.log(propertyId)
+        const dbsearch = await Favorite.findOne({
+            where:{
+                propertyId:propertyId,
+            }
+        })
+        // console.log(dbsearch)
+        if(!dbsearch){
         const create=await postFavorite( buyerId, propertyId);
         create?.dataValues ?
         res.status(200).json(create?.dataValues)
-        :res.status(404).json({message:"No se pudo marcar como favorito"});
+        :res.status(404).json({message:"No se pudo marcar como favorito"});}
     } catch (error) {
         console.log(error.message);
         res.status(500).send({message:error.message});
@@ -33,16 +41,16 @@ router.get('/:userId', async (req, res) => {
 
 router.delete('/',async(req,res) =>{
     const {
-        id,
+        favoriteId,
         userId,
-        propertyId
+        propertyId,
       } = req.query;
     try {
-        const resDelete =await deleteFavorites(id,userId,propertyId);
+        const resDelete =await deleteFavorites(favoriteId,userId,propertyId);
         if(resDelete>0){
-            res.status(204).send("Se eliminó exitosamente el id: "+id);
+            res.status(204).send("Se eliminó exitosamente el id: "+favoriteId);
         }else{
-            res.status(500).send("No se encontro el recuros");
+            res.status(500).send("No se encontro el recursos");
         }
         
     } catch (error) {

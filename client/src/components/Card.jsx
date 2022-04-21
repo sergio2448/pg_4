@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {ImLocation2} from "react-icons/im"
-
-
-
-
 
 export default function Cards({
   image,
@@ -22,11 +20,39 @@ export default function Cards({
   rooms,
   latitude,
   longitude,
-  maplist
+  maplist,
+  id,
+  currentProperties,
+  setCurrentProperties
 }) {
   rooms = 5;
   const apiKey = 'pk.eyJ1IjoiY2x1ejEyMyIsImEiOiJjbDFteGU3d2wwb2FlM2RtbTl1cGo1dmJ5In0.jk1TN2dm1nwc5Drrwx9MLQ'
   const mapRef = useRef();
+  const user = useSelector(state => state.user)
+
+  function deleteProperties(id, adminEmail) {
+    return axios.delete(`http://localhost:3001/admin/delete-prop?id=${id}&adminEmail=${adminEmail}`)
+    .then((res)=>{
+        alert('Property has been deleted.')
+    })
+    .catch((err) => console.error(err));
+
+  }
+
+  function handleButton(e) {
+  if (window.confirm("Do you really want to delete this property?")) {
+    deleteProperties(id, user.user.email)
+    let newProps = [];
+    currentProperties.map(c => {
+      if(c.id !== id){
+        newProps.push(c);
+      }
+    })
+    setCurrentProperties(newProps);  
+  }
+  
+}
+
 
   return isMap ? (
     <div className="border border-stone-600/40 pb-6  transition ease-in-out duration-200 hover:text-sky-500">
@@ -81,10 +107,12 @@ export default function Cards({
           </span>
         ) : (
           <span></span>
-        )}
-        <span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
+        )} 
+        {
+          window.location.pathname == "/logged/Publishing" ? (<button onClick={(e) => {handleButton(e)}} className='text-white bg-red-600 border-dashed rounded-md text-xl hover:bg-red-800'>Eliminate</button>) : (<span className="text-white text-sm font-bold ml-4 font-Poppins opacity-100 z-120 bg-rose-500 px-2 py-1 rounded">
           {lease == 'Venta' ? 'For Sale' : 'Rent'}
-        </span>
+        </span>)
+        }
       </div>
         <h2 className="px-6 mt-6 mb-6 text-xl font-bold font-Monserrat">
           {name + ", " + city + ", " + country}

@@ -66,7 +66,7 @@ export default function SearchBar() {
             [e.target.name]: value
         })
     }
-    console.log(features)
+    
     function handleReset(e) {
         dispatch(getSearchbar(''))
         setInput({
@@ -88,7 +88,6 @@ export default function SearchBar() {
         e.preventDefault();
         let featuresArr = [];
         let objKeys = Object.keys(features);
-        console.log(objKeys)
         objKeys.map(k => {
             if (features[k].length) {
                 featuresArr.push({
@@ -100,7 +99,6 @@ export default function SearchBar() {
         let listFeature = {
             listFeatures: [...featuresArr]
         }
-        console.log(listFeature)
         let aInput = `lease=${input.searchDivs}&${input.searchType}=${input.searchInput}`;
         dispatch(getSearchbar(aInput, listFeature))
         if (window.location.pathname == '/') {
@@ -113,15 +111,15 @@ export default function SearchBar() {
 
             {
                 // Venta/Alquiler
-                filterSelect == 'Venta' ? (<div className='flex justify-center'>
-                    <div className='  bg-stone-800 text-base text-sky-500 font-Monserrat font-bold px-4 py-1 ' >Buy</div>
+                filterSelect == 'Venta' ? (<div className='flex justify-center '>
+                    <div className='  bg-stone-800 text-base text-sky-500 font-Monserrat font-bold px-4 py-1' >Buy</div>
                     <div title='Alquiler' onClick={(e) => handleDivs(e)} className='bg-stone-900 text-base text-white font-Monserrat font-bold px-4 py-1 '>Rent</div>
                 </div>) : (<div className='flex justify-center'>
                     <div title='Venta' onClick={(e) => handleDivs(e)} className=' bg-stone-900 text-base text-white font-Monserrat font-bold px-4 py-1  ' >Buy</div>
-                    <div className=' bg-stone-800 text-base text-sky-500 font-Monserrat font-bold px-4 py-1 '>Rent</div>
+                    <div className=' bg-stone-800 text-base text-sky-500 font-Monserrat font-bold px-4 py-1'>Rent</div>
                 </div>)
             }
-            <form onSubmit={(e) => handleForm(e)} className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-6/12 h-16 ') : ('flex items-center m-auto justify-center z-10 w-6/12 py-6 bg-stone-800')}>
+            <form onSubmit={(e) => handleForm(e)} className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-6/12 h-16 ') : ('flex items-center m-auto justify-center z-10 w-6/12 px-6 py-6 bg-stone-800')}>
                 {
                     window.location.pathname !== '/' ? (<div>
                         <div className={window.location.pathname == '/' ? ('flex items-center m-auto justify-center z-10 w-full h-16  bg-stone-800') : ('flex items-center m-auto justify-center z-10 mb-6 bg-stone-800')}><select onChange={(e) => handleInput(e)} name='searchType' className='pl-2 mr-5 rounded transition ease-in-out delay-200 bg-sky-300 hover:bg-sky-200 text-stone-800 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
@@ -137,35 +135,8 @@ export default function SearchBar() {
                         {listfeatures.length > 0 && listfeatures.map(({ name, isNumerable }) => {
                             return <FiltFeatures onChange={handleSelect} feature={name} numerable={isNumerable} className= 'pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'/>
                         })}
-                        {/* <select name='rooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Rooms</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option value={3}>+3</option>
-                        </select>
-                        <select name='bathrooms' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Bathrooms</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option value={3}>+3</option>
-                        </select>
-                        <select name='garden' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Garden</option>
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                        <select name='pool' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Pool</option>
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                        <select name='floor' onChange={(e) => handleSelect(e)} className='pl-2 mr-5 rounded transition ease-in-out delay-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-2 h-8'>
-                            <option>Floors</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select> */}
-                        <button onClick={e => handleReset(e)} type='reset' className='course-reset ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded'>Reset</button>
+      
+                        <button onClick={e => handleReset(e)} type='reset' className='course-reset ml-5 text-base text-white font-Monserrat font-bold bg-sky-500 transition ease-in-out duration-200 hover:bg-sky-700 px-2 py-1 rounded mt-2'>Reset</button>
                     </div>)
 
                         :
