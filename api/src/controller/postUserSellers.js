@@ -57,18 +57,30 @@ router.post('/', async (req, res) => {
     }
 
 })
-router.put('/', async (req, res) => {
-    const { firstName,lastName,nickName,email,phoneNumber,role,dateBirth} = req.body;
-    const userexistente = await getbyEmail(email)
-    if(userexistente){
-        if(role===ROL_SELLER){
-            createReview =await sellers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } });
+router.put('/updateData', async (req, res) => {
+    try{
+    const { firstName,lastName,nickName,id,dateBirth,phoneNumber} = req.body;
+    
+   
+    const userexistente = await Sellers.findOne({
+        where:{
+            userId:id
         }
-        if(role===ROL_BUYER){
-            createReview = await Buyers.update({where:{firstName: firstName, lastName:lastName, nickName:nickName, phoneNumber:phoneNumber, dateBirth:dateBirth  } })
-        }
-    }
 
+    })
+    console.log(userexistente)
+    userexistente.firstName = firstName
+    userexistente.lastName = lastName
+    userexistente.nickName = nickName
+    userexistente.phoneNumber = phoneNumber
+    userexistente.dateBirth = dateBirth
+    await userexistente.save()
+    res.send(userexistente)}
+
+    catch(error) {
+        console.log(error.message);
+        res.status(500).send({message:error.message});
+    }
 })
 
 router.post('/phoneNumber', async (req, res) => {
