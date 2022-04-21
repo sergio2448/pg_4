@@ -167,7 +167,7 @@ export function getTransactions(adminEmail) {
   return function (dispatch) {
     return axios
       .get(
-        `http://localhost:3001/admin/transactions?userEmail=${adminEmail}&start_date=04/06/2022&end_date=04/18/2022&page_size=&page=1&transaction_id=&transaction_type=&transaction_status&payment_instrument_type=CREDITCARD&fields=all`
+        `http://localhost:3001/admin/transactions?userEmail=${adminEmail}&start_date=&end_date=&page_size=&page=1&transaction_id=&transaction_type=&transaction_status&payment_instrument_type=CREDITCARD&fields=all`
       )
       .then((response) => {
         dispatch({
