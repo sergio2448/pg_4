@@ -35,7 +35,7 @@ const createOrder = async (req, res) => {
                 brand_name: 'Inmobiliaria.com',
                 landing_page: "LOGIN",
                 user_action: "PAY_NOW",
-                return_url: `${host}/pay/capture-order?idProperty=${id}`,
+                return_url: `${host}/pay/capture-order?idProperty=${id}?tiempo=${tiempo}`,
                 cancel_url: `${host}/pay/cancel-order?idProperty=${id}`,
             }
         }
@@ -164,7 +164,7 @@ const captureOrder = async (req, res) => {
                 }
             })
             const { emailUser } = await userdata(userid)
-            await axios.post(`${host}/send-email/payment?emailUser${emailUser}&tiempo=${tiempo}`);
+            await axios.post(`${host}/send-email/payment?emailUser=${emailUser}&tiempo=${tiempo}`);
         }
 
         res.redirect(`${hostclient}`)
