@@ -93,7 +93,7 @@ console.log(favourites)
         </tr>
       </thead>
       <tbody>
-            
+    
 
            {favourites.length ? ((!render.length ? setrender(favourites) : render.length) && render[0]?.favorites?.map((element)=>{
           return(<tr key={element.id} className={trClass}>
@@ -120,7 +120,10 @@ console.log(favourites)
         })): (<div>NO HAY FAVORITOS!</div>) } 
          
       </tbody>
+      
     </table>
+    
+    
  </div>
           <div className='bottom-0 absolute'>
     <Footer /></div>
