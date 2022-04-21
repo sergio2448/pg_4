@@ -132,13 +132,13 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
             <Nav />
         </div>
     </div>
-    <div className='relative w-full h-screen '>
+    <div className='relative w-full h-screen mt-16'>
       <h2 class="mt-6 text-stone-300 text-5xl font-base font-Poppins">
         <strong>
           {detail[0]?.country}, {detail[0]?.city}
         </strong>
       </h2>
-      <div className="w-3/5 ml-20 mr-20 mb-32 mt-10 mx-auto">
+      <div className="w-8/12 ml-20 mr-20 mb-16 mt-10 mx-auto">
         {photos ? (
           <Gallery
             photos={photos}
