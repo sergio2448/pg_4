@@ -43,7 +43,7 @@ export default function ListProperties() {
             <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">Customers also purchased</h2>
                 <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {
-                        userDB.user.sellers[0].properties.length ? userDB.user.sellers[0].properties.map(property => (
+                        userDB.user.sellers[0].properties.length ? userDB.user?.sellers[0]?.properties.map(property => (
                             <div key={property.id} className="w-full">
                                 <div className="group relative">
                                     <div className="w-full border-solid border-2 border-black min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
@@ -316,11 +316,12 @@ export default function ListProperties() {
                                     
                                 </div>
                             </div>
-                        )): <p className='font-Poppins text-5xl italic hover:scale-125 transition-all select-none absolute mx-40 text-white'>You don't have any properties created.</p>
+                        )): <p className='text-white relative text-5xl pb-20  mb-32 absolute mx-32 font-bold font-Poppins'>You don't have any properties created.</p>
                     }
                 </div>   
             </div>
-            <Footer/>
+            <div className=' relative'>
+            <Footer/></div>
         </div>
     )
 }

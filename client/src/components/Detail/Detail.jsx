@@ -2,7 +2,7 @@ import houseBackground from '../../styles/images/house-back.jpg';
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDetailCalendar, getHomeDetail } from "../../redux/actions/index";
+import { getDetailCalendar, getFavourites, getHomeDetail } from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
@@ -12,13 +12,12 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import CalendarOneDay from "../Calendar/CalendarOneDay";
 import HoursPicker from "../Calendar/HoursPicker";
 import axios from "axios";
-
 import "react-datepicker/dist/react-datepicker.css";
-import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from "react";
 import Review from "./Review";
 import Comment from "./Comment";
-/* import DirectChatPage from "../chatbox/DirectChatPage"; */
+
+
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -51,9 +50,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
        dispatch(getHomeDetail([]));
      };
   }, []);
-  console.log("detail", detail);
+ 
 
-  const calendarInfo = useSelector((state) => state.detailCalendar);
+  let calendarInfo = useSelector((state) => state.detailCalendar);
 
   const photos =
     detail[0]?.photos?.length > 0
@@ -86,12 +85,14 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         dates: selectedDay,
         hours: selectedDate,
         sellerId: sellId,
-        buyerId: user.user?.buyers[0]?.id
+        buyerId: user.user?.buyers[0]?.id,
+        propertyId: detail[0].id
+
       }
       addAgenda(agendaObj);
       navigate('/logged/Quotes');
     }
-    
+    calendarInfo = []
 
   }
 
@@ -99,7 +100,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   //AÑADIR A FAVORITOS
 
   
-  console.log(detail[0]?.id)
+ 
   const [values, setValues] = React.useState({
     buyerId: user.user?.buyers[0]?.id,
     propertyId: id,
@@ -107,19 +108,21 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   })
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      await dispatch(addFavourites(values))
-
+  function addFavourites(data) {
+    axios.post("http://localhost:3001/favorite", data)   
+    .then((res)=>{        
+      dispatch(getFavourites(user.user?.id));
       alert('Favourite added successfully!');
+    })
+    .catch((err) => {
+      alert('We could not add your favourite. Please try again.')
+    }    
+    );
+  }
 
-    } catch (err) {
-      alert('We could not add your favourite. Please try again.');
-
-    }
-
-
+  async function handleSubmit(e) {
+    e.preventDefault();    
+    addFavourites(values);
   }
 
   return (
@@ -127,18 +130,18 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
     <div className='z-1 absolute bg-black w-full h-screen shadow-black shadow-2xl'>
         <img className='opacity-60 z-2 object-cover w-full h-full blur-sm' src={houseBackground} />
     </div>
-    <div className='relative z-6'>
+    
         <div className=' relative z-20 '>
             <Nav />
-        </div>
+        
     </div>
-    <div className='relative w-full h-screen '>
+    <div className='relative w-full h-full mt-16'>
       <h2 class="mt-6 text-stone-300 text-5xl font-base font-Poppins">
         <strong>
           {detail[0]?.country}, {detail[0]?.city}
         </strong>
       </h2>
-      <div className="w-3/5 ml-20 mr-20 mb-32 mt-10 mx-auto">
+      <div className="w-8/12 h-fit ml-20 mr-20 mb-40 mt-10 mx-auto">
         {photos ? (
           <Gallery
             photos={photos}
@@ -225,7 +228,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div>
           <div class="grid grid-cols-2 gap-3">
-            <button onClick={handleSubmit}>Favourite</button>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={handleSubmit}>Favourite</button>
           </div>
         </div>
       </div>
@@ -266,7 +269,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           }
             
           {
-            user.user && detail[0] ? <Comment propertyId={detail[0].id}/> : ""
+            user.user && detail[0] ? <Comment propertyId={detail[0]?.id}/> : ""
           }
 
         
@@ -280,11 +283,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
               {
                 (calendarInfo.length == 0) && (contact) ? (<div>
                   <h3 className='mt-6 text-stone-400 font-normal '>Contact</h3>
-                  { detail[0]?.seller.phoneNumber && <h5 className='text-stone-400 font-normal text-xl'>Phone: {detail[0].seller.phoneNumber}</h5>}
-                  { detail[0].seller.user.email && <h5 className=' text-stone-400 font-normal text-xl'>Email: {detail[0].seller.user.email}</h5>}
+                  { detail[0]?.seller?.phoneNumber && <h5 className='text-stone-400 font-normal text-xl'>Phone: {detail[0]?.seller?.phoneNumber}</h5>}
+                  { detail[0]?.seller?.user?.email && <h5 className=' text-stone-400 font-normal text-xl'>Email: {detail[0]?.seller?.user?.email}</h5>}
                 </div>) : (calendarInfo.length !== 0) && (<div className="flex justify-center">
                 <div className="ml-5 rounded border border-stone-400/75">
-                  <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
+                  <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0]?.dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
                 </div>
                 <div className="ml-5 pt-16 ">
                   <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />

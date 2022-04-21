@@ -17,7 +17,7 @@ const initialState = {
   typeUser: "buyer",
   detailCalendar: [],
   transactions: {},
-  favouritesUpdate:{},
+  favouritesUpdate:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -94,9 +94,15 @@ const rootReducer = (state = initialState, action) => {
         dropdown: action.payload,
       };
     case "GET_FAVOURITES":
+      state.favourites = [];
       return {
         ...state,
         favourites: action.payload,
+      };
+      case "GET_FAVOURITESUPDATE":
+      return {
+        ...state,
+        favouritesUpdate: action.payload,
       };
       
     case "UPDATE_TYPE_USER":

@@ -3,34 +3,55 @@ import Nav from '../Nav';
 import houseBackground from '../../styles/images/house-back.jpg'
 import  { useAuth0 } from '@auth0/auth0-react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getFavourites,deleteFavourites, } from "../../redux/actions";
+import { getFavourites } from "../../redux/actions";
 import Footer from '../Footer';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { BsFillHouseFill } from "react-icons/bs";
 
 
 
 
 function StripedTable() {
 
-  const [render,setrender] =useState(0)
+  const [render,setrender] =useState([])
   const navigate = useNavigate()
   const user = useSelector((state)=>state.user)
-  var favourites = useSelector((state)=>state.favourites)
-  var favouritesUpdate = useSelector((state)=>state.favouritesUpdate)
-  favouritesUpdate = favourites
-  const dispatch = useDispatch();
-   useEffect( async function() {
-     await dispatch(getFavourites(user.user?.id))
-     
-    
+  const favourites = useSelector((state)=>state.favourites)
+console.log(favourites)
 
+
+  
+  const dispatch = useDispatch();
+   useEffect( () => {
+     dispatch(getFavourites(user.user?.id));    
   }, [])
 
-  const handleSubmit = async ( element ) =>{
-    await dispatch(deleteFavourites(element.id,element.buyerId, element.propertyId))
-    favouritesUpdate.filter(function(i) { return i !== element });
+
+  function deleteFavourites(id,userId,propertyId) {
+
+            axios.delete(`http://localhost:3001/favorite?propertyId=${propertyId}&userId=${userId}&favoriteId=${id}`)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err) => console.error(err));
     
-    
+}
+
+  const handleSubmit = ( element ) =>{
+    deleteFavourites(element.id,element.buyerId, element.propertyId);
+    let newArr = [];
+    render[0].favorites.map(f => {
+      if(f.id !== element.id){
+        newArr.push(f);
+      }
+    })
+    render[0].favorites = newArr;
+    setrender(render[0]);
+    // if(window.confirm("Are you sure you want to delete favorite?")){
+      
+       
+    // }
     
   }
   async function Redirect( element){
@@ -74,37 +95,29 @@ function StripedTable() {
       <tbody>
             
 
-{!favourites?
-        <p>You dont have favorites</p>
-        
-        
-        
-        
-        
-        : 
-
-
-           favourites[0]?.favorites.map((element)=>{
-          return(<tr className={trClass}>
+           {favourites.length ? ((!render.length ? setrender(favourites) : render.length) && render[0]?.favorites?.map((element)=>{
+          return(<tr key={element.id} className={trClass}>
 
             
-            <td className={tdClass} onClick={()=> Redirect(element)}>
-                <a >
+            <td className={tdClass} >
+                <a onClick={()=>Redirect(element)}>
               <img
+              
                 src="https://frtassets.fotocasa.es/statics/img/home_inspirational_block_6.jpg"
                 className="h-12"
-              /></a>
+              />
+              </a>
             </td>
             
-            <td className={tdClass}>{element.property.city}</td>
-            <td className={tdClass}>{element.property.address}</td>
-            <td className={tdClass}>{element.property.lease === "Alquiler"? "rent" : "sell"}</td>
-            <td className={tdClass}>{element.property.m2}m2</td>
-            <td className={tdClass}>${element.property.cost}</td>
+            <td className={tdClass}>{element.property?.city}</td>
+            <td className={tdClass}>{element.property?.address}</td>
+            <td className={tdClass}>{element.property?.lease === "Alquiler"? "rent" : "sell"}</td>
+            <td className={tdClass}>{element.property?.m2}m2</td>
+            <td className={tdClass}>${element.property?.cost}</td>
             <div className='flex flex-col pt-10 '>
             <button className='' onClick={()=> handleSubmit(element)}>Delete Favorites</button></div>
           </tr>   )
-        })}   
+        })): (<div>NO HAY FAVORITOS!</div>) } 
          
       </tbody>
     </table>

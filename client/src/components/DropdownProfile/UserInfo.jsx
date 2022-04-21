@@ -27,7 +27,7 @@ function UserInfo() {
 
   const rowClass =
     "flex flex-row sm:flex-row justify-between  sm:items-start py-3 border-t border-gray-300  font-Poppins"
-  const leftClass = "w-auto sm:w-1/3 font-black	text-lg   text-center sm:text-left p-4 font-Poppins"
+  const leftClass = "w-64 sm:w-1/3 font-black	text-lg   text-center sm:text-left p-4 font-Poppins"
   const rightClass = "flex-1 text-center sm:text-left p-4 font-Poppins"
   return (
 <div className='z-2 absolute  w-full h-screen flex flex-col items-center'>
@@ -46,7 +46,7 @@ function UserInfo() {
       <div className="mt-4">
         <div className={rowClass}>
           <span className={leftClass}>Full name</span>
-          <span className={rightClass}>{user.user?.role?.rolName === 'buyer'? `${user.user?.buyers[0]?.firstName} ${user.user?.buyers[0]?.lastName}`  : `${user.user?.sellers[0]?.firstName}  ${user.user?.sellers[0]?.lastName}`}</span>
+          <span className={rightClass}>{user.user?.role?.rolName === 'buyer'? `${user.user?.buyers[0]?.firstName} ${user.user?.buyers[0].lastName}`  : `${user.user?.sellers[0].firstName}  ${user.user?.sellers[0].lastName}`}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Email Address</span>
@@ -58,14 +58,14 @@ function UserInfo() {
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Location</span>
-          <span className={rightClass}>Argentina, Buenos Aires (Hardcodeado, agregar a db)</span>
+          <span className={rightClass}>{user.user?.sellers[0]?.country? user.user?.sellers[0]?.country : "-"}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>BirthDate</span>
           <span className={rightClass}>
             {user.user?.role?.rolName === 'buyer'? 
-            user.user?.buyers[0]?.dateBirth? user.user?.buyers[0]?.dateBirth : '-' 
-            : user.user?.sellers[0]?.dateBirth? user.user?.sellers[0]?.dateBirth : '-'}</span>
+            user.user?.buyers[0]?.dateBirth? user.user?.buyers[0]?.dateBirth.slice(0,10) : '-' 
+            : user.user?.sellers[0]?.dateBirth? user.user?.sellers[0]?.dateBirth.slice(0,10) : '-'}</span>
         </div>
         <div className={rowClass}>
           <span className={leftClass}>Phone Number</span>
