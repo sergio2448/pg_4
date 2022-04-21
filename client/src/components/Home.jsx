@@ -47,7 +47,7 @@ function Home() {
         <SearchBar />
       </div>
       <div className=' mt-64 py-16 text-center '>
-        <h2 className='text-white text-5xl relative font-base font-Poppins'>Explore the Neighbourhoods</h2>
+        <h2 className='text-stone-600 text-5xl relative font-base font-Poppins'>Explore the Neighbourhoods</h2>
         <div className='mx-4 px-6 my-12 grid grid-cols-3 gap-6'>
           {
             mapasList.length ? mapasList.map(c => {
