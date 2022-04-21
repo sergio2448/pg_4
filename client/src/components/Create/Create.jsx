@@ -113,7 +113,7 @@ export default function Create() {
             console.log(error.message)
         }
     }, []);
-
+    console.log("Errors", Object.values(errors))
     const submit = async (event) => {
         event.preventDefault()
         let idEstateCreated
@@ -156,7 +156,7 @@ export default function Create() {
                 }
             }
         } else {
-            console.log("ERROR")
+            console.log("ERROR DE CREACION")
         }
     };
 
@@ -235,7 +235,7 @@ export default function Create() {
                                                 pages.page3 ? <Page3 newEstate={newEstate} setImages={setImages} imagesDeleted={imagesDeleted} setImagesDeleted={setImagesDeleted} setCurrentStep={setCurrentStep} setPages={setPages} pages={pages} errors={errors} handleSubmit={handleSubmit} images={images} /> : ""
                                             }
                                             {
-                                                pages.page4 ? <Page4 setCurrentStep={setCurrentStep} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
+                                                pages.page4 ? <Page4 setCurrentStep={setCurrentStep} errorsForm={errors} submit={submit} setPages={setPages} pages={pages} newEstate={newEstate} setNewEstate={setNewEstate} errors={errors} /> : ""
                                             }
                                         </div>
                                     </form>
