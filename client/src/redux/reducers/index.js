@@ -112,7 +112,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         transactions: action.payload,
       };
-
     default:
       return {
         ...state,

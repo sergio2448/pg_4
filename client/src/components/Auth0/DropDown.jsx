@@ -107,10 +107,10 @@ export default function DropDown() {
                             ripple="light"
                             size="lg"
                             onClick={(e) => {
-                                navigate("/logged/Favorites")
+                                navigate("/logged/Publishing")
                             }}
                         >
-                            Favorites
+                            Publishing
                         </DropdownItem>
                         : ""
                 }

@@ -133,6 +133,15 @@ export function deleteFavourites(id,userId,propertyId) {
     
 }
 
+export function deleteProperties(id, adminEmail) {
+  return axios.delete(`http://localhost:3001/admin/delete-prop?id=${id}&adminEmail=${adminEmail}`)
+  .then((res)=>{
+      console.log(res)
+  })
+  .catch((err) => console.error(err));
+
+}
+
 export function addFavourites(data) {
   return axios
     .post("http://localhost:3001/favorite", data)

@@ -17,6 +17,7 @@ import FormInfo from './components/DropdownProfile/FormInfo';
 import Dashadmin from "./components/admin modules/Dashadmin";
 import UsersAdmin from "./components/admin modules/Users/UsersAdmin"
 import SellerCalendar from "./components/Seller/SellerCalendar"
+import AdminProperties from './components/DropdownProfile/AdminProperties';
 import Schedule from './components/Detail/Schedule';
 import Features from './components/admin modules/Features';
 
@@ -35,6 +36,8 @@ function App() {
                     <Route path='/logged/Favorites' element={<StripedTable/>} />
                     <Route path='/logged/myprofile' element={<UserInfo/>} />
                     <Route path='/logged/Updatedata' element={<FormInfo/>} />  
+                    <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />  
+                    <Route path='/logged/Publishing' element={<AdminProperties />} />
                     <Route path='/logged/SellerCalendar' element={<SellerCalendar />} />
                     <Route path='/logged/Quotes' element={<Schedule />} />
                     <Route path='/pay/:id' element={<PaypalButton/>}/>
@@ -43,7 +46,11 @@ function App() {
                     <Route path='/sub' element={<PaypalButtonSub/>}/>
                     <Route path="/cardad" element={<Dashadmin />} />
                     <Route path='/admin/users' element={<UsersAdmin />} />
+<<<<<<< HEAD
+                    
+=======
                     <Route path='/admin/features' element={<Features />} />
+>>>>>>> 2b0e774a8b7d439d7678457ee75934fc31e7fc07
                     {/* <Route path='*' element={<PageNotFound />} /> */}
                 </Routes>
             </div>
