@@ -2,7 +2,7 @@ import houseBackground from '../../styles/images/house-back.jpg';
 import Nav from "../Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDetailCalendar, getHomeDetail } from "../../redux/actions/index";
+import { getDetailCalendar, getFavourites, getHomeDetail } from "../../redux/actions/index";
 import Gallery from "./Gallery";
 import Footer from "../Footer";
 import ReactMapGL, { Marker } from "react-map-gl";
@@ -14,7 +14,6 @@ import HoursPicker from "../Calendar/HoursPicker";
 import axios from "axios";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { addFavourites } from "../../redux/actions/index";
 import React, { useState, useEffect } from "react";
 import Review from "./Review";
 import Comment from "./Comment";
@@ -85,7 +84,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         dates: selectedDay,
         hours: selectedDate,
         sellerId: sellId,
-        buyerId: user.user?.buyers[0]?.id
+        buyerId: user.user?.buyers[0]?.id,
+        propertyId: detail[0].id
+
       }
       addAgenda(agendaObj);
       navigate('/logged/Quotes');
@@ -106,19 +107,21 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
 
   })
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      await dispatch(addFavourites(values))
-
+  function addFavourites(data) {
+    axios.post("http://localhost:3001/favorite", data)   
+    .then((res)=>{        
+      dispatch(getFavourites(user.user.id));
       alert('Favourite added successfully!');
+    })
+    .catch((err) => {
+      alert('We could not add your favourite. Please try again.')
+    }    
+    );
+  }
 
-    } catch (err) {
-      alert('We could not add your favourite. Please try again.');
-
-    }
-
-
+  async function handleSubmit(e) {
+    e.preventDefault();    
+    addFavourites(values);
   }
 
   console.log(detail)

@@ -93,6 +93,7 @@ const rootReducer = (state = initialState, action) => {
         dropdown: action.payload,
       };
     case "GET_FAVOURITES":
+      state.favourites = [];
       return {
         ...state,
         favourites: action.payload,

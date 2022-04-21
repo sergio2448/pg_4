@@ -2,11 +2,12 @@ const { Favorite,Properties,Buyers,Idstatus } = require('../db')
 
 const postFavorite = async (buyerId,propertyId) =>{
    
-    try {
-        const resultCreate= await Favorite.create({buyerId,propertyId});
+    let prop = await Favorite.findOne({ where: { buyerId: buyerId, propertyId: propertyId} });
+    if(!prop){
+        const resultCreate = await Favorite.create({buyerId,propertyId});
             return resultCreate;
-    } catch (error) {
-        console.log("Ocurrio un error en FavoriteMidd/ postFavorite :"+error);
+    }else{
+        return null;
     }
 }
 

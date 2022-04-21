@@ -3,34 +3,51 @@ import Nav from '../Nav';
 import houseBackground from '../../styles/images/house-back.jpg'
 import  { useAuth0 } from '@auth0/auth0-react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getFavourites,deleteFavourites } from "../../redux/actions";
+import { getFavourites } from "../../redux/actions";
 import Footer from '../Footer';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 
 
 
 function StripedTable() {
 
-  const [render,setrender] =useState(0)
+  const [render,setrender] =useState([])
   const navigate = useNavigate()
   const user = useSelector((state)=>state.user)
   const favourites = useSelector((state)=>state.favourites)
 
+
+
   
   const dispatch = useDispatch();
-   useEffect( async function() {
-     await dispatch(getFavourites(user.user.id))
-     return () => {
-      dispatch(getFavourites(user.user.id));
-    };
+   useEffect( () => {
+     dispatch(getFavourites(user.user.id));    
+  }, [])
+
+
+  function deleteFavourites(id,userId,propertyId) {
+
+            axios.delete(`http://localhost:3001/favorite?propertyId=${propertyId}&userId=${userId}&favoriteId=${id}`)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err) => console.error(err));
     
+}
 
-  }, [render])
-
-  const handleSubmit = async ( element ) =>{
-    await dispatch(deleteFavourites(element.id,element.buyerId, element.propertyId))
-    setrender(render+1)
+  const handleSubmit = ( element ) =>{
+    deleteFavourites(element.id,element.buyerId, element.propertyId);
+    let newArr = [];
+    render[0].favorites.map(f => {
+      if(f.id !== element.id){
+        newArr.push(f);
+      }
+    })
+    render[0].favorites = newArr;
+    setrender(render[0]);
     // if(window.confirm("Are you sure you want to delete favorite?")){
       
        
@@ -77,11 +94,11 @@ function StripedTable() {
       <tbody>
             
 
-           {favourites[0]?.favorites.map((element)=>{
-          return(<tr className={trClass}>
+           {favourites.length ? ((!render.length ? setrender(favourites) : render.length) && render[0].favorites?.map((element)=>{
+          return(<tr key={element.id} className={trClass}>
 
             
-            <td className={tdClass} onClick={()=> Redirect(element)}>
+            <td className={tdClass} >
                 <a >
               <img
                 src="https://frtassets.fotocasa.es/statics/img/home_inspirational_block_6.jpg"
@@ -97,7 +114,7 @@ function StripedTable() {
             <div className='flex flex-col pt-10 '>
             <button className='' onClick={()=> handleSubmit(element)}>Delete Favorites</button></div>
           </tr>   )
-        })}   
+        })): (<div>NO HAY FAVORITOS!</div>) } 
          
       </tbody>
     </table>
