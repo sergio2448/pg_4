@@ -125,6 +125,7 @@ export function getFavourites(id) {
     }
 }
 
+
 export function deleteFavourites(id,userId,propertyId) {
 
             return(axios.delete(`http://localhost:3001/favorite?propertyId=${propertyId}&userId=${userId}&favoriteId=${id}`))

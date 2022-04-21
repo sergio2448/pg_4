@@ -3,7 +3,7 @@ import Nav from '../Nav';
 import houseBackground from '../../styles/images/house-back.jpg'
 import  { useAuth0 } from '@auth0/auth0-react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { getFavourites,deleteFavourites } from "../../redux/actions";
+import { getFavourites,deleteFavourites, } from "../../redux/actions";
 import Footer from '../Footer';
 import { useNavigate } from "react-router-dom";
 
@@ -15,32 +15,29 @@ function StripedTable() {
   const [render,setrender] =useState(0)
   const navigate = useNavigate()
   const user = useSelector((state)=>state.user)
-  const favourites = useSelector((state)=>state.favourites)
-
-  
+  var favourites = useSelector((state)=>state.favourites)
+  var favouritesUpdate = useSelector((state)=>state.favouritesUpdate)
+  favouritesUpdate = favourites
   const dispatch = useDispatch();
    useEffect( async function() {
-     await dispatch(getFavourites(user.user.id))
-     return () => {
-      dispatch(getFavourites(user.user.id));
-    };
+     await dispatch(getFavourites(user.user?.id))
+     
     
 
-  }, [render])
+  }, [])
 
   const handleSubmit = async ( element ) =>{
     await dispatch(deleteFavourites(element.id,element.buyerId, element.propertyId))
-    setrender(render+1)
-    // if(window.confirm("Are you sure you want to delete favorite?")){
-      
-       
-    // }
+    favouritesUpdate.filter(function(i) { return i !== element });
+    
+    
     
   }
   async function Redirect( element){
    
     navigate(`/estate/${element.propertyId}`)
   }
+  console.log(favourites)
   
   
   // console.log(user.user.buyers[0]?.id)
@@ -57,9 +54,9 @@ function StripedTable() {
     <div className='z-1 absolute bg-black w-full h-full shadow-black shadow-2xl '>
       <img className='opacity-60 z-2 object-cover w-full h-full ' src={houseBackground} />
     </div>
-    <div className='z-2 absolute  w-full h-screen shadow-inner shadow-black self-center '></div>
+    
     <Nav />{/* sky-500/80 */}
-    <div  className="  my-12 rounded-md p-4 relative bg-gray-300/80 flex flex-col  items-center 	w-screen h-full shadow-md    self-end">
+    <div  className="  my-12 rounded-md p-4 relative  flex flex-col  items-center 	w-screen h-full shadow-md    self-end">
     <h2 className='text-white text-5xl pb-20  relative font-bold font-Poppins'>Favorite Properties</h2>
 
     <table className="w-4/6 table-auto  rounded-md   ">
@@ -77,7 +74,17 @@ function StripedTable() {
       <tbody>
             
 
-           {favourites[0]?.favorites.map((element)=>{
+{!favourites?
+        <p>You dont have favorites</p>
+        
+        
+        
+        
+        
+        : 
+
+
+           favourites[0]?.favorites.map((element)=>{
           return(<tr className={trClass}>
 
             
