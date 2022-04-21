@@ -13,6 +13,7 @@ export default function Schedule() {
     const [quotes, setQuotes] = React.useState(null)
     const userDB = useSelector(state => state.user)
     const [render, setRender] = React.useState(0)
+    const [property, setProperties] = React.useState(null)
 
     console.log(userDB.user.sellers[0].id)
     console.log(userDB.user.buyers[0].id)
@@ -27,6 +28,11 @@ export default function Schedule() {
             console.log(error)
         }
     }, [render])
+
+    async function updateProperty(id) {
+        let json = await axios.post('http://localhost:3001/Properties?id=' + id);
+        setProperties(json.data)
+    }
 
     console.log(quotes)
 
@@ -194,6 +200,11 @@ export default function Schedule() {
                                                     </td>
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
                                                         {quote.status}
+                                                    </td>
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
+                                                        
+                                                        Contact: {quote.status === "Approved" ? userDB.user.email : "2644576693"
+                                                        }
                                                     </td>
                                                 </tr>
                                             )
