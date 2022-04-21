@@ -6,7 +6,7 @@ import Dropdown from "@material-tailwind/react/Dropdown"
 import DropdownItem from "@material-tailwind/react/DropdownItem"
 import { useSelector } from "react-redux";
 import Footer from "../Footer";
-
+import { Link } from "react-router-dom";
 
 export default function Schedule() {
 
@@ -15,8 +15,7 @@ export default function Schedule() {
     const [render, setRender] = React.useState(0)
     const [property, setProperties] = React.useState(null)
 
-    console.log(userDB.user.sellers[0].id)
-    console.log(userDB.user.buyers[0].id)
+    
     React.useEffect(async () => {
         try {
             let quot = await axios.put(`http://localhost:3001/agenda`, {
@@ -29,12 +28,7 @@ export default function Schedule() {
         }
     }, [render])
 
-    async function updateProperty(id) {
-        let json = await axios.post('http://localhost:3001/Properties?id=' + id);
-        setProperties(json.data)
-    }
-
-    console.log(quotes)
+    
 
     return (
         <div className="w-full h-screen bg-stone-200/75 ">
@@ -51,7 +45,7 @@ export default function Schedule() {
             </div>
             <div className="flex flex-col items-center mb-16">
             <div className="  mb-6  font-black  w-4/6  p-12 relative items-center ">
-                <div className="flex flex-col relative ">
+                <div className=" ">
                     
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 flex justify-center mt-8">
                         <div className="py-2 inline-block w-11/12 sm:px-6 lg:px-8 text-white text-xl">
@@ -78,18 +72,18 @@ export default function Schedule() {
                                         </tr>
                                     </thead>
                                     <tbody >
-                                        <div className="bg-gray-300/80">
+                                        
                                         {
                                             quotes?.map(quote =>
                                                 quote.sellerId === userDB.user.sellers[0].id &&
-                                                <tr className="border-b bg-blue-100 border-black">
-                                                    <td className="text-sm text-gray-900 font-medium px-4 py-2 whitespace-nowrap">
+                                                <tr className="border-b bg-blue-100 border-black w-full">
+                                                    <td className="text-sm text-gray-900 font-medium px-4 py-2 whitespace-nowrap w-full">
                                                         {quote.dates.day}/{quote.dates.month}/{quote.dates.year}
                                                     </td>
-                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap ">
                                                         {quote.hours.hours}:{quote.hours.minutes}
                                                     </td>
-                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
+                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap ">
                                                         {quote.place}
                                                     </td>
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap">
@@ -150,7 +144,7 @@ export default function Schedule() {
                                                     </td>
                                                 </tr>
                                             )
-                                        }</div>
+                                        }
                                     </tbody>
                                 </table>
                                 {
@@ -199,12 +193,9 @@ export default function Schedule() {
                                                         {quote.place}
                                                     </td>
                                                     <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
-                                                        {quote.status}
-                                                    </td>
-                                                    <td className="text-sm text-gray-900 font-light px-4 py-2 whitespace-nowrap flex justify-center">
-                                                        
-                                                        Contact: {quote.status === "Approved" ? userDB.user.email : "2644576693"
-                                                        }
+                                                        <Link to={`/estate/${quote.propertyId}`}>
+                                                            {quote.status}
+                                                        </Link>
                                                     </td>
                                                 </tr>
                                             )

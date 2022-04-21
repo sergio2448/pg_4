@@ -12,12 +12,12 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import CalendarOneDay from "../Calendar/CalendarOneDay";
 import HoursPicker from "../Calendar/HoursPicker";
 import axios from "axios";
-
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState, useEffect } from "react";
 import Review from "./Review";
 import Comment from "./Comment";
-/* import DirectChatPage from "../chatbox/DirectChatPage"; */
+
+
 
 const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   name = "Hardcode Street";
@@ -50,9 +50,9 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
        dispatch(getHomeDetail([]));
      };
   }, []);
-  console.log("detail", detail);
+ 
 
-  const calendarInfo = useSelector((state) => state.detailCalendar);
+  let calendarInfo = useSelector((state) => state.detailCalendar);
 
   const photos =
     detail[0]?.photos?.length > 0
@@ -92,7 +92,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
       addAgenda(agendaObj);
       navigate('/logged/Quotes');
     }
-    
+    calendarInfo = []
 
   }
 
@@ -100,7 +100,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   //AÑADIR A FAVORITOS
 
   
-  console.log(detail[0]?.id)
+ 
   const [values, setValues] = React.useState({
     buyerId: user.user?.buyers[0]?.id,
     propertyId: id,
@@ -111,7 +111,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
   function addFavourites(data) {
     axios.post("http://localhost:3001/favorite", data)   
     .then((res)=>{        
-      dispatch(getFavourites(user.user.id));
+      dispatch(getFavourites(user.user?.id));
       alert('Favourite added successfully!');
     })
     .catch((err) => {
@@ -228,7 +228,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
         </div>
         <div>
           <div class="grid grid-cols-2 gap-3">
-            <button onClick={handleSubmit}>Favourite</button>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={handleSubmit}>Favourite</button>
           </div>
         </div>
       </div>
@@ -269,7 +269,7 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
           }
             
           {
-            user.user && detail[0] ? <Comment propertyId={detail[0].id}/> : ""
+            user.user && detail[0] ? <Comment propertyId={detail[0]?.id}/> : ""
           }
 
         
@@ -283,11 +283,11 @@ const Detail = ({ name, city, country, cost, measure, rooms, description }) => {
               {
                 (calendarInfo.length == 0) && (contact) ? (<div>
                   <h3 className='mt-6 text-stone-400 font-normal '>Contact</h3>
-                  { detail[0]?.seller.phoneNumber && <h5 className='text-stone-400 font-normal text-xl'>Phone: {detail[0].seller.phoneNumber}</h5>}
-                  { detail[0].seller.user.email && <h5 className=' text-stone-400 font-normal text-xl'>Email: {detail[0].seller.user.email}</h5>}
+                  { detail[0]?.seller?.phoneNumber && <h5 className='text-stone-400 font-normal text-xl'>Phone: {detail[0]?.seller?.phoneNumber}</h5>}
+                  { detail[0]?.seller?.user?.email && <h5 className=' text-stone-400 font-normal text-xl'>Email: {detail[0]?.seller?.user?.email}</h5>}
                 </div>) : (calendarInfo.length !== 0) && (<div className="flex justify-center">
                 <div className="ml-5 rounded border border-stone-400/75">
-                  <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0].dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
+                  <CalendarOneDay selectedDay={selectedDay} setSelectedDay={setSelectedDay} defaultFrom={calendarInfo[0]?.dates.from} defaultTo={calendarInfo[0].dates.to} className='' />
                 </div>
                 <div className="ml-5 pt-16 ">
                   <HoursPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} className='' />

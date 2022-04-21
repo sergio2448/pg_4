@@ -41,14 +41,14 @@ export default function ListProperties() {
             </div>
             <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">Customers also purchased</h2>
-                <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
                     {
-                        userDB.user.sellers[0].properties.length ? userDB.user.sellers[0].properties.map(property => (
+                        userDB.user?.sellers[0]?.properties?.length ? userDB.user?.sellers[0]?.properties.map(property => (
                             <div key={property.id} className="w-full">
                                 <div className="group relative">
                                     <div className="w-full border-solid border-2 border-black min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                         <img
-                                            src={'http://localhost:3001/Properties/images/' + property.photos[0].photos}
+                                            src={'http://localhost:3001/Properties/images/' + property.photos[0]?.photos}
                                             alt="Loading..."
                                             className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                                         />
@@ -64,7 +64,7 @@ export default function ListProperties() {
                                             <h3 className="text-lg text-white italic uppercase mb-2">
                                                 <Link to={`/estate/${property.id}`}>
                                                     <span aria-hidden="true" className="absolute inset-0" />
-                                                    {property.idstatus.statusName}
+                                                    {property.idstatus?.statusName}
                                                 </Link>
                                                 <p className="mt-1 text-lg text-white">{property.lease}</p>
                                             </h3>
@@ -234,7 +234,7 @@ export default function ListProperties() {
                                                         e.preventDefault()
                                                         try {
                                                             await axios.delete(`http://localhost:3001/Properties/${property.id}`)
-                                                            let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user.email}`)
+                                                            let userExist = await axios(`http://localhost:3001/optionUser/${userDB.user?.email}`)
                                                             dispatch(loadUser(userExist.data))
                                                             setShowModal(false)
                                                         } catch (error) {
@@ -316,12 +316,11 @@ export default function ListProperties() {
                                     
                                 </div>
                             </div>
-                        )): <p className='text-white text-5xl pb-20  absolute mx-32 font-bold font-Poppins'>You don't have any properties created.</p>
+                        )): <p className='text-white relative text-5xl pb-20  mb-32 absolute mx-32 font-bold font-Poppins'>You don't have any properties created.</p>
                     }
                 </div>   
             </div>
-            <div className='bottom-0 absolute'>
-            <Footer/></div>
+            
         </div>
     )
 }
