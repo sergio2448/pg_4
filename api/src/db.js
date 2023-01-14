@@ -7,6 +7,17 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize(process.env.DATABASE_URL, {
+      database: PGDATABASE,
+      dialect: "postgres",
+      host: PGHOST,
+      port: PGPORT,
+      username: PGUSER,
+      password: PGPASSWORD,
+      pool: {
+        max: 3,
+        min: 1,
+        idle: 10000,
+     },
         dialectOptions: {
           ssl: {
             require: true,
