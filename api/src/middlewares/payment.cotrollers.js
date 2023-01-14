@@ -7,8 +7,8 @@ const authtoken = require('../middlewares/authtoken.js')
 const { isAdmin } = require('./authadmin')
 const { PAYPAL_API } = process.env
 
-const host = 'http://localhost:3001'
-const hostclient = 'http://localhost:3000'
+const host = 'https://new-pg.herokuapp.com'
+const hostclient = 'https://pg-four-id140g569-sergio2448.vercel.app'
 
 
 

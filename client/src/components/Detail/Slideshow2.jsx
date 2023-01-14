@@ -15,7 +15,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 1
-                ? "http://localhost:3001/Properties/images/" + photos[0]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[0]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
@@ -26,7 +26,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 2
-                ? "http://localhost:3001/Properties/images/" + photos[1]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[1]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
@@ -37,7 +37,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 3
-                ? "http://localhost:3001/Properties/images/" + photos[2]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[2]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
@@ -48,7 +48,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 4
-                ? "http://localhost:3001/Properties/images/" + photos[3]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[3]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
@@ -59,7 +59,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 5
-                ? "http://localhost:3001/Properties/images/" + photos[4]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[4]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
@@ -70,7 +70,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 6
-                ? "http://localhost:3001/Properties/images/" + photos[5]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[5]
                 : hardcodeHouse
             }
             className="block w-96 h-60"
@@ -81,7 +81,7 @@ const Slideshow2 = ({ photos }) => {
           <img
             src={
               photos.length >= 7
-                ? "http://localhost:3001/Properties/images/" + photos[6]
+                ? "https://new-pg.herokuapp.com/Properties/images/" + photos[6]
                 : hardcodeHouse
             }
             className="block w-96 h-60"

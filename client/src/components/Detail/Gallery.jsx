@@ -42,7 +42,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 1
-                      ? "http://localhost:3001/Properties/images/" + photos[0]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[0]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}
@@ -56,7 +56,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 2
-                      ? "http://localhost:3001/Properties/images/" + photos[1]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[1]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}
@@ -68,7 +68,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 3
-                      ? "http://localhost:3001/Properties/images/" + photos[2]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[2]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}
@@ -80,7 +80,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 4
-                      ? "http://localhost:3001/Properties/images/" + photos[3]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[3]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}
@@ -92,7 +92,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 5
-                      ? "http://localhost:3001/Properties/images/" + photos[4]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[4]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}
@@ -104,7 +104,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 6
-                      ? "http://localhost:3001/Properties/images/" + photos[5]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[5]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}
@@ -116,7 +116,7 @@ const Gallery = ({ photos, lease }) => {
                   class="block object-cover object-center w-full h-full max-w-full max-h-full rounded-xl cursor-pointer hover:scale-110 transition duration-300 ease-in-out"
                   src={
                     photos.length >= 7
-                      ? "http://localhost:3001/Properties/images/" + photos[6]
+                      ? "https://new-pg.herokuapp.com/Properties/images/" + photos[6]
                       : genericImage
                   }
                   onClick={(e) => setShowModal(true)}

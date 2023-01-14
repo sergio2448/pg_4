@@ -92,7 +92,7 @@ const App = () => {
                         e.preventDefault()
                         try {
                             if(selectedDayRange.from && selectedDayRange.to) {
-                                let newRange = await axios.post('http://localhost:3001/calendar', {
+                                let newRange = await axios.post('https://new-pg.herokuapp.com/calendar', {
                                     "dates": selectedDayRange,
                                     "type":"seller",
                                     "userId": userDB.user.id

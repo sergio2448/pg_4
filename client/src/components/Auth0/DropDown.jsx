@@ -167,7 +167,7 @@ export default function DropDown() {
                 }
 
                 <DropdownLink color="lightBlue" ripple="light" size="lg" onClick={() => {
-                    logout({ returnTo: window.location.origin })
+                    logout({returnTo: window.location.origin})
                 }}>
                     LogOut
                 </DropdownLink>

@@ -25,24 +25,26 @@ export const Profile = () => {
 
     React.useEffect(async () => {
         try {
-            let userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+            let userExist = await axios(
+              `https://new-pg.herokuapp.com/optionUser/${user.email}`
+            );
             setUserLoged(userExist.data)
             if(userExist.data.result === "Sin Registros") {
-                let newUser = await axios.post(`http://localhost:3001/optionUser`, {
+                let newUser = await axios.post(`https://new-pg.herokuapp.com/optionUser`, {
                     "firstName": user.given_name ? user.given_name : user.name,
                     "lastName": user.family_name ? user.family_name : user.name,
                     "nickName": user.nickname,
                     "email": user.email,
                     "image":user.picture,
                 })
-                userExist = await axios(`http://localhost:3001/optionUser/${user.email}`)
+                userExist = await axios(`https://new-pg.herokuapp.com/optionUser/${user.email}`)
                 dispatch(loadUser(userExist.data))
                 setUserLoged(userExist.data)
                 const notificationUser={
                     userid:userExist.data.user.id
                 }
                 setShowModal(true)
-                await axios.post(`http://localhost:3001/send-email/welcome`,notificationUser)
+                await axios.post(`https://new-pg.herokuapp.com/send-email/welcome`,notificationUser)
             }
             dispatch(loadUser(userExist.data))
         } catch (error) {
@@ -85,7 +87,7 @@ export const Profile = () => {
                                 onClick={async (e) => {
                                     e.preventDefault()
                                     try {
-                                        let phone = await axios.post("http://localhost:3001/optionUser/phoneNumber", {
+                                        let phone = await axios.post("https://new-pg.herokuapp.com/optionUser/phoneNumber", {
                                             phoneNumber: phoneNumber,
                                             id: userLoged.user.id
                                         })

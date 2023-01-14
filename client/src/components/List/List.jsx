@@ -64,7 +64,7 @@ function List() {
                                     <Link to={"/estate/" + c.id}>
                                       <Card
                                         image={
-                                          "http://localhost:3001/Properties/images/" +
+                                          "https://new-pg.herokuapp.com/Properties/images/" +
                                           c.photos[0].photos
                                         }
                                         featured={false}

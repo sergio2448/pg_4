@@ -10,7 +10,7 @@ export default function Page3({ setImages, images, imagesDeleted, setImagesDelet
                     newEstate.photos ? newEstate.photos.map((photo) => {
                         if(imagesDeleted.includes(photo.photos))return (
                             <div className='relative'>
-                                <img src={'http://localhost:3001/Properties/images/' + photo.photos} className="w-48 h-48 m-2" />
+                                <img src={'https://new-pg.herokuapp.com/Properties/images/' + photo.photos} className="w-48 h-48 m-2" />
                                 <FaWindowClose className='absolute top-4 right-4 text-xl text-red-700' onClick={(e) => {
                                     e.preventDefault()
                                     setImagesDeleted(imagesDeleted.map(elem => {

@@ -18,9 +18,9 @@ export default function Schedule() {
     
     React.useEffect(async () => {
         try {
-            let quot = await axios.put(`http://localhost:3001/agenda`, {
-                idSeller: userDB.user?.sellers[0]?.id,
-                idBuyer: userDB.user?.buyers[0]?.id
+            let quot = await axios.put(`https://new-pg.herokuapp.com/agenda`, {
+                idSeller: userDB.user.sellers[0].id,
+                idBuyer: userDB.user.buyers[0].id
             })
             setQuotes(quot.data)
         } catch (error) {
@@ -105,7 +105,7 @@ export default function Schedule() {
                                                                 quote.status !== "Approved" && <DropdownItem color="lightBlue" ripple="light" onClick={async (e) => {
                                                                     e.preventDefault()
                                                                     try {
-                                                                        let state = await axios.put("http://localhost:3001/agenda/status", {
+                                                                        let state = await axios.put("https://new-pg.herokuapp.com/agenda/status", {
                                                                             id: quote.id,
                                                                             status: "Approved"
                                                                         })
@@ -126,7 +126,7 @@ export default function Schedule() {
                                                                 onClick={async (e) => {
                                                                     e.preventDefault()
                                                                     try {
-                                                                        let state = await axios.put("http://localhost:3001/agenda/status", {
+                                                                        let state = await axios.put("https://new-pg.herokuapp.com/agenda/status", {
                                                                             id: quote.id,
                                                                             status: "Cancelled"
                                                                         })
