@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "${API_URL}"
+const API_URL = "pg4-production.up.railway.app"
 export function getSearchbar(input, body) {
     console.log(body)
     return async (dispatch) => {
